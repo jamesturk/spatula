@@ -7,16 +7,16 @@ General premise is that scraping is broken down into page-by-page tasks.
 Each type of page encountered by the scraper is represented by a subclass of
 `Page`
 
-99% of scraper code either goes in handle\_list\_item (for cases where
+99% of scraper code either goes in `handle_list_item` (for cases where
 list of similar objects is being scraped, like a table) or in
-handle\_page if a similar item is being scraped.
+`handle_page` if a similar item is being scraped.
 
 So if there were a list of legislators and a detail page for each one might
-make LegislatorList and LegislatorDetail classes.
+make `LegislatorList` and `LegislatorDetail` classes.
 
-LegislatorList could likely get by with just handle\_list\_item overridden.
+`LegislatorList` could likely get by with just `handle_list_item` overridden.
 
-LegislatorDetail likely with just handle\_page.
+`LegislatorDetail` likely with just handle\_page.
 
 Usage looks something like:
 
