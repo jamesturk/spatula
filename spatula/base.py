@@ -109,20 +109,6 @@ class CSV(AbstractPage):
     def do_request(self):
         return self.scraper.get(self.url)
 
-    def scrape_page_items(self, page_type, url=None, **kwargs):
-        """
-            creates an instance of ``page_type`` and returns an iterable of
-            scraped items
-        """
-        yield from page_type(self.scraper, url=url, **kwargs).handle_page()
-
-    def scrape_page(self, page_type, url=None, obj=None, **kwargs):
-        """
-            creates an instance of ``page_type`` that knows about an object
-            being built(``obj``)
-        """
-        return page_type(self.scraper, url=url, obj=obj, **kwargs).handle_page()
-
     def handle_list_item(self, item):
         """
             override handle_list_item for scrapers that iterate over
