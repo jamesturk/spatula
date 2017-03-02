@@ -101,10 +101,10 @@ class PDF(AbstractPage):
 
 
 class CSV(AbstractPage):
-    def __init__(self, scraper, url=None, *, obj=None, **kwargs):
+    def __init__(self, scraper, url=None, dictreader_kwargs={}, *, obj=None, **kwargs):
         super().__init__(scraper, url=url, obj=obj, **kwargs)
         resp = self.do_request()
-        self.reader = csv.DictReader(io.StringIO(resp.text))
+        self.reader = csv.DictReader(io.StringIO(resp.text), **dictreader_kwargs)
 
     def do_request(self):
         return self.scraper.get(self.url)
