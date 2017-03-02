@@ -1,3 +1,5 @@
+import csv
+import io
 import os
 import subprocess
 import lxml.html
