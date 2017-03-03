@@ -1,3 +1,5 @@
+import csv
+import io
 import os
 import subprocess
 import lxml.html
@@ -96,3 +98,29 @@ class PDF(AbstractPage):
         data = pipe.read()
         pipe.close()
         return data
+
+
+class CSV(AbstractPage):
+    def __init__(self, scraper, url=None, dictreader_kwargs={}, *, obj=None, **kwargs):
+        super().__init__(scraper, url=url, obj=obj, **kwargs)
+        resp = self.do_request()
+        self.reader = csv.DictReader(io.StringIO(resp.text), **dictreader_kwargs)
+
+    def do_request(self):
+        return self.scraper.get(self.url)
+
+    def handle_list_item(self, item):
+        """
+            override handle_list_item for scrapers that iterate over
+            return values
+        """
+        raise NotImplementedError()
+
+    def handle_page(self):
+        for item in self.reader:
+            processed = self.handle_list_item(item)
+            if processed:
+                if hasattr(processed, '__iter__'):
+                    yield from processed
+                else:
+                    yield processed
