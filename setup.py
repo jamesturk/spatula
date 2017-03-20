@@ -3,7 +3,7 @@ import sys
 from setuptools import setup, find_packages
 
 setup(name="spatula",
-      version='0.0.1',
+      version='0.0.2',
       py_modules=['spatula'],
       author="James Turk",
       author_email='james.p.turk@gmail.com',
