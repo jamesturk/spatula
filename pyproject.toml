@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "spatula"
+version = "0.3.0"
+description = "lightweight structured scraping toolkit"
+authors = ["James Turk <dev@jamesturk.net>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/jamesturk/spatula/"
+
+[tool.poetry.scripts]
+spatula = 'spatula.cli:cli'
+
+[tool.poetry.dependencies]
+python = "^3.7"
+scrapelib = "^1.2.0"
+attrs = "^20.3.0"
+click = "^7.1.2"
+lxml = "^4.6.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

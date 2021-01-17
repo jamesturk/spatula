@@ -1,4 +1,4 @@
-# spatula (next-gen scrape) 2.0
+# spatula (next-gen scrape)
 
 ## Motivations
 
