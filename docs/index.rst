@@ -14,8 +14,7 @@ User Guide
    quickstart
    philosophy
    pages
-   tutorial
-   advanced
+   usage
 
 
 Indices and tables

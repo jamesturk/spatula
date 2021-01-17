@@ -24,6 +24,7 @@ def _display(obj) -> str:
 
 
 @click.group()
+@click.version_option(version="0.3.0")
 def cli() -> None:
     pass
 
