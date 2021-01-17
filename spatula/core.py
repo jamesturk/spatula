@@ -1,10 +1,11 @@
 import os
+import json
 import glob
 import datetime
+import uuid
 from typing import Optional
 import requests
 import scrapelib
-from utils import dump_obj
 
 
 class Workflow:
@@ -16,6 +17,14 @@ class Workflow:
             self.page_processors = page_processors
         if not scraper:
             self.scraper = scrapelib.Scraper()
+
+    def get_new_filename(obj):
+        return str(uuid.uuid4())
+
+    def save_object(self, obj, output_dir):
+        filename = os.path.join(output_dir, self.get_new_filename(obj))
+        with open(filename, "w") as f:
+            json.dump(obj, f)
 
     def execute(self, output_dir: str = None) -> None:
         count = 0
@@ -44,7 +53,7 @@ class Workflow:
                 page._fetch_data(self.scraper)
                 data = page.process_page()
             count += 1
-            dump_obj(data.to_dict(), output_dir=output_dir)
+            self.save_object(data.to_dict(), output_dir=output_dir)
         print(f"success: wrote {count} objects to {output_dir}")
 
 
