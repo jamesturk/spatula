@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-import sys
 from setuptools import setup, find_packages
 
 setup(name="spatula",
-      version='0.0.2',
+      version='0.3.0',
       py_modules=['spatula'],
       author="James Turk",
       author_email='dev@jamesturk.net',
       license="MIT",
-      url="http://github.com/jamesturk/spatula",
+      url="https://github.com/jamesturk/spatula",
       long_description="",
       packages=find_packages(),
       description="spatula is for scraping",
@@ -18,12 +17,14 @@ setup(name="spatula",
                    "License :: OSI Approved :: MIT License",
                    "Natural Language :: English",
                    "Operating System :: OS Independent",
-                   "Programming Language :: Python :: 3.5",
+                   "Programming Language :: Python :: 3.7",
+                   "Programming Language :: Python :: 3.8",
+                   "Programming Language :: Python :: 3.9",
                    "Topic :: Software Development :: Libraries :: Python Modules",
                    ],
       install_requires=['scrapelib>=1.0.0'],
-#      entry_points="""
-#[console_scripts]
-#scrapeshell = scrapelib.__main__:scrapeshell
-#"""
+      entry_points="""
+[console_scripts]
+spatula = spatula.cli:cli
+"""
       )
