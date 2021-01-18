@@ -4,6 +4,7 @@ import importlib
 import pprint
 from typing import List
 from scrapelib import Scraper
+import lxml.html
 from .pages import ListPage
 from .core import URL
 
@@ -28,6 +29,24 @@ def _display(obj) -> str:
 def cli() -> None:
     pass
 
+
+@cli.command()
+@click.argument("url")
+def shell(url: str) -> None:
+    try:
+        from IPython import embed
+    except ImportError:
+        print("shell command requires IPython")
+        return
+    scraper = Scraper()
+    resp = scraper.get(url)
+    root = lxml.html.fromstring(resp.content)  # noqa
+    print("local variables")
+    print("---------------")
+    print("url: %s" % url)
+    print("resp: requests Response instance")
+    print("root: `lxml HTML element`")
+    embed()
 
 @cli.command()
 @click.argument("class_name")

@@ -16,6 +16,8 @@ scrapelib = "^1.2.0"
 attrs = "^20.3.0"
 click = "^7.1.2"
 lxml = "^4.6.2"
+cssselect = "^1.1.0"
+ipython = {version = "^7.19.0", extras = ["shell"]}
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^3.4.3"
