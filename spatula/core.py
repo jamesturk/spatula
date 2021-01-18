@@ -18,7 +18,7 @@ class Workflow:
         if not scraper:
             self.scraper = scrapelib.Scraper()
 
-    def get_new_filename(obj):
+    def get_new_filename(self, obj):
         return str(uuid.uuid4())
 
     def save_object(self, obj, output_dir):
@@ -53,7 +53,11 @@ class Workflow:
                 page._fetch_data(self.scraper)
                 data = page.process_page()
             count += 1
-            self.save_object(data.to_dict(), output_dir=output_dir)
+            if isinstance(data, dict):
+                dd = data
+            else:
+                dd = data.to_dict()
+            self.save_object(dd, output_dir=output_dir)
         print(f"success: wrote {count} objects to {output_dir}")
 
 
