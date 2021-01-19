@@ -21,6 +21,7 @@ ipython = {version = "^7.19.0", extras = ["shell"]}
 
 [tool.poetry.dev-dependencies]
 Sphinx = "^3.4.3"
+sphinx-rtd-theme = "^0.5.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
