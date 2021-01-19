@@ -1,6 +1,8 @@
 API Reference
 =============
 
+.. module:: spatula
+
 Pages
 -----
 
@@ -25,14 +27,17 @@ Pages
 Selectors
 ---------
 
-:py:class:`Selector`
+.. autoclass:: Selector
+  :members:
 
-:py:class:`CSS`
 
-:py:class:`SimilarLink`
+.. autoclass:: CSS
 
-:py:class:`XPath`
 
+.. autoclass:: SimilarLink
+
+
+.. autoclass:: XPath
 
 Sources
 -------

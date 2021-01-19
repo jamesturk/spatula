@@ -13,6 +13,9 @@ class SelectorError(ValueError):
 
 
 class Selector:
+    """
+    Base class implementing **Selector** interface.
+    """
     def __init__(
         self,
         *,
@@ -32,6 +35,16 @@ class Selector:
         max_items: Optional[int] = None,
         num_items: Optional[int] = None,
     ) -> List[_Element]:
+        """
+        Return all matches of the given selector within `element`.
+
+        If the number of elements matched is outside the prescribed boundaries, a :py:class:`SelectorError` is raised.
+
+        :param element: The element to match within. When used from within a `Page` will usually be `self.root`.
+        :param min_items: A minimum number of items to match.
+        :param max_items: A maximum number of items to match.
+        :param num_items: An exact number of items to match.
+        """
         items = list(self.get_items(element))
         num_items = self.num_items if num_items is None else num_items
         max_items = self.max_items if max_items is None else max_items
@@ -56,16 +69,35 @@ class Selector:
         return items
 
     def match_one(self, element: _Element) -> _Element:
+        """
+        Return exactly one match.
+
+        :param element: Element to search within.
+        """
         return self.match(element, num_items=1)[0]
 
     def get_items(self, element: _Element) -> Iterator[_Element]:
+        """
+        :meta private:
+        """
         raise NotImplementedError()
 
     def get_display(self) -> str:
+        """
+        :meta private:
+        """
         raise NotImplementedError()
 
 
 class XPath(Selector):
+    """
+    Utilize `XPath <https://en.wikipedia.org/wiki/XPath#Examples>`_ selectors.
+
+    :param xpath: XPath expression to use.
+    :param min_items: A minimum number of items to match.
+    :param max_items: A maximum number of items to match.
+    :param num_items: An exact number of items to match.
+    """
     def __init__(
         self,
         xpath: str,
@@ -85,6 +117,14 @@ class XPath(Selector):
 
 
 class SimilarLink(Selector):
+    """
+    Match links that fit a provided pattern.
+
+    :param pattern: Regular expression for link hrefs.
+    :param min_items: A minimum number of items to match.
+    :param max_items: A maximum number of items to match.
+    :param num_items: An exact number of items to match.
+    """
     def __init__(
         self,
         pattern: str,
@@ -109,6 +149,14 @@ class SimilarLink(Selector):
 
 
 class CSS(Selector):
+    """
+    Utilize CSS-style selectors.
+
+    :param css_selector: CSS selector expression to use.
+    :param min_items: A minimum number of items to match.
+    :param max_items: A maximum number of items to match.
+    :param num_items: An exact number of items to match.
+    """
     def __init__(
         self,
         css_selector: str,
