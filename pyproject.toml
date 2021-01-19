@@ -18,10 +18,9 @@ click = "^7.1.2"
 lxml = "^4.6.2"
 cssselect = "^1.1.0"
 ipython = {version = "^7.19.0", extras = ["shell"]}
+Sphinx = {version="^3.4.3", extras = ["docs"]}
+sphinx-rtd-theme = {version="^0.5.1", extras li =["docs"]}
 
-[tool.poetry.dev-dependencies]
-Sphinx = "^3.4.3"
-sphinx-rtd-theme = "^0.5.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
