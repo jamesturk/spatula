@@ -31,17 +31,14 @@ Goals
 
    It should be possible to test changes to a single part of the scrape without running the entire process.  The user shouldn't have to comment out code or add temporary debug statements to do something that is extremely common when authoring scrapers.
 
-Pages
------
+Pages & Page Roles
+------------------
 
 A key component of using **spatula** is thinking of the scraper in terms of types of "pages". 
 
 For each type of page you encounter, you'll write a subclass of :py:class:`Page` to extract the data from it.
 
 .. note:: If you're familiar with MVC frameworks, a good way to think of this concept is the inverse of a view: a :py:class:`Page` takes some kind of presentation (e.g. an HTML page or CSV file) and converts it back to the underlying data that it is comprised of.
-
-Page Roles
-~~~~~~~~~~
 
 There are a few types of pages we generally encounter when scraping sites.  How we write and use our :py:class:`Page` subclasses will depend upon which of these four roles the page fulfills.
 

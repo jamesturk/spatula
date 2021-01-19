@@ -18,7 +18,7 @@ User Guide
    tutorial
    cli
    reference
-   
+   changelog
 
 
 Indices and tables
