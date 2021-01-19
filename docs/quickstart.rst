@@ -70,7 +70,7 @@ Scraping a List Page
 It is fairly common for a scrape to encounter some sort of directory or listing page.
 
 **spatula** provides a special interface for these cases.
-See below how we process each matching link by deriving from a :py:class:`HtmlListPage` and providing a :py:var:`selector` as well as a :py:meth:`process_item` method.
+See below how we process each matching link by deriving from a :py:class:`HtmlListPage` and providing a :py:attr:`selector` as well as a :py:meth:`process_item` method.
 
 Example::
 
@@ -117,8 +117,50 @@ We can chain these together into what we'll call a :py:class:`Workflow`, like so
   # this line added at the bottom of the file, defines a workflow
   rfc_details = Workflow(RFCList(), RFC)
 
-Which can then be run as::
+Running a workflow will write the output as JSON (or a format of your selection) to disk.
+
+Doing so looks like::
 
   $ poetry run spatula scrape example.rfc_details
+  fetching http://tools.ietf.org/html/2 for RFC
+  fetching http://tools.ietf.org/html/3 for RFC
+  fetching http://tools.ietf.org/html/4 for RFC
+  fetching http://tools.ietf.org/html/5 for RFC
+  fetching http://tools.ietf.org/html/6 for RFC
+  fetching http://tools.ietf.org/html/7 for RFC
+  fetching http://tools.ietf.org/html/8 for RFC
+  ...
+  scrapelib.HTTPError: 404 while retrieving https://tools.ietf.org/html/8
 
-This will write the output as JSON in a directory printed to the command line.
+Oops, a bad link!  
+
+Handling Errors
+---------------
+
+In this case, the site has a bad link.
+
+We need to tell spatula that it is OK to skip an item that has a bad link.
+
+We'll add to :py:class:`RFC`::
+
+  class RFC(HtmlPage):
+    ...
+
+    def handle_error_response(self, exception):
+        # TODO: use logging
+        print("skipping", self.source.url)
+
+Wrapping Up
+-----------
+
+Let's try to run the scrape again::
+
+  $ poetry run spatula scrape example.rfc_details
+  fetching http://tools.ietf.org/html/8 for RFC
+  skipping http://tools.ietf.org/html/8
+  fetching http://tools.ietf.org/html/9 for RFC
+  skipping http://tools.ietf.org/html/9
+  success: wrote 7 objects to _scrapes/2021-01-18/001
+
+
+And now our scraped data is on disk, ready for you to use.

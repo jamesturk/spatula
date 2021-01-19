@@ -2,7 +2,7 @@ import io
 import csv
 import lxml.html
 import scrapelib
-from .core import URL
+from .core import URL, HandledError
 
 
 class Page:
@@ -29,8 +29,13 @@ class Page:
         if isinstance(self.source, str):
             self.source = URL(self.source)
         print(f"fetching {self.source} for {self.__class__.__name__}")
-        self.response = self.source.get_response(scraper)
-        self.postprocess_response()
+        try:
+            self.response = self.source.get_response(scraper)
+        except scrapelib.HTTPError as e:
+            self.handle_error_response(e)
+            raise HandledError(e)
+        else:
+            self.postprocess_response()
 
     def __init__(self, input_val=None, *, source=None):
         self.input = input_val
@@ -40,6 +45,10 @@ class Page:
 
     def postprocess_response(self) -> None:
         """ this is called after source.get_response but before self.process_page """
+        pass
+
+    def process_error_response(self, exception) -> None:
+        """ this is called after source.get_response if an exception is raised """
         pass
 
     def process_page(self):
