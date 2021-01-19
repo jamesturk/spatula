@@ -29,6 +29,8 @@ Pages
 
 .. py:class:: HtmlPage
 
+  .. inheritance-diagram:: HtmlPage
+
   Page that automatically handles parsing and normalizing links in an HTML response.
 
   **Provided Variables:**
@@ -42,6 +44,8 @@ Pages
 
 .. py:class:: JsonPage
 
+  .. inheritance-diagram:: JsonPage
+
   Page that automatically handles parsing a JSON response.
 
   **Provided Variables:**
@@ -51,6 +55,8 @@ Pages
     Parsed JSON response data.
 
 .. py:class:: XmlPage
+
+  .. inheritance-diagram:: XmlPage
 
   Page that automatically handles parsing and normalizing links in an XML response.
 
@@ -65,23 +71,33 @@ Pages
 
 .. py:class:: ListPage
 
+  .. inheritance-diagram:: ListPage
+
   Base class for common pattern of extracting many homogenous items from one page.
 
   Instead of overriding :py:meth:`process_response`, subclasses should provide a :py:meth:`process_item` that will be invoked on each subitem in the page (as defined by the particular subclass being used).
 
 .. py:class:: CsvListPage
 
+  .. inheritance-diagram:: CsvListPage
+
   :py:class:`ListPage` subclass where each row of a CSV file will be handed to :py:meth:`process_item`.
 
 .. py:class:: HtmlListPage
+
+  .. inheritance-diagram:: HtmlListPage
 
   :py:class:`ListPage` subclass where each element matching the provided :py:attr:`selector` will be handed to :py:meth:`process_item`.
 
 .. py:class:: JsonListPage
 
+  .. inheritance-diagram:: JsonListPage
+
   :py:class:`ListPage` subclass where each element in a JSON list response will be handed to :py:meth:`process_item`.
 
 .. py:class:: XmlListPage
+
+TODO: inheritance diagram won't show up for this one, need to dig in 
 
   :py:class:`ListPage` subclass where each element matching the provided :py:attr:`selector` will be handed to :py:meth:`process_item`.  Unlike :py:class:`HtmlListPage`, the root element will be parsed with the `lxml.etree` parser.
 
