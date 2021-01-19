@@ -359,4 +359,47 @@ Which means we can mimic what will happen if a valid URL is passed through to :p
 Defining Our Workflows
 ----------------------
 
-TODO
+Now that our two page scrapers work separately, we can wire them together.
+
+.. code-block:: python
+
+    # one more import
+    from spatula import HtmlListPage, CSS, XPath, HtmlPage, SimilarLink, Workflow
+
+    # ... at the bottom ...
+
+    senators = Workflow(
+        RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/senate"),
+        PersonDetail,
+    )
+    delegates = Workflow(
+        RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/house"),
+        PersonDetail,
+    )
+
+These two workflows define a starting point, which will be our :py:class:`RosterList` instantiated with the two starting URLs.
+
+The individual results from that scrape will then be sent one at a time as input into :py:class:`PersonDetail`.
+
+We can run workflows with:
+
+.. code-block:: console
+
+    $ poetry run spatula scrape maryland.senators
+    fetching https://mgaleg.maryland.gov/mgawebsite/Members/Index/senate for RosterList
+    ...
+    fetching https://mgaleg.maryland.gov/mgawebsite/Members/Details/zucker01 for PersonDetail
+    success: wrote 47 objects to _scrapes/2021-01-19/001
+
+If you look in this directory, there will be a bunch of JSON files that contain the full results of each scrape, for instance::
+
+  {"name": "Senator Cory V. McCray",
+   "image": "https://mgaleg.maryland.gov/2021RS/images/mccray02.jpg",
+   "email": "cory.mccray@senate.state.md.us",
+   "district": "District 45",
+   "party": "Democrat",
+   "url": "https://mgaleg.maryland.gov/mgawebsite/Members/Details/mccray02"
+   }
+
+Once this data is on disk, **spatula**'s job is done.
+You can post-process these files however you want, and in the future **spatula** will provide additional output methods.
