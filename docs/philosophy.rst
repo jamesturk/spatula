@@ -56,3 +56,20 @@ There are two other roles that a page can play, we'll get into these in more det
 
 One is what we'll call an 'auxillary detail' page, essentially a subpage of a detail page that contains additional information we need to collect. (An example would be if each detail page had a subpage listing a legislator's committee assignments that we wanted to collect.)
 The final role is what we call 'augmentation' pages, which provide data with which we want to augment the entire data set.  (An example would be a separate page that is a photo directory of all legislators.  We'll need to scrape this and match the photos to the legislators we scraped from the listing/detail pages.)
+
+Scraper / Page Separation
+-------------------------
+
+Why don't page objects fetch themselves?  A big part of this is that we want to share a scraper among them for rate limiting and other configuration yet to come.  In theory this could mean that each one is instantiated with a scraper parameter, but that'd be a bit more cumbersome.  This also can make testing even easier, as there's no need to mock HTTP requests/etc. as just passing a mock object into the :py:class:`Page` will suffice.
+
+
+Open Questions
+--------------
+
+Spatula isn't quite done, these are things that need to be solved:
+
+1. How do we want to handle pagination?  This is a special case where a list scraper should do multiple fetches.
+
+2. What types of objects should be valid to pass between stages?  Right now it is assumed they are either dicts or ``attr.s`` classes.  It might be better to standardize on one, or even allow ``dataclasses`` and/or ``namedtuples``.
+
+3. What edge cases are we aware of that seem hard to implement in this structure? 
