@@ -10,22 +10,22 @@ Pages
 
   Base class for all **Page** objects.
 
-.. py:attribute:: source
+  .. py:attribute:: source
 
-  Can be set on subclasses of :py:class:`Page` to define the initial HTTP
-  request that the page will handle in its :py:meth:`process_response`.
+    Can be set on subclasses of :py:class:`Page` to define the initial HTTP
+    request that the page will handle in its :py:meth:`process_response`.
 
-  For simple GET requests, :py:data:`source` can be a string.
-  :py:class:`URL` should be used for more advanced use cases.
+    For simple GET requests, :py:data:`source` can be a string.
+    :py:class:`URL` should be used for more advanced use cases.
 
-.. py:attribute:: response
+  .. py:attribute:: response
 
-  Provides access to the raw :py:class:`requests.Response` object obtained
-  by fetching py:data:`source`.
+    Provides access to the raw :py:class:`requests.Response` object obtained
+    by fetching py:data:`source`.
 
-.. automethod:: Page.postprocess_response
-.. automethod:: Page.process_error_response
-.. automethod:: Page.process_page
+  .. automethod:: Page.postprocess_response
+  .. automethod:: Page.process_error_response
+  .. automethod:: Page.process_page
 
 .. py:class:: HtmlPage
 
