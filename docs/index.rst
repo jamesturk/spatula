@@ -13,8 +13,10 @@ User Guide
 
    quickstart
    philosophy
-   pages
-   usage
+   tutorial
+   cli
+   reference
+   
 
 
 Indices and tables
