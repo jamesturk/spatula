@@ -35,6 +35,7 @@ extensions = [
     "sphinx.ext.inheritance_diagram",
     "sphinx.ext.autosectionlabel",
     "sphinx_rtd_theme",
+    "sphinx_click",
 ]
 
 autodoc_typehints = "description"

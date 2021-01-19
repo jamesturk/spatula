@@ -20,6 +20,7 @@ cssselect = "^1.1.0"
 ipython = {version = "^7.19.0", extras = ["shell"]}
 Sphinx = {version = "^3.4.3", extras = ["docs"]}
 sphinx-rtd-theme = {version = "^0.5.1", extras = ["docs"]}
+sphinx-click = {version = "^2.5.0", extras = ["docs"]}
 
 
 [build-system]

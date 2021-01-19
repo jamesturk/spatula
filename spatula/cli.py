@@ -34,9 +34,17 @@ def cli() -> None:
 
 @cli.command()
 @click.argument("url")
-@click.option("-ua", "--user-agent", default=f"spatula {VERSION}")
-@click.option("-X", "--verb", default="GET")
+@click.option(
+    "-ua",
+    "--user-agent",
+    default=f"spatula {VERSION}",
+    help="override default user-agent",
+)
+@click.option("-X", "--verb", default="GET", help="set HTTP verb such as POST")
 def shell(url: str, user_agent: str, verb: str) -> None:
+    """
+    Start an interactive Python session to interact with a particular page.
+    """
     try:
         from IPython import embed
     except ImportError:
@@ -62,10 +70,20 @@ def shell(url: str, user_agent: str, verb: str) -> None:
 
 @cli.command()
 @click.argument("class_name")
-@click.option("-i", "--interactive")
-@click.option("-d", "--data", multiple=True)
-@click.option("-s", "--source")
+@click.option("-i", "--interactive", help="Interactively prompt for missing data.")
+@click.option("-d", "--data", multiple=True, help="Provide input data in name=value pairs.")
+@click.option("-s", "--source", help="Provide (or override) source URL")
 def test(class_name: str, interactive: bool, data: List[str], source: str) -> None:
+    """
+    This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected. 
+    ``test`` can also be useful for debugging existing scrapers, you can see exactly what a single step of the scrape is providing, to help narrow down where erroneous data is coming from.
+
+    Example::
+
+    $ spatula test path.to.ClassName --source https://example.com
+
+    This will run the scraper defined at :py:class:`path.to.ClassName` against the provided URL.
+    """
     Cls = get_class(class_name)
     s = Scraper()
 
@@ -108,8 +126,11 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
 
 @cli.command()
 @click.argument("workflow_name")
-@click.option("-o", "--output-dir", default=None)
+@click.option("-o", "--output-dir", default=None, help="override default output directory.")
 def scrape(workflow_name: str, output_dir: str) -> None:
+    """
+    Run full workflow, and output data to disk.
+    """
     workflow = get_class(workflow_name)
     workflow.execute(output_dir=output_dir)
 

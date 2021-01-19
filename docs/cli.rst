@@ -15,37 +15,14 @@ Or with poetry::
 
 The CLI provides three useful subcommands for different stages of development:
 
-shell
------
+.. click:: spatula.cli:shell
+   :prog: spatula shell
+   :nested: full
 
-TODO
+.. click:: spatula.cli:test
+   :prog: spatula test
+   :nested: full
 
-test
-----
-
-This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected. 
-``test`` can also be useful for debugging existing scrapers, you can see exactly what a single step of the scrape is providing, to help narrow down where erroneous data is coming from.
-
-Example::
-
-$ spatula test path.to.ClassName --source https://example.com
-
-This will run the scraper defined at :py:class:`path.to.ClassName` against the provided URL.
-
-Options:
-
-``-i``, ``--interactive``
-  Handle input interactively, prompt for any missing input values.
-
-``-d``, ``--data``
-  Provide input data by key name.  (e.g. ``--data name=value`` will set the input field ``name`` to ``value``)
-
-  (this option can be provided multiple times)
-
-``-s``, ``--source``
-  Provide (or override) source URL.
-
-scrape
-------
-
-TODO
+.. click:: spatula.cli:scrape
+   :prog: spatula scrape
+   :nested: full
