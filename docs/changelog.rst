@@ -1,10 +1,14 @@
 Changelog
 =========
 
-0.3.1 - 
+0.4.0 - 
 ------------------
 
-* bugfix: not specifying a page processor would lead to an error
+* add default behavior when `Page.input` has a `url` attribute.
+* allow use of `dataclasses` in addition to `attrs` as input objects
+* improve output of HTML elements
+* bugfix: not specifying a page processor on workflow is no longer an error
+
 
 0.3.0 - 2021-01-18
 ------------------
