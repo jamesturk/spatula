@@ -8,6 +8,8 @@ import lxml.html
 from .pages import ListPage
 from .core import URL
 
+VERSION = "0.3.0"
+
 
 def get_class(dotted_name: str):
     mod_name, cls_name = dotted_name.rsplit(".", 1)
@@ -25,28 +27,38 @@ def _display(obj) -> str:
 
 
 @click.group()
-@click.version_option(version="0.3.0")
+@click.version_option(version=VERSION)
 def cli() -> None:
     pass
 
 
 @cli.command()
 @click.argument("url")
-def shell(url: str) -> None:
+@click.option("-ua", "--user-agent", default=f"spatula {VERSION}")
+@click.option("-X", "--verb", default="GET")
+def shell(url: str, user_agent: str, verb: str) -> None:
     try:
         from IPython import embed
     except ImportError:
         print("shell command requires IPython")
         return
+
+    # import selectors so they can be used without import
+    from .selectors import SelectorError, XPath, SimilarLink, CSS  # noqa
+
     scraper = Scraper()
-    resp = scraper.get(url)
+    scraper.user_agent = user_agent
+    resp = scraper.request(verb, url)
     root = lxml.html.fromstring(resp.content)  # noqa
-    print("local variables")
-    print("---------------")
-    print("url: %s" % url)
-    print("resp: requests Response instance")
-    print("root: `lxml HTML element`")
+    click.secho(f"spatula {VERSION} shell", fg="blue")
+    click.secho("available selectors: CSS, SimilarLink, XPath", fg="blue")
+    click.secho("local variables", fg="green")
+    click.secho("---------------", fg="green")
+    click.secho("url: %s" % url, fg="green")
+    click.secho("resp: requests Response instance", fg="green")
+    click.secho(f"root: `lxml HTML element` <{root.tag}>", fg="green")
     embed()
+
 
 @cli.command()
 @click.argument("class_name")
