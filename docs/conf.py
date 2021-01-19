@@ -33,6 +33,7 @@ release = '0.3'
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.autosectionlabel",
     "sphinx_rtd_theme",
 ]
 

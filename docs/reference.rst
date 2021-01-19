@@ -97,7 +97,7 @@ Pages
 
 .. py:class:: XmlListPage
 
-TODO: inheritance diagram won't show up for this one, need to dig in 
+  .. inheritance-diagram:: XmlListPage
 
   :py:class:`ListPage` subclass where each element matching the provided :py:attr:`selector` will be handed to :py:meth:`process_item`.  Unlike :py:class:`HtmlListPage`, the root element will be parsed with the `lxml.etree` parser.
 

@@ -1,9 +1,10 @@
 Quickstart
 ==========
 
-This guide contains quick examples of how you could scrape a small list of `RFCs <https://en.wikipedia.org/wiki/Request_for_Comments>`_ to demonstrate what a scraper using **spatula** looks like.
+This guide contains quick examples of how you could scrape a small list of `RFCs <https://en.wikipedia.org/wiki/Request_for_Comments>`_ to demonstrate what it looks like to write a scraper using **spatula**.
 
-After reading through this you can continue on to the tutorial or look at more detailed documentation on **spatula**'s API. (TODO)
+You can skip ahead if you want to read about **spatula**'s :ref:`Design Philosophy`,
+or check out the :ref:`Tutorial` or :ref:`API Reference`.
 
 Installation
 ------------
@@ -132,7 +133,7 @@ Doing so looks like:
 
 .. code-block:: console
 
-  $ poetry run spatula scrape example.rfc_details
+  $ spatula scrape example.rfc_details
   fetching http://tools.ietf.org/html/2 for RFC
   fetching http://tools.ietf.org/html/3 for RFC
   fetching http://tools.ietf.org/html/4 for RFC
@@ -171,7 +172,7 @@ Let's try to run the scrape again:
 
 .. code-block:: console
 
-  $ poetry run spatula scrape example.rfc_details
+  $ spatula scrape example.rfc_details
   fetching http://tools.ietf.org/html/8 for RFC
   skipping http://tools.ietf.org/html/8
   fetching http://tools.ietf.org/html/9 for RFC
@@ -180,3 +181,6 @@ Let's try to run the scrape again:
 
 
 And now our scraped data is on disk, ready for you to use.
+
+You might want to read a bit more about **spatula**'s :ref:`Design Philosophy`,
+or check out the :ref:`Tutorial` or :ref:`API Reference`.
