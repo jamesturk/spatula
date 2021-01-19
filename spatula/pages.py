@@ -22,6 +22,8 @@ class Page:
         if not self.source:
             if hasattr(self, "get_source_from_input"):
                 self.source = self.get_source_from_input()
+            elif hasattr(self.input, "url"):
+                self.source = URL(self.input.url)
             else:
                 raise Exception(
                     f"{self.__class__.__name__} has no source or get_source_from_input"
