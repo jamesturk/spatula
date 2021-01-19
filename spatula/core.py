@@ -55,13 +55,13 @@ class Workflow:
         self.initial_page._fetch_data(self.scraper)
         for i, item in enumerate(self.initial_page.process_page()):
             data = item
-            for pp_cls in self.page_processors:
-                page = pp_cls(data)
-                try:
+            try:
+                for pp_cls in self.page_processors:
+                    page = pp_cls(data)
                     page._fetch_data(self.scraper)
-                except HandledError:
-                    continue
-                data = page.process_page()
+                    data = page.process_page()
+            except HandledError:
+                continue
             count += 1
             if isinstance(data, dict):
                 dd = data
