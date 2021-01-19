@@ -1,4 +1,5 @@
 import attr
+import dataclasses
 import click
 import importlib
 import pprint
@@ -87,11 +88,13 @@ def shell(url: str, user_agent: str, verb: str) -> None:
 @cli.command()
 @click.argument("class_name")
 @click.option("-i", "--interactive", help="Interactively prompt for missing data.")
-@click.option("-d", "--data", multiple=True, help="Provide input data in name=value pairs.")
+@click.option(
+    "-d", "--data", multiple=True, help="Provide input data in name=value pairs."
+)
 @click.option("-s", "--source", help="Provide (or override) source URL")
 def test(class_name: str, interactive: bool, data: List[str], source: str) -> None:
     """
-    This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected. 
+    This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected.
     ``test`` can also be useful for debugging existing scrapers, you can see exactly what a single step of the scrape is providing, to help narrow down where erroneous data is coming from.
 
     Example::
@@ -116,7 +119,11 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
     input_type = getattr(Cls, "input_type", None)
     if input_type:
         print(f"{Cls.__name__} expects input ({input_type.__name__}): ")
-        for field in attr.fields(input_type):
+        if dataclasses.is_dataclass(input_type):
+            fields = dataclasses.fields(input_type)
+        elif attr.has(input_type):
+            fields = attr.fields(input_type)
+        for field in fields:
             if field.name in fake_input:
                 print(f"  {field.name}: {fake_input[field.name]}")
             elif interactive:
@@ -142,7 +149,9 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
 
 @cli.command()
 @click.argument("workflow_name")
-@click.option("-o", "--output-dir", default=None, help="override default output directory.")
+@click.option(
+    "-o", "--output-dir", default=None, help="override default output directory."
+)
 def scrape(workflow_name: str, output_dir: str) -> None:
     """
     Run full workflow, and output data to disk.
