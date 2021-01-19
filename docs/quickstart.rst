@@ -134,11 +134,7 @@ Doing so looks like:
 .. code-block:: console
 
   $ spatula scrape example.rfc_details
-  fetching http://tools.ietf.org/html/2 for RFC
-  fetching http://tools.ietf.org/html/3 for RFC
-  fetching http://tools.ietf.org/html/4 for RFC
-  fetching http://tools.ietf.org/html/5 for RFC
-  fetching http://tools.ietf.org/html/6 for RFC
+  ...
   fetching http://tools.ietf.org/html/7 for RFC
   fetching http://tools.ietf.org/html/8 for RFC
   ...
@@ -173,6 +169,7 @@ Let's try to run the scrape again:
 .. code-block:: console
 
   $ spatula scrape example.rfc_details
+  ...
   fetching http://tools.ietf.org/html/8 for RFC
   skipping http://tools.ietf.org/html/8
   fetching http://tools.ietf.org/html/9 for RFC

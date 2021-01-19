@@ -21,7 +21,9 @@ class Workflow:
         self, initial_page, page_processors=None, *, scraper: scrapelib.Scraper = None
     ):
         self.initial_page = initial_page
-        if not isinstance(page_processors, (list, tuple)):
+        if page_processors is None:
+            self.page_processors = []
+        elif not isinstance(page_processors, (list, tuple)):
             self.page_processors = [page_processors]
         else:
             self.page_processors = page_processors
