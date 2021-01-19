@@ -22,7 +22,9 @@ Scraping a Single Page
 
 RFCs live on pages like `RFC 1945 <https://tools.ietf.org/html/rfc1945>`_.
 
-We're going to pull some data elements from the page that look like::
+We're going to pull some data elements from the page that look like:
+
+.. code-block:: html
 
   <meta name="DC.Creator" content="Nielsen, Henrik Frystyk" />
   <meta name="DC.Creator" content="Berners-Lee, Tim" />
@@ -56,7 +58,9 @@ Example::
 
 This will extract the title and authors elements from the page.
 
-It can be tested from the command line like::
+It can be tested from the command line like:
+
+.. code-block:: console
 
   $ spatula test example.RFC --source "https://tools.ietf.org/html/rfc1945"
   fetching https://tools.ietf.org/html/rfc1945 for RFC
@@ -87,7 +91,9 @@ Example::
           return dict(url=item.get("href"))
 
 This will extract all links on the page in the format specified by the given regular expression.
-It can be tested from the command line like::
+It can be tested from the command line like:
+
+.. code-block:: console
 
   $ spatula test example.RFCList
   fetching https://tools.ietf.org/rfc/ for RFCList
@@ -102,7 +108,10 @@ Defining a Simple Workflow
 
 Notice that :py:class:`RFCList` returns URLs, and we need to instantiate :py:class:`RFC` with a source on the command line.
 
-We can chain these together into what we'll call a :py:class:`Workflow`, like so::
+We can chain these together into what we'll call a :py:class:`Workflow`, like so:
+
+.. code-block:: python
+  :emphasize-lines: 3-7,11-12
 
   class RFC(HtmlPage):
     ...
@@ -119,7 +128,9 @@ We can chain these together into what we'll call a :py:class:`Workflow`, like so
 
 Running a workflow will write the output as JSON (or a format of your selection) to disk.
 
-Doing so looks like::
+Doing so looks like:
+
+.. code-block:: console
 
   $ poetry run spatula scrape example.rfc_details
   fetching http://tools.ietf.org/html/2 for RFC
@@ -141,7 +152,10 @@ In this case, the site has a bad link.
 
 We need to tell spatula that it is OK to skip an item that has a bad link.
 
-We'll add to :py:class:`RFC`::
+We'll add to :py:class:`RFC`:
+
+.. code-block:: python
+  :emphasize-lines: 4-6
 
   class RFC(HtmlPage):
     ...
@@ -153,7 +167,9 @@ We'll add to :py:class:`RFC`::
 Wrapping Up
 -----------
 
-Let's try to run the scrape again::
+Let's try to run the scrape again:
+
+.. code-block:: console
 
   $ poetry run spatula scrape example.rfc_details
   fetching http://tools.ietf.org/html/8 for RFC

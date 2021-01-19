@@ -14,6 +14,9 @@ class HandledError(Exception):
 
 
 class Workflow:
+    """
+    Define a complete workflow by which items can be scraped and saved to disk.
+    """
     def __init__(
         self, initial_page, page_processors=None, *, scraper: scrapelib.Scraper = None
     ):
@@ -76,6 +79,14 @@ class Source:
 
 
 class URL(Source):
+    """
+    Defines a resource to fetch via URL, particularly useful for handling non-GET requests.
+
+    :param url: URL to fetch
+    :param method: HTTP method to use, defaults to "GET"
+    :param data: POST data to include in request body.
+    :param headers: dictionary of HTTP headers to set for the request.
+    """
     def __init__(
         self, url: str, method: str = "GET", data: dict = None, headers: dict = None
     ):
@@ -96,6 +107,10 @@ class URL(Source):
 
 
 class NullSource(Source):
+    """
+    Special class to set as a page's :py:attr:`source` to indicate no HTTP request needs
+    to be performed.
+    """
     def get_response(
         self, scraper: scrapelib.Scraper
     ) -> Optional[requests.models.Response]:

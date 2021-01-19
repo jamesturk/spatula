@@ -44,15 +44,27 @@ class Page:
             self.source = source
 
     def postprocess_response(self) -> None:
-        """ this is called after source.get_response but before self.process_page """
+        """
+        To be overridden.
+
+        This is called after source.get_response but before self.process_page.
+        """
         pass
 
     def process_error_response(self, exception) -> None:
-        """ this is called after source.get_response if an exception is raised """
+        """
+        To be overridden.
+
+        This is called after source.get_response if an exception is raised.
+        """
         pass
 
     def process_page(self):
-        """ return data extracted from this page and this page alone """
+        """
+        To be overridden.
+
+        Return data extracted from this page and this page alone.
+        """
         raise NotImplementedError()
 
 
