@@ -1,5 +1,15 @@
 import pytest
+import lxml.etree
 from spatula import CSS, XPath, SimilarLink, SelectorError, Selector
+
+dummy_html = """<html>
+<li class="first"><b>one</b></li>
+<li><b>two</b></li>
+<li><b>three</b></li>
+<a href='https://example.com'>*</a>
+<a href='http://example.com/insecure'>*</a>
+<a href='https://example.com/secure'>*</a>
+</html>"""
 
 
 class DummySelector(Selector):
@@ -64,3 +74,28 @@ def test_max_items():
     # override and error
     with pytest.raises(SelectorError):
         assert ds.match(5, max_items=4)
+
+
+def test_match_one():
+    ds = DummySelector()
+    ds.match_one(1) == 0
+
+    with pytest.raises(SelectorError):
+        ds.match_one(0)
+    with pytest.raises(SelectorError):
+        ds.match_one(2)
+
+
+def test_css_selector():
+    root = lxml.etree.fromstring(dummy_html)
+    assert CSS(".first b").match_one(root).text == "one"
+
+
+def test_xpath_selector():
+    root = lxml.etree.fromstring(dummy_html)
+    assert len(XPath("//b").match(root, num_items=3)) == 3
+
+
+def test_similar_link_selector():
+    root = lxml.etree.fromstring(dummy_html)
+    assert len(SimilarLink("https").match(root)) == 2
