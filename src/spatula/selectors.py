@@ -1,12 +1,7 @@
 import re
 from typing import Optional, List, Iterator
 from lxml.etree import _Element
-
-
-def elem_to_str(item: _Element, inside: bool = False) -> str:
-    attribs = "  ".join(f"{k}='{v}'" for k, v in item.attrib.items())
-    return f"<{item.tag} {attribs}> @ line {item.sourceline}"
-
+from .utils import _display
 
 class SelectorError(ValueError):
     pass
@@ -52,17 +47,17 @@ class Selector:
 
         if num_items is not None and len(items) != num_items:
             raise SelectorError(
-                f"{self.get_display()} on {elem_to_str(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)}, "
                 f"expected {num_items}"
             )
         if min_items is not None and len(items) < min_items:
             raise SelectorError(
-                f"{self.get_display()} on {elem_to_str(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)}, "
                 f"expected at least {min_items}"
             )
         if max_items is not None and len(items) > max_items:
             raise SelectorError(
-                f"{self.get_display()} on {elem_to_str(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)}, "
                 f"expected at most {max_items}"
             )
 
@@ -77,12 +72,6 @@ class Selector:
         return self.match(element, num_items=1)[0]
 
     def get_items(self, element: _Element) -> Iterator[_Element]:
-        """
-        :meta private:
-        """
-        raise NotImplementedError()
-
-    def get_display(self) -> str:
         """
         :meta private:
         """
@@ -112,7 +101,7 @@ class XPath(Selector):
     def get_items(self, element: _Element) -> Iterator[_Element]:
         yield from element.xpath(self.xpath)
 
-    def get_display(self) -> str:
+    def __str__(self) -> str:
         return f"XPath({self.xpath})"
 
 
@@ -144,7 +133,7 @@ class SimilarLink(Selector):
                 yield element
                 seen.add(href)
 
-    def get_display(self) -> str:
+    def __str__(self) -> str:
         return f"SimilarLink({self.pattern})"
 
 
@@ -171,5 +160,5 @@ class CSS(Selector):
     def get_items(self, element: _Element) -> Iterator[_Element]:
         yield from element.cssselect(self.css_selector)
 
-    def get_display(self) -> str:
+    def __str__(self) -> str:
         return f"CSS({self.css_selector})"
