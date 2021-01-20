@@ -1,14 +1,21 @@
-import attr
 import dataclasses
-import click
 import importlib
 import pprint
 import lxml.html
+import click
 from typing import List
 from scrapelib import Scraper
 from lxml.etree import _Element
 from .pages import ListPage
 from .core import URL
+
+try:
+    from attr import has as attr_has
+    from attr import fields as attr_fields
+except ImportError:
+    attr_has = lambda x: False  # noqa
+    attr_fields = lambda x: []  # noqa
+
 
 VERSION = "0.3.0"
 
@@ -121,8 +128,8 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
         print(f"{Cls.__name__} expects input ({input_type.__name__}): ")
         if dataclasses.is_dataclass(input_type):
             fields = dataclasses.fields(input_type)
-        elif attr.has(input_type):
-            fields = attr.fields(input_type)
+        elif attr_has(input_type):
+            fields = attr_fields(input_type)
         for field in fields:
             if field.name in fake_input:
                 print(f"  {field.name}: {fake_input[field.name]}")
