@@ -1,5 +1,7 @@
 import io
 import csv
+import tempfile
+import subprocess
 import lxml.html
 import scrapelib
 from .core import URL, HandledError
@@ -69,6 +71,14 @@ class Page:
         """
         raise NotImplementedError()
 
+    def get_next_source(self):
+        """
+        To be overriden for paginated pages.
+
+        Return a URL or valid source to fetch the next page, None if there isn't one.
+        """
+        return None
+
 
 class HtmlPage(Page):
     """
@@ -97,6 +107,29 @@ class JsonPage(Page):
 
     def postprocess_response(self) -> None:
         self.data = self.response.json()
+
+
+class PDFPage(Page):
+    preserve_layout = False
+
+    def postprocess_response(self) -> None:
+        with tempfile.NamedTemporaryFile() as temp:
+            temp.write(self.response.content)
+            temp.flush()
+            temp.seek(0)
+
+            if self.preserve_layout:
+                command = ['pdftotext', '-layout', temp.name, '-']
+            else:
+                command = ['pdftotext', temp.name, '-']
+
+            try:
+                pipe = subprocess.Popen(command, stdout=subprocess.PIPE, close_fds=True).stdout
+            except OSError as e:
+                raise EnvironmentError(f"error running pdftotext, missing executable? [{e}]")
+            data = pipe.read()
+            pipe.close()
+        self.text = data.decode("utf8")
 
 
 class ListPage(Page):
