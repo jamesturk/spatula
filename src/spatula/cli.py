@@ -115,8 +115,10 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
                 fake_input[field.name] = dummy_val
                 print(f"  {field.name}: {dummy_val}")
 
-    # we need to do the request-response-next-page loop until we're done
-    while source:
+    # we need to do the request-response-next-page loop at least once
+    once = True
+    while source or once:
+        once = False
         if input_type:
             page = Cls(input_type(**fake_input), source=source)
         else:
