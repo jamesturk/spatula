@@ -25,8 +25,6 @@ def get_class(dotted_name: str):
     return getattr(mod, cls_name)
 
 
-
-
 @click.group()
 @click.version_option(version=VERSION)
 def cli() -> None:
@@ -117,18 +115,30 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
                 fake_input[field.name] = dummy_val
                 print(f"  {field.name}: {dummy_val}")
 
-        page = Cls(input_type(**fake_input), source=source)
-    else:
-        page = Cls(fake_input, source=source)
+    # we need to do the request-response-next-page loop until we're done
+    while source:
+        if input_type:
+            page = Cls(input_type(**fake_input), source=source)
+        else:
+            page = Cls(fake_input, source=source)
 
-    # fetch data after input is handled, since we might need to build the source
-    page._fetch_data(s)
+        # fetch data after input is handled, since we might need to build the source
+        page._fetch_data(s)
 
-    if issubclass(Cls, ListPage):
-        for i, item in enumerate(page.process_page()):
-            print(f"{i}:", _display(item))
-    else:
-        print(_display(page.process_page()))
+        result = page.process_page()
+
+        if issubclass(Cls, ListPage):
+            for i, item in enumerate(result):
+                print(f"{i}:", _display(item))
+        else:
+            print(_display(result))
+
+        # will be None in most cases, existing the loop, otherwise we restart
+        source = page.get_next_source()
+        if source:
+            click.secho(
+                f"paginating for {page.__class__.__name__}: {source}", fg="blue"
+            )
 
 
 @cli.command()
