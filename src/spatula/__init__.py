@@ -3,7 +3,7 @@ from .pages import (  # noqa
     HtmlPage,
     XmlPage,
     JsonPage,
-    PDFPage,
+    PdfPage,
     ListPage,
     CsvListPage,
     HtmlListPage,

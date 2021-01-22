@@ -109,7 +109,7 @@ class JsonPage(Page):
         self.data = self.response.json()
 
 
-class PDFPage(Page):
+class PdfPage(Page):
     preserve_layout = False
 
     def postprocess_response(self) -> None:
