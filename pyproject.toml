@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "spatula"
-version = "0.3.0"
+version = "0.4.0"
 description = "lightweight structured scraping toolkit"
 authors = ["James Turk <dev@jamesturk.net>"]
 license = "MIT"
@@ -11,7 +11,7 @@ repository = "https://github.com/jamesturk/spatula/"
 spatula = 'spatula.cli:cli'
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 scrapelib = "^1.2.0"
 click = "^7.1.2"
 lxml = "^4.6.2"
