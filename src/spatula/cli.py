@@ -67,6 +67,38 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     embed()
 
 
+def _get_fake_input(Cls, data):
+    # build fake input from command line data if present
+    fake_input = {}
+    for item in data:
+        k, v = item.split("=", 1)
+        fake_input[k] = v
+
+    input_type = getattr(Cls, "input_type", None)
+
+    if hasattr(Cls, "example_input"):
+        return getattr(Cls, "example_input")
+
+    if input_type:
+        print(f"{Cls.__name__} expects input ({input_type.__name__}): ")
+        if dataclasses.is_dataclass(input_type):
+            fields = dataclasses.fields(input_type)
+        elif attr_has(input_type):
+            fields = attr_fields(input_type)
+        for field in fields:
+            if field.name in fake_input:
+                print(f"  {field.name}: {fake_input[field.name]}")
+            elif interactive:
+                fake_input[field.name] = click.prompt("  " + field.name)
+            else:
+                dummy_val = f"~{field.name}"
+                fake_input[field.name] = dummy_val
+                print(f"  {field.name}: {dummy_val}")
+        return input_type(**fake_input)
+    else:
+        return fake_input
+
+
 @cli.command()
 @click.argument("class_name")
 @click.option("-i", "--interactive", help="Interactively prompt for missing data.")
@@ -88,41 +120,17 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
     Cls = get_class(class_name)
     s = Scraper()
 
+    fake_input = _get_fake_input(Cls, data)
+
     # special case for passing a single URL source
     if source:
         source = URL(source)
-
-    # build fake input from command line data if present
-    fake_input = {}
-    for item in data:
-        k, v = item.split("=", 1)
-        fake_input[k] = v
-
-    input_type = getattr(Cls, "input_type", None)
-    if input_type:
-        print(f"{Cls.__name__} expects input ({input_type.__name__}): ")
-        if dataclasses.is_dataclass(input_type):
-            fields = dataclasses.fields(input_type)
-        elif attr_has(input_type):
-            fields = attr_fields(input_type)
-        for field in fields:
-            if field.name in fake_input:
-                print(f"  {field.name}: {fake_input[field.name]}")
-            elif interactive:
-                fake_input[field.name] = click.prompt("  " + field.name)
-            else:
-                dummy_val = f"~{field.name}"
-                fake_input[field.name] = dummy_val
-                print(f"  {field.name}: {dummy_val}")
 
     # we need to do the request-response-next-page loop at least once
     once = True
     while source or once:
         once = False
-        if input_type:
-            page = Cls(input_type(**fake_input), source=source)
-        else:
-            page = Cls(fake_input, source=source)
+        page = Cls(fake_input, source=source)
 
         # fetch data after input is handled, since we might need to build the source
         page._fetch_data(s)
