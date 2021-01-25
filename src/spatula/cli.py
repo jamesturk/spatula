@@ -125,6 +125,8 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
     # special case for passing a single URL source
     if source:
         source = URL(source)
+    if not source and hasattr(Cls, "example_source"):
+        source = Cls.example_source
 
     # we need to do the request-response-next-page loop at least once
     once = True
