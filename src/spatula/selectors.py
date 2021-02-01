@@ -3,6 +3,7 @@ from typing import Optional, List, Iterator
 from lxml.etree import _Element
 from .utils import _display
 
+
 class SelectorError(ValueError):
     pass
 
@@ -11,6 +12,7 @@ class Selector:
     """
     Base class implementing **Selector** interface.
     """
+
     def __init__(
         self,
         *,
@@ -87,6 +89,7 @@ class XPath(Selector):
     :param max_items: A maximum number of items to match.
     :param num_items: An exact number of items to match.
     """
+
     def __init__(
         self,
         xpath: str,
@@ -114,6 +117,7 @@ class SimilarLink(Selector):
     :param max_items: A maximum number of items to match.
     :param num_items: An exact number of items to match.
     """
+
     def __init__(
         self,
         pattern: str,
@@ -129,7 +133,11 @@ class SimilarLink(Selector):
         seen = set()
         for element in element.xpath("//a"):
             href = element.get("href")
-            if href and href not in seen and self.pattern.match(element.get("href", "")):
+            if (
+                href
+                and href not in seen
+                and self.pattern.match(element.get("href", ""))
+            ):
                 yield element
                 seen.add(href)
 
@@ -146,6 +154,7 @@ class CSS(Selector):
     :param max_items: A maximum number of items to match.
     :param num_items: An exact number of items to match.
     """
+
     def __init__(
         self,
         css_selector: str,

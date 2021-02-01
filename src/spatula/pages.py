@@ -151,14 +151,18 @@ class PdfPage(Page):
             temp.seek(0)
 
             if self.preserve_layout:
-                command = ['pdftotext', '-layout', temp.name, '-']
+                command = ["pdftotext", "-layout", temp.name, "-"]
             else:
-                command = ['pdftotext', temp.name, '-']
+                command = ["pdftotext", temp.name, "-"]
 
             try:
-                pipe = subprocess.Popen(command, stdout=subprocess.PIPE, close_fds=True).stdout
+                pipe = subprocess.Popen(
+                    command, stdout=subprocess.PIPE, close_fds=True
+                ).stdout
             except OSError as e:
-                raise EnvironmentError(f"error running pdftotext, missing executable? [{e}]")
+                raise EnvironmentError(
+                    f"error running pdftotext, missing executable? [{e}]"
+                )
             data = pipe.read()
             pipe.close()
         self.text = data.decode("utf8")
