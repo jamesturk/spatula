@@ -10,17 +10,31 @@ from .core import URL, HandledError
 
 
 def page_to_items(scraper, page):
+    # fetch data for a page, and then call the process_page entrypoint
     page._fetch_data(scraper)
     result = page.process_page()
+
+    # if we got back a generator, we need to process each result
     if isinstance(result, typing.Generator):
+        # each item yielded might be a Page or an end-result
         for item in result:
             if isinstance(item, Page):
                 yield from page_to_items(scraper, item)
             else:
                 yield item
+
+        # after handling a list, check for pagination
+        next_source = page.get_next_source()
+        if next_source:
+            # instantiate the same class with same input, but increment the source
+            yield from page_to_items(
+                scraper, type(page)(source=next_source, input_val=page.input)
+            )
     elif isinstance(result, Page):
+        # single Page result, recurse deeper
         yield from page_to_items(scraper, result)
     else:
+        # end-result, just return as-is
         yield result
 
 
