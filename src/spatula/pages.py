@@ -3,9 +3,25 @@ import csv
 import tempfile
 import subprocess
 import logging
+import typing
 import lxml.html
 import scrapelib
 from .core import URL, HandledError
+
+
+def page_to_items(scraper, page):
+    page._fetch_data(scraper)
+    result = page.process_page()
+    if isinstance(result, typing.Generator):
+        for item in result:
+            if isinstance(item, Page):
+                yield from page_to_items(scraper, item)
+            else:
+                yield item
+    elif isinstance(result, Page):
+        yield from page_to_items(scraper, result)
+    else:
+        yield result
 
 
 class Page:

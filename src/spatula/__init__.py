@@ -9,6 +9,7 @@ from .pages import (  # noqa
     HtmlListPage,
     JsonListPage,
     XmlListPage,
+    page_to_items,
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .core import Workflow, Source, URL, NullSource  # noqa
