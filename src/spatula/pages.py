@@ -2,6 +2,7 @@ import io
 import csv
 import tempfile
 import subprocess
+import logging
 import lxml.html
 import scrapelib
 from .core import URL, HandledError
@@ -32,7 +33,7 @@ class Page:
                 )
         if isinstance(self.source, str):
             self.source = URL(self.source)
-        print(f"fetching {self.source} for {self.__class__.__name__}")
+        self.logger.info(f"fetching {self.source}")
         try:
             self.response = self.source.get_response(scraper)
         except scrapelib.HTTPError as e:
@@ -46,6 +47,7 @@ class Page:
         # allow possibility to override default source, useful during dev
         if source:
             self.source = source
+        self.logger = logging.getLogger(self.__class__.__name__)
 
     def postprocess_response(self) -> None:
         """
