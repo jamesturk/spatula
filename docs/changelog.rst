@@ -1,16 +1,17 @@
 Changelog
 =========
 
-0.4.0 - 
+0.4.0 - 2021-02-01
 ------------------
 
 * restore Python 3.7 compatibility
+* add behavior to handle returning additional `Page` subclasses to continue
+  scraping
 * add default behavior when `Page.input` has a `url` attribute.
 * add :py:class:`PdfPage`
 * add `page_to_items` helper
 * add `Page.example_input` and `Page.example_source` for test command
 * add `Page.logger` for logging
-* add `Workflow.yield_items` method
 * allow use of `dataclasses` in addition to `attrs` as input objects
 * improve output of HTML elements
 * bugfix: not specifying a page processor on workflow is no longer an error

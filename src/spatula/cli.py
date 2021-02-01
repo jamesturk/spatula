@@ -15,7 +15,7 @@ except ImportError:
     attr_fields = lambda x: []  # noqa
 
 
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 
 
 def get_class(dotted_name: str):

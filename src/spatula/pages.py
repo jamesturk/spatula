@@ -28,7 +28,7 @@ def page_to_items(scraper, page):
         if next_source:
             # instantiate the same class with same input, but increment the source
             yield from page_to_items(
-                scraper, type(page)(source=next_source, input_val=page.input)
+                scraper, type(page)(page.input, source=next_source)
             )
     elif isinstance(result, Page):
         # single Page result, recurse deeper
