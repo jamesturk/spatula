@@ -69,6 +69,23 @@ Pages
     Can use the normal lxml methods (such as :py:meth:`xpath` and :py:meth:`getchildren`), or
     use this element as the target of a :py:class:`Selector` subclass.
 
+.. py:class:: PdfPage
+
+  .. inheritance-diagram:: PdfPage
+
+  Page that automatically handles extracting text from a PDF.
+
+  **Provided Variables:**
+
+  .. py:attribute:: preserve_layout
+
+    Defaults to ``False``, but can be set to true on subclasses to use the
+    ``-layout`` flag to ``pdftotext``.  Useful for tabular data in particular.
+
+  .. py:attribute:: text
+
+    Raw text extracted from PDF by ``pdftotext`` tool which must be installed.
+
 .. py:class:: ListPage
 
   .. inheritance-diagram:: ListPage

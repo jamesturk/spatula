@@ -17,6 +17,7 @@ class Workflow:
     """
     Define a complete workflow by which items can be scraped and saved to disk.
     """
+
     def __init__(
         self, initial_page, page_processors=None, *, scraper: scrapelib.Scraper = None
     ):
@@ -57,6 +58,16 @@ class Workflow:
                 if len(glob.glob(output_dir + "/*")):
                     raise FileExistsError(f"{output_dir} exists and is not empty")
 
+        count = 0
+        for data in self.yield_items():
+            if isinstance(data, dict):
+                dd = data
+            else:
+                dd = data.to_dict()
+            self.save_object(dd, output_dir=output_dir)
+        print(f"success: wrote {count} objects to {output_dir}")
+
+    def yield_items(self):
         self.initial_page._fetch_data(self.scraper)
         for i, item in enumerate(self.initial_page.process_page()):
             data = item
@@ -67,13 +78,7 @@ class Workflow:
                     data = page.process_page()
             except HandledError:
                 continue
-            count += 1
-            if isinstance(data, dict):
-                dd = data
-            else:
-                dd = data.to_dict()
-            self.save_object(dd, output_dir=output_dir)
-        print(f"success: wrote {count} objects to {output_dir}")
+            yield data
 
 
 class Source:
@@ -89,6 +94,7 @@ class URL(Source):
     :param data: POST data to include in request body.
     :param headers: dictionary of HTTP headers to set for the request.
     """
+
     def __init__(
         self, url: str, method: str = "GET", data: dict = None, headers: dict = None
     ):
@@ -113,6 +119,7 @@ class NullSource(Source):
     Special class to set as a page's :py:attr:`source` to indicate no HTTP request needs
     to be performed.
     """
+
     def get_response(
         self, scraper: scrapelib.Scraper
     ) -> Optional[requests.models.Response]:
