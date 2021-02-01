@@ -8,7 +8,8 @@ Changelog
 * add default behavior when `Page.input` has a `url` attribute.
 * add :py:class:`PdfPage`
 * add `Page.example_input` and `Page.example_source` for test command
-* add `Workflow.yield_items`
+* add `Page.logger` for logging
+* add `Workflow.yield_items` method
 * allow use of `dataclasses` in addition to `attrs` as input objects
 * improve output of HTML elements
 * bugfix: not specifying a page processor on workflow is no longer an error
