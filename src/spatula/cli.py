@@ -1,11 +1,10 @@
 import dataclasses
 import importlib
+import typing
 import lxml.html
 import click
-from typing import List
 from scrapelib import Scraper
 from .utils import _display
-from .pages import ListPage
 from .core import URL
 
 try:
@@ -67,7 +66,7 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     embed()
 
 
-def _get_fake_input(Cls, data):
+def _get_fake_input(Cls, data, interactive):
     # build fake input from command line data if present
     fake_input = {}
     for item in data:
@@ -106,7 +105,7 @@ def _get_fake_input(Cls, data):
     "-d", "--data", multiple=True, help="Provide input data in name=value pairs."
 )
 @click.option("-s", "--source", help="Provide (or override) source URL")
-def test(class_name: str, interactive: bool, data: List[str], source: str) -> None:
+def test(class_name: str, interactive: bool, data: typing.List[str], source: str) -> None:
     """
     This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected.
     ``test`` can also be useful for debugging existing scrapers, you can see exactly what a single step of the scrape is providing, to help narrow down where erroneous data is coming from.
@@ -120,7 +119,7 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
     Cls = get_class(class_name)
     s = Scraper()
 
-    fake_input = _get_fake_input(Cls, data)
+    fake_input = _get_fake_input(Cls, data, interactive)
 
     # special case for passing a single URL source
     if source:
@@ -139,7 +138,7 @@ def test(class_name: str, interactive: bool, data: List[str], source: str) -> No
 
         result = page.process_page()
 
-        if issubclass(Cls, ListPage):
+        if isinstance(result, typing.Generator):
             for i, item in enumerate(result):
                 print(f"{i}:", _display(item))
         else:
