@@ -49,6 +49,8 @@ class Page:
         """
         # process dependencies first
         for val, dep in self.dependencies.items():
+            if isinstance(dep, type):
+                dep = dep(self.input)
             dep._fetch_data(scraper)
             setattr(self, val, dep.process_page())
 

@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.4.1 - 2021-02-01
+------------------
+
+* bugfix: dependencies are instantiated from parent page input
+
 0.4.0 - 2021-02-01
 ------------------
 
