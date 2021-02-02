@@ -2,6 +2,7 @@ import dataclasses
 import importlib
 import typing
 import lxml.html
+import logging
 import click
 from scrapelib import Scraper
 from .utils import _display
@@ -16,6 +17,12 @@ except ImportError:
 
 
 VERSION = "0.4.1"
+
+
+def configure_logging():
+    # take over scrapelib's logging
+    logging.getLogger("scrapelib").setLevel(logging.ERROR)
+    logging.basicConfig(level=logging.INFO)
 
 
 def get_class(dotted_name: str):
@@ -46,7 +53,7 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     try:
         from IPython import embed
     except ImportError:
-        print("shell command requires IPython")
+        click.secho("shell command requires IPython", fg="red")
         return
 
     # import selectors so they can be used without import
@@ -79,20 +86,20 @@ def _get_fake_input(Cls, data, interactive):
         return getattr(Cls, "example_input")
 
     if input_type:
-        print(f"{Cls.__name__} expects input ({input_type.__name__}): ")
+        click.secho(f"{Cls.__name__} expects input ({input_type.__name__}): ")
         if dataclasses.is_dataclass(input_type):
             fields = dataclasses.fields(input_type)
         elif attr_has(input_type):
             fields = attr_fields(input_type)
         for field in fields:
             if field.name in fake_input:
-                print(f"  {field.name}: {fake_input[field.name]}")
+                click.secho(f"  {field.name}: {fake_input[field.name]}")
             elif interactive:
                 fake_input[field.name] = click.prompt("  " + field.name)
             else:
                 dummy_val = f"~{field.name}"
                 fake_input[field.name] = dummy_val
-                print(f"  {field.name}: {dummy_val}")
+                click.secho(f"  {field.name}: {dummy_val}")
         return input_type(**fake_input)
     else:
         return fake_input
@@ -149,9 +156,9 @@ def test(
 
         if isinstance(result, typing.Generator):
             for i, item in enumerate(result):
-                print(f"{i}:", _display(item))
+                click.echo(click.style(f"{i+1}: ", fg="green") + _display(item))
         else:
-            print(_display(result))
+            click.secho(_display(result))
 
         # will be None in most cases, existing the loop, otherwise we restart
         source = page.get_next_source()
@@ -170,8 +177,10 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     """
     Run full workflow, and output data to disk.
     """
+    configure_logging()
     workflow = get_class(workflow_name)
-    workflow.execute(output_dir=output_dir)
+    count = workflow.execute(output_dir=output_dir)
+    click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
 
 
 if __name__ == "__main__":

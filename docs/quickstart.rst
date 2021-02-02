@@ -158,8 +158,8 @@ We'll add to :py:class:`RFC`:
     ...
 
     def handle_error_response(self, exception):
-        # TODO: use logging
-        print("skipping", self.source.url)
+        # self.logger is configured for you already on all Page classes
+        self.logger.warning("skipping", self.source.url)
 
 Wrapping Up
 -----------

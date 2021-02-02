@@ -84,4 +84,4 @@ class Workflow:
         for item in page_to_items(self.scraper, self.initial_page):
             self.save_object(item, output_dir=output_dir)
             count += 1
-        print(f"success: wrote {count} objects to {output_dir}")
+        return count
