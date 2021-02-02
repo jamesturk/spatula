@@ -4,8 +4,9 @@ import tempfile
 import subprocess
 import logging
 import typing
-import lxml.html
 import scrapelib
+import lxml.html
+from openpyxl import load_workbook
 from .core import URL, HandledError
 
 
@@ -187,6 +188,24 @@ class CsvListPage(ListPage):
 
     def process_page(self):
         for item in self.reader:
+            try:
+                item = self.process_item(item)
+            except self.SkipItem:
+                continue
+            yield item
+
+    def process_item(self, item):
+        return item
+
+
+class ExcelListPage(ListPage):
+    def postprocess_response(self) -> None:
+        workbook = load_workbook(io.BytesIO(self.response.content))
+        # TODO: allow selecting this with a class property
+        self.worksheet = workbook.active
+
+    def process_page(self):
+        for item in self.worksheet.values:
             try:
                 item = self.process_item(item)
             except self.SkipItem:
