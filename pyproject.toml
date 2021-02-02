@@ -16,6 +16,7 @@ scrapelib = "^1.2.0"
 click = "^7.1.2"
 lxml = "^4.6.2"
 cssselect = "^1.1.0"
+openpyxl = "^3.0.6"
 attrs = {version = "^20.3.0", extras = ["attrs"]}
 ipython = {version = "^7.19.0", extras = ["shell"]}
 Sphinx = {version = "^3.4.3", extras = ["docs"]}
