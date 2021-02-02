@@ -44,8 +44,8 @@ class Page:
 
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
         """
-        ensure that the page has all of its data, this is guaranteed to be called exactly once
-        before process_page is invoked
+        ensure that the page has all of its data, this is guaranteed to be called
+        exactly once before process_page is invoked
         """
         # process dependencies first
         for val, dep in self.dependencies.items():
@@ -199,7 +199,8 @@ class CsvListPage(ListPage):
 
 class LxmlListPage(ListPage):
     """
-    Base class for XML and HTML subclasses below, only difference is which parser is used.
+    Base class for XML and HTML subclasses below, only difference is which
+    parser is used.
 
     Simplification for pages that get a list of items and process them.
 

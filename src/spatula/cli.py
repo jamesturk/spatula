@@ -109,14 +109,21 @@ def test(
     class_name: str, interactive: bool, data: typing.List[str], source: str
 ) -> None:
     """
-    This command allows you to scrape a single page and see the output immediately.  This eases the common cycle of making modifications to a scraper, running a scrape (possibly with long-running but irrelevant portions commented out), and comparing output to what is expected.
-    ``test`` can also be useful for debugging existing scrapers, you can see exactly what a single step of the scrape is providing, to help narrow down where erroneous data is coming from.
+    This command allows you to scrape a single page and see the output immediately.
+    This eases the common cycle of making modifications to a scraper, running a scrape
+    (possibly with long-running but irrelevant portions commented out), and comparing
+    output to what is expected.
+
+    ``test`` can also be useful for debugging existing scrapers, you can see exactly
+    what a single step of the scrape is providing, to help narrow down where
+    erroneous data is coming from.
 
     Example::
 
     $ spatula test path.to.ClassName --source https://example.com
 
-    This will run the scraper defined at :py:class:`path.to.ClassName` against the provided URL.
+    This will run the scraper defined at :py:class:`path.to.ClassName` against the
+    provided URL.
     """
     Cls = get_class(class_name)
     s = Scraper()

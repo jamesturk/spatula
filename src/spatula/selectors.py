@@ -35,9 +35,11 @@ class Selector:
         """
         Return all matches of the given selector within `element`.
 
-        If the number of elements matched is outside the prescribed boundaries, a :py:class:`SelectorError` is raised.
+        If the number of elements matched is outside the prescribed boundaries, a
+        :py:class:`SelectorError` is raised.
 
-        :param element: The element to match within. When used from within a `Page` will usually be `self.root`.
+        :param element: The element to match within. When used from within a `Page` will
+                        usually be `self.root`.
         :param min_items: A minimum number of items to match.
         :param max_items: A maximum number of items to match.
         :param num_items: An exact number of items to match.

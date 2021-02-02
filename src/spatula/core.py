@@ -87,7 +87,8 @@ class Source:
 
 class URL(Source):
     """
-    Defines a resource to fetch via URL, particularly useful for handling non-GET requests.
+    Defines a resource to fetch via URL, particularly useful for handling non-GET
+    requests.
 
     :param url: URL to fetch
     :param method: HTTP method to use, defaults to "GET"
