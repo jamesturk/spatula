@@ -1,13 +1,11 @@
 import logging
 import pytest
-from dataclasses import dataclass
 from spatula import Page, MissingSourceError
 from scrapelib import HTTPError
 
 SOURCE = "https://example.com"
 
 
-@dataclass
 class Error:
     status_code = 400
     url = "error"
