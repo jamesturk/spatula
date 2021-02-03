@@ -116,8 +116,17 @@ def _get_fake_input(Cls, data, interactive):
     "-d", "--data", multiple=True, help="Provide input data in name=value pairs."
 )
 @click.option("-s", "--source", help="Provide (or override) source URL")
+@click.option(
+    "--pagination/--no-pagination",
+    default=True,
+    help="Determine whether or not pagination should be followed or one page is enough for testing",
+)
 def test(
-    class_name: str, interactive: bool, data: typing.List[str], source: str
+    class_name: str,
+    interactive: bool,
+    data: typing.List[str],
+    source: str,
+    pagination: bool,
 ) -> None:
     """
     This command allows you to scrape a single page and see the output immediately.
@@ -149,6 +158,7 @@ def test(
 
     # we need to do the request-response-next-page loop at least once
     once = True
+    num_items = 0
     while source or once:
         once = False
         page = Cls(fake_input, source=source)
@@ -159,17 +169,28 @@ def test(
         result = page.process_page()
 
         if isinstance(result, typing.Generator):
-            for i, item in enumerate(result):
-                click.echo(click.style(f"{i+1}: ", fg="green") + _display(item))
+            for item in result:
+                # use this count instead of enumerate to handle pagination
+                num_items += 1
+                click.echo(click.style(f"{num_items}: ", fg="green") + _display(item))
         else:
             click.secho(_display(result))
 
         # will be None in most cases, existing the loop, otherwise we restart
         source = page.get_next_source()
         if source:
-            click.secho(
-                f"paginating for {page.__class__.__name__}: {source}", fg="blue"
-            )
+            if pagination:
+                click.secho(
+                    f"paginating for {page.__class__.__name__} source={source}",
+                    fg="blue",
+                )
+            else:
+                click.secho(
+                    "pagination disabled: would paginate for "
+                    f"{page.__class__.__name__} source={source}",
+                    fg="yellow",
+                )
+                break
 
 
 @cli.command()

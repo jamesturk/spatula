@@ -80,9 +80,28 @@ def test_test_command_paginated():
 
     result = runner.invoke(cli, ["test", "tests.examples.ExamplePaginatedPage"])
     assert result.exit_code == 0
-    assert "paginating for ExamplePaginatedPage: https://example.com" in result.output
-    # 7 = 3 from each page and pagination line
-    assert len(result.output.splitlines()) == 7
+    assert (
+        "paginating for ExamplePaginatedPage source=https://example.com"
+        in result.output
+    )
+    # make sure the 6th item is present and numbered correctly
+    assert "6: " in result.output
+
+
+def test_test_command_no_pagination():
+    runner = CliRunner()
+
+    result = runner.invoke(
+        cli, ["test", "tests.examples.ExamplePaginatedPage", "--no-pagination"]
+    )
+    assert result.exit_code == 0
+    assert (
+        "pagination disabled: would paginate for ExamplePaginatedPage source=https://example.com"
+        in result.output
+    )
+    # make sure the 6th item is present and numbered correctly
+    assert len(result.output.splitlines()) == 4
+    assert "6: " not in result.output
 
 
 # TODO: --data --interactive
