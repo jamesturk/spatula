@@ -73,3 +73,16 @@ def test_test_command_source_flag():
     )
     assert result.exit_code == 0
     assert "{'source': 'https://example.com'" in result.output
+
+
+def test_test_command_paginated():
+    runner = CliRunner()
+
+    result = runner.invoke(cli, ["test", "tests.examples.ExamplePaginatedPage"])
+    assert result.exit_code == 0
+    assert "paginating for ExamplePaginatedPage: https://example.com" in result.output
+    # 7 = 3 from each page and pagination line
+    assert len(result.output.splitlines()) == 7
+
+
+# TODO: --data --interactive
