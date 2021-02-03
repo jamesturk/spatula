@@ -6,7 +6,12 @@ import logging
 import scrapelib
 import lxml.html
 from openpyxl import load_workbook
-from .core import URL, HandledError
+from .core import URL
+
+
+class MissingSourceError(Exception):
+    def __init__(self, msg):
+        super().__init__(msg)
 
 
 class Page:
@@ -31,7 +36,7 @@ class Page:
             elif hasattr(self.input, "url"):
                 self.source = URL(self.input.url)
             else:
-                raise Exception(
+                raise MissingSourceError(
                     f"{self.__class__.__name__} has no source or get_source_from_input"
                 )
         if isinstance(self.source, str):
@@ -40,8 +45,7 @@ class Page:
         try:
             self.response = self.source.get_response(scraper)
         except scrapelib.HTTPError as e:
-            self.handle_error_response(e)
-            raise HandledError(e)
+            self.process_error_response(e)
         else:
             self.postprocess_response()
 
@@ -57,7 +61,7 @@ class Page:
     def __str__(self):
         s = f"{self.__class__.__name__}("
         if self.input:
-            s += f"input={self.input}"
+            s += f"input={self.input} "
         if self.source:
             s += f"source={self.source}"
         s += ")"
@@ -77,7 +81,7 @@ class Page:
 
         This is called after source.get_response if an exception is raised.
         """
-        pass
+        raise exception
 
     def process_page(self):
         """

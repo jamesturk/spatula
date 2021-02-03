@@ -5,6 +5,9 @@ Changelog
 ------------------
 
 * add :py:class:`ExcelListPage`
+* improve `Page.logger` and CLI output
+* move to simpler `Workflow` class
+* bugfix: inconsistent name for `process_error_response`
 
 
 0.4.1 - 2021-02-01

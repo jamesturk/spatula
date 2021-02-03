@@ -10,6 +10,7 @@ from .pages import (  # noqa
     HtmlListPage,
     JsonListPage,
     XmlListPage,
+    MissingSourceError,
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .core import Source, URL, NullSource  # noqa
