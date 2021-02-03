@@ -6,7 +6,7 @@ import logging
 import scrapelib
 import lxml.html
 from openpyxl import load_workbook
-from .core import URL
+from .sources import URL
 
 
 class MissingSourceError(Exception):

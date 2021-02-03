@@ -10,7 +10,7 @@ import lxml.html
 import click
 from scrapelib import Scraper
 from .utils import _display
-from .core import URL
+from .sources import URL
 
 try:
     from attr import has as attr_has
