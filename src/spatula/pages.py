@@ -158,10 +158,20 @@ class PdfPage(Page):  # pragma: no cover
 
 class ListPage(Page):
     class SkipItem(Exception):
-        pass
+        def __init__(self, msg):
+            super().__init__(msg)
 
-    def skip(self) -> None:
-        raise self.SkipItem()
+    def skip(self, msg: str = "") -> None:
+        raise self.SkipItem(msg)
+
+    def _process_or_skip_loop(self, iterable):
+        for item in iterable:
+            try:
+                item = self.process_item(item)
+            except self.SkipItem as e:
+                self.logger.debug(f"SkipItem: {e}")
+                continue
+            yield item
 
     def process_item(self, item):
         return item
@@ -172,12 +182,7 @@ class CsvListPage(ListPage):
         self.reader = csv.DictReader(io.StringIO(self.response.text))
 
     def process_page(self):
-        for item in self.reader:
-            try:
-                item = self.process_item(item)
-            except self.SkipItem:
-                continue
-            yield item
+        yield from self._process_or_skip_loop(self.reader)
 
     def process_item(self, item):
         return item
@@ -190,12 +195,7 @@ class ExcelListPage(ListPage):
         self.worksheet = workbook.active
 
     def process_page(self):
-        for item in self.worksheet.values:
-            try:
-                item = self.process_item(item)
-            except self.SkipItem:
-                continue
-            yield item
+        yield from self._process_or_skip_loop(self.worksheet.values)
 
     def process_item(self, item):
         return item
@@ -218,12 +218,7 @@ class LxmlListPage(ListPage):
         if not self.selector:
             raise NotImplementedError("must either provide selector or override scrape")
         items = self.selector.match(self.root)
-        for item in items:
-            try:
-                item = self.process_item(item)
-            except self.SkipItem:
-                continue
-            yield item
+        yield from self._process_or_skip_loop(items)
 
 
 class HtmlListPage(LxmlListPage, HtmlPage):
@@ -236,9 +231,4 @@ class XmlListPage(LxmlListPage, XmlPage):
 
 class JsonListPage(ListPage, JsonPage):
     def process_page(self):
-        for item in self.data:
-            try:
-                item = self.process_item(item)
-            except self.SkipItem:
-                continue
-            yield item
+        yield from self._process_or_skip_loop(self.data)
