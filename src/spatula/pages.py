@@ -54,6 +54,15 @@ class Page:
             self.__class__.__module__ + "." + self.__class__.__name__
         )
 
+    def __str__(self):
+        s = f"{self.__class__.__name__}("
+        if self.input:
+            s += f"input={self.input}"
+        if self.source:
+            s += f"source={self.source}"
+        s += ")"
+        return s
+
     def postprocess_response(self) -> None:
         """
         To be overridden.

@@ -27,4 +27,4 @@ def _display(obj) -> str:
     elif isinstance(obj, _Element):
         return _display_element(obj)
     else:
-        return repr(obj)
+        return str(obj)

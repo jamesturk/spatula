@@ -42,10 +42,11 @@ class Workflow:
     Define a complete workflow by which items can be scraped and saved to disk.
     """
 
-    def __init__(
-        self, initial_page, page_processors=None, *, scraper: scrapelib.Scraper = None
-    ):
-        self.initial_page = initial_page
+    def __init__(self, initial_page, *, scraper: scrapelib.Scraper = None):
+        if isinstance(initial_page, type):
+            self.initial_page = initial_page()
+        else:
+            self.initial_page = initial_page
         if not scraper:
             self.scraper = scrapelib.Scraper()
 
