@@ -43,3 +43,33 @@ def test_scrape_command_output_dir_flag():
         )
         assert result.exit_code == 1
         assert "mydir exists and is not empty" in result.output
+
+
+def test_test_command_basic():
+    runner = CliRunner()
+
+    # tests list output
+    result = runner.invoke(cli, ["test", "tests.examples.ExampleListPage"])
+    assert result.exit_code == 0
+    assert "1: {'val': '1'}" in result.output
+    assert "5: {'val': '5'}" in result.output
+
+
+def test_test_command_example_source():
+    runner = CliRunner()
+
+    # tests example source and single element output
+    result = runner.invoke(cli, ["test", "tests.examples.ExamplePage"])
+    assert result.exit_code == 0
+    assert "{'source': 'NullSource'}" in result.output
+
+
+def test_test_command_source_flag():
+    runner = CliRunner()
+
+    # tests example source and single element output
+    result = runner.invoke(
+        cli, ["test", "tests.examples.ExamplePage", "--source", "https://example.com"]
+    )
+    assert result.exit_code == 0
+    assert "{'source': 'https://example.com'" in result.output

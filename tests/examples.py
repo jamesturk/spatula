@@ -12,4 +12,11 @@ class ExampleListPage(Page):
         yield {"val": "5"}
 
 
+class ExamplePage(Page):
+    example_source = NullSource()
+
+    def process_page(self):
+        return {"source": str(self.source)}
+
+
 simple_5 = Workflow(ExampleListPage)
