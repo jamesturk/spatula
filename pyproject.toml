@@ -27,6 +27,7 @@ sphinx-click = {version = "^2.5.0", extras = ["docs"]}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
+pytest-cov = "^2.11.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
