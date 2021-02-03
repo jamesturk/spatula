@@ -1,7 +1,5 @@
 import os
 import json
-import glob
-import datetime
 import uuid
 import typing
 import scrapelib
@@ -63,24 +61,6 @@ class Workflow:
             json.dump(dd, f)
 
     def execute(self, output_dir: str = None) -> None:
-        count = 0
-        if not output_dir:
-            dirn = 1
-            today = datetime.date.today().strftime("%Y-%m-%d")
-            while True:
-                try:
-                    output_dir = f"_scrapes/{today}/{dirn:03d}"
-                    os.makedirs(output_dir)
-                    break
-                except FileExistsError:
-                    dirn += 1
-        else:
-            try:
-                os.makedirs(output_dir)
-            except FileExistsError:
-                if len(glob.glob(output_dir + "/*")):
-                    raise FileExistsError(f"{output_dir} exists and is not empty")
-
         count = 0
         for item in page_to_items(self.scraper, self.initial_page):
             self.save_object(item, output_dir=output_dir)

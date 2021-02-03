@@ -1,8 +1,12 @@
 import dataclasses
+import datetime
+import glob
 import importlib
+import logging
+import os
+import sys
 import typing
 import lxml.html
-import logging
 import click
 from scrapelib import Scraper
 from .utils import _display
@@ -11,7 +15,7 @@ from .core import URL
 try:
     from attr import has as attr_has
     from attr import fields as attr_fields
-except ImportError:
+except ImportError:  # pragma: no cover
     attr_has = lambda x: False  # noqa
     attr_fields = lambda x: []  # noqa
 
@@ -52,7 +56,7 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     """
     try:
         from IPython import embed
-    except ImportError:
+    except ImportError:  # pragma: no cover
         click.secho("shell command requires IPython", fg="red")
         return
 
@@ -179,9 +183,26 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     """
     configure_logging()
     workflow = get_class(workflow_name)
+    if not output_dir:
+        dirn = 1
+        today = datetime.date.today().strftime("%Y-%m-%d")
+        while True:
+            try:
+                output_dir = f"_scrapes/{today}/{dirn:03d}"
+                os.makedirs(output_dir)
+                break
+            except FileExistsError:
+                dirn += 1
+    else:
+        try:
+            os.makedirs(output_dir)
+        except FileExistsError:
+            if len(glob.glob(output_dir + "/*")):
+                click.secho(f"{output_dir} exists and is not empty", fg="red")
+                sys.exit(1)
     count = workflow.execute(output_dir=output_dir)
     click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     cli()
