@@ -129,7 +129,7 @@ class JsonPage(Page):
         self.data = self.response.json()
 
 
-class PdfPage(Page):
+class PdfPage(Page):  # pragma: no cover
     preserve_layout = False
 
     def postprocess_response(self) -> None:

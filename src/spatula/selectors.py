@@ -75,7 +75,7 @@ class Selector:
         """
         return self.match(element, num_items=1)[0]
 
-    def get_items(self, element: _Element) -> Iterator[_Element]:
+    def get_items(self, element: _Element) -> Iterator[_Element]:  # pragma: no cover
         """
         :meta private:
         """
@@ -106,7 +106,7 @@ class XPath(Selector):
     def get_items(self, element: _Element) -> Iterator[_Element]:
         yield from element.xpath(self.xpath)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # pragma: no cover
         return f"XPath({self.xpath})"
 
 
@@ -143,7 +143,7 @@ class SimilarLink(Selector):
                 yield element
                 seen.add(href)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # pragma: no cover
         return f"SimilarLink({self.pattern})"
 
 
@@ -171,5 +171,5 @@ class CSS(Selector):
     def get_items(self, element: _Element) -> Iterator[_Element]:
         yield from element.cssselect(self.css_selector)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # pragma: no cover
         return f"CSS({self.css_selector})"

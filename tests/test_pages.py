@@ -9,6 +9,7 @@ from spatula import (
     XmlListPage,
     JsonListPage,
     XPath,
+    URL,
 )
 
 SOURCE = "https://example.com"
@@ -27,13 +28,13 @@ class Response:
 
 
 def test_html_page():
-    p = HtmlPage(source=SOURCE)
+    p = HtmlPage(source=URL(SOURCE))
     p.response = Response(b"<html><a href='/test'>link</a></html>")
     p.postprocess_response()
     # test existence of page.root
     link = p.root.xpath("//a")[0]
     # test that links were normalized to example.com
-    link.get("href") == "https://example.com/test"
+    assert link.get("href") == "https://example.com/test"
 
 
 def test_xml_page():

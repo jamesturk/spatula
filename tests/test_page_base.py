@@ -40,12 +40,14 @@ def test_page_init_and_str():
 
 def test_fetch_data_dependencies():
     class DependencyPage(Page):
+        source = SOURCE
+
         def process_page(self):
             return "dependency fulfilled"
 
     class DependencyTestPage(Page):
         source = SOURCE
-        dependencies = {"a_dependency": DependencyPage(source=SOURCE)}
+        dependencies = {"a_dependency": DependencyPage}
 
     p = DependencyTestPage()
     p._fetch_data(DummyScraper())
@@ -113,3 +115,11 @@ def test_fetch_data_postprocess():
     p = Postprocess(source=SOURCE)
     p._fetch_data(DummyScraper())
     assert p._postprocessed
+
+
+def test_default_processing():
+    p = DummyPage()
+    with pytest.raises(ArithmeticError):
+        p.process_error_response(ArithmeticError())
+    with pytest.raises(NotImplementedError):
+        p.process_page()
