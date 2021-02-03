@@ -104,4 +104,39 @@ def test_test_command_no_pagination():
     assert "6: " not in result.output
 
 
-# TODO: --data --interactive
+def test_test_command_input():
+    runner = CliRunner()
+
+    result = runner.invoke(cli, ["test", "tests.examples.SimpleInputPage"])
+    assert result.exit_code == 0
+    assert "{'name': '~name', 'number': '~number'}" in result.output
+
+
+def test_test_command_input_data_flag():
+    runner = CliRunner()
+
+    result = runner.invoke(
+        cli, ["test", "tests.examples.SimpleInputPage", "-d", "number=11"]
+    )
+    assert result.exit_code == 0
+    assert "{'name': '~name', 'number': '11'}" in result.output
+
+
+def test_test_command_input_interactive_flag():
+    runner = CliRunner()
+
+    result = runner.invoke(
+        cli,
+        ["test", "tests.examples.SimpleInputPage", "--interactive"],
+        input="James\n99\n",
+    )
+    assert result.exit_code == 0
+    assert "{'name': 'James', 'number': '99'}" in result.output
+
+
+def test_test_command_input_with_example():
+    runner = CliRunner()
+
+    result = runner.invoke(cli, ["test", "tests.examples.ExampleInputPage"],)
+    assert result.exit_code == 0
+    assert "{'name': 'Tony', 'number': 65}" in result.output

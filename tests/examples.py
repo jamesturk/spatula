@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from spatula import Page, Workflow, NullSource
 
 
@@ -34,6 +35,24 @@ class ExamplePage(Page):
 
     def process_page(self):
         return {"source": str(self.source)}
+
+
+@dataclass
+class Input:
+    name: str
+    number: int
+
+
+class SimpleInputPage(Page):
+    source = NullSource()
+    input_type = Input
+
+    def process_page(self):
+        return {"name": self.input.name, "number": self.input.number}
+
+
+class ExampleInputPage(SimpleInputPage):
+    example_input = Input("Tony", 65)
 
 
 simple_5 = Workflow(ExampleListPage)

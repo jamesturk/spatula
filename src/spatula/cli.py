@@ -111,7 +111,11 @@ def _get_fake_input(Cls, data, interactive):
 
 @cli.command()
 @click.argument("class_name")
-@click.option("-i", "--interactive", help="Interactively prompt for missing data.")
+@click.option(
+    "--interactive/--no-interactive",
+    default=False,
+    help="Interactively prompt for missing data.",
+)
 @click.option(
     "-d", "--data", multiple=True, help="Provide input data in name=value pairs."
 )
@@ -119,7 +123,8 @@ def _get_fake_input(Cls, data, interactive):
 @click.option(
     "--pagination/--no-pagination",
     default=True,
-    help="Determine whether or not pagination should be followed or one page is enough for testing",
+    help="Determine whether or not pagination should be followed or one page is "
+    "enough for testing",
 )
 def test(
     class_name: str,
