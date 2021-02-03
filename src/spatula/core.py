@@ -3,11 +3,6 @@ import requests
 import scrapelib
 
 
-class HandledError(Exception):
-    def __init__(self, original):
-        self.original = original
-
-
 class Source:
     pass
 
