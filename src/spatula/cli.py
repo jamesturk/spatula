@@ -23,10 +23,11 @@ except ImportError:  # pragma: no cover
 VERSION = "0.4.1"
 
 
-def configure_logging():
-    # take over scrapelib's logging
+def configure_logging(level):
+    # replace scrapelib's logging
     logging.getLogger("scrapelib").setLevel(logging.ERROR)
-    logging.basicConfig(level=logging.INFO)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+    logging.basicConfig(level=level)
 
 
 def get_class(dotted_name: str):
@@ -150,6 +151,7 @@ def test(
     This will run the scraper defined at :py:class:`path.to.ClassName` against the
     provided URL.
     """
+    configure_logging(logging.DEBUG)
     Cls = get_class(class_name)
     s = Scraper()
 
@@ -207,7 +209,7 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     """
     Run full workflow, and output data to disk.
     """
-    configure_logging()
+    configure_logging(logging.INFO)
     workflow = get_class(workflow_name)
     if not output_dir:
         dirn = 1
