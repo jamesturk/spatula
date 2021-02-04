@@ -1,6 +1,6 @@
 import logging
 import pytest
-from spatula import Page, MissingSourceError
+from spatula import Page, MissingSourceError, HandledError
 from scrapelib import HTTPError
 
 SOURCE = "https://example.com"
@@ -100,8 +100,8 @@ def test_fetch_data_handle_error_response():
             raise Exception("should not happen")
 
     p = ErrorPage(source="error")
-    p._fetch_data(DummyScraper())
-    # ensure error response is called
+    with pytest.raises(HandledError):
+        p._fetch_data(DummyScraper())
     assert p._error_was_called
 
 

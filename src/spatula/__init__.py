@@ -11,6 +11,7 @@ from .pages import (  # noqa
     JsonListPage,
     XmlListPage,
     MissingSourceError,
+    HandledError,
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .sources import Source, URL, NullSource  # noqa
