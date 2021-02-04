@@ -6,7 +6,9 @@ import scrapelib
 from .pages import Page, HandledError
 
 
-def page_to_items(scraper, page):
+def page_to_items(
+    scraper: scrapelib.Scraper, page: Page
+) -> typing.Iterable[typing.Any]:
     # fetch data for a page, and then call the process_page entrypoint
     try:
         page._fetch_data(scraper)
@@ -43,7 +45,9 @@ class Workflow:
     Define a complete workflow by which items can be scraped and saved to disk.
     """
 
-    def __init__(self, initial_page, *, scraper: scrapelib.Scraper = None):
+    def __init__(
+        self, initial_page: typing.Any[type, Page], *, scraper: scrapelib.Scraper = None
+    ):
         if isinstance(initial_page, type):
             self.initial_page = initial_page()
         else:
@@ -51,10 +55,10 @@ class Workflow:
         if not scraper:
             self.scraper = scrapelib.Scraper()
 
-    def get_new_filename(self, obj):
+    def get_new_filename(self, obj: typing.Any) -> str:
         return str(uuid.uuid4())
 
-    def save_object(self, obj, output_dir):
+    def save_object(self, obj: typing.Any, output_dir: str) -> None:
         filename = os.path.join(output_dir, self.get_new_filename(obj))
         if isinstance(obj, dict):
             dd = obj
@@ -63,7 +67,7 @@ class Workflow:
         with open(filename, "w") as f:
             json.dump(dd, f)
 
-    def execute(self, output_dir: str = None) -> None:
+    def execute(self, output_dir: str = None) -> int:
         count = 0
         for item in page_to_items(self.scraper, self.initial_page):
             self.save_object(item, output_dir=output_dir)

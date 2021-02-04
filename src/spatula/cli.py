@@ -24,14 +24,14 @@ except ImportError:  # pragma: no cover
 VERSION = "0.5.0"
 
 
-def configure_logging(level):
+def configure_logging(level: int) -> None:
     # replace scrapelib's logging
     logging.getLogger("scrapelib").setLevel(logging.ERROR)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
     logging.basicConfig(level=level)
 
 
-def get_class(dotted_name: str):
+def get_class(dotted_name: str) -> typing.Any[type, Workflow]:
     mod_name, cls_name = dotted_name.rsplit(".", 1)
     mod = importlib.import_module(mod_name)
     return getattr(mod, cls_name)
@@ -79,7 +79,7 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     embed()
 
 
-def _get_fake_input(Cls, data, interactive):
+def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typing.Any:
     # build fake input from command line data if present
     fake_input = {}
     for item in data:

@@ -3,25 +3,26 @@ import csv
 import tempfile
 import subprocess
 import logging
+import typing
 import scrapelib
 import lxml.html
 from openpyxl import load_workbook
-from .sources import URL
+from .sources import Source, URL
 
 
 class MissingSourceError(Exception):
-    def __init__(self, msg):
+    def __init__(self, msg: str):
         super().__init__(msg)
 
 
 class HandledError(Exception):
-    def __init__(self, exc):
+    def __init__(self, exc: Exception):
         super().__init__(exc)
 
 
 class Page:
-    source = None
-    dependencies = {}
+    source: typing.Any[None, str, Source] = None
+    dependencies: typing.Dict[str, "Page"] = {}
 
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
         """
@@ -55,7 +56,9 @@ class Page:
         else:
             self.postprocess_response()
 
-    def __init__(self, input_val=None, *, source=None):
+    def __init__(
+        self, input_val: typing.Any = None, *, source: typing.Any[str, Source] = None
+    ):
         self.input = input_val
         # allow possibility to override default source, useful during dev
         if source:
@@ -64,7 +67,7 @@ class Page:
             self.__class__.__module__ + "." + self.__class__.__name__
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         s = f"{self.__class__.__name__}("
         if self.input:
             s += f"input={self.input} "
@@ -81,7 +84,7 @@ class Page:
         """
         pass
 
-    def process_error_response(self, exception) -> None:
+    def process_error_response(self, exception: Exception) -> None:
         """
         To be overridden.
 
@@ -89,7 +92,7 @@ class Page:
         """
         raise exception
 
-    def process_page(self):
+    def process_page(self) -> typing.Any:
         """
         To be overridden.
 
@@ -97,7 +100,7 @@ class Page:
         """
         raise NotImplementedError()
 
-    def get_next_source(self):
+    def get_next_source(self) -> typing.Any[str, Source]:
         """
         To be overriden for paginated pages.
 
@@ -164,13 +167,15 @@ class PdfPage(Page):  # pragma: no cover
 
 class ListPage(Page):
     class SkipItem(Exception):
-        def __init__(self, msg):
+        def __init__(self, msg: str):
             super().__init__(msg)
 
     def skip(self, msg: str = "") -> None:
         raise self.SkipItem(msg)
 
-    def _process_or_skip_loop(self, iterable):
+    def _process_or_skip_loop(
+        self, iterable: typing.Iterable
+    ) -> typing.Iterable[typing.Any]:
         for item in iterable:
             try:
                 item = self.process_item(item)
@@ -179,7 +184,7 @@ class ListPage(Page):
                 continue
             yield item
 
-    def process_item(self, item):
+    def process_item(self, item: typing.Any) -> typing.Any:
         return item
 
 
@@ -187,11 +192,8 @@ class CsvListPage(ListPage):
     def postprocess_response(self) -> None:
         self.reader = csv.DictReader(io.StringIO(self.response.text))
 
-    def process_page(self):
+    def process_page(self) -> typing.Iterable[typing.Any]:
         yield from self._process_or_skip_loop(self.reader)
-
-    def process_item(self, item):
-        return item
 
 
 class ExcelListPage(ListPage):
@@ -200,11 +202,8 @@ class ExcelListPage(ListPage):
         # TODO: allow selecting this with a class property
         self.worksheet = workbook.active
 
-    def process_page(self):
+    def process_page(self) -> typing.Iterable[typing.Any]:
         yield from self._process_or_skip_loop(self.worksheet.values)
-
-    def process_item(self, item):
-        return item
 
 
 class LxmlListPage(ListPage):
@@ -220,7 +219,7 @@ class LxmlListPage(ListPage):
 
     selector = None
 
-    def process_page(self):
+    def process_page(self) -> typing.Iterable[typing.Any]:
         if not self.selector:
             raise NotImplementedError("must either provide selector or override scrape")
         items = self.selector.match(self.root)
@@ -236,5 +235,5 @@ class XmlListPage(LxmlListPage, XmlPage):
 
 
 class JsonListPage(ListPage, JsonPage):
-    def process_page(self):
+    def process_page(self) -> typing.Iterable[typing.Any]:
         yield from self._process_or_skip_loop(self.data)
