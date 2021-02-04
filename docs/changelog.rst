@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5.0
+0.5.0 - 2021-02-04
 ------------------
 
 * add :py:class:`ExcelListPage`

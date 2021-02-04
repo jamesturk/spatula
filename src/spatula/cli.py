@@ -21,7 +21,7 @@ except ImportError:  # pragma: no cover
     attr_fields = lambda x: []  # noqa
 
 
-VERSION = "0.4.1"
+VERSION = "0.5.0"
 
 
 def configure_logging(level):
