@@ -41,7 +41,7 @@ Example::
 
   # imports we'll use in this example
   from spatula import (
-      HtmlPage, HtmlListPage, CSS, SimilarLink, Workflow
+      HtmlPage, HtmlListPage, CSS, SimilarLink
   )
 
 

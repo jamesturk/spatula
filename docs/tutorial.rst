@@ -356,28 +356,37 @@ Which means we can mimic what will happen if a valid URL is passed through to :p
      'party': '~party',
      'url': 'https://mgaleg.maryland.gov/mgawebsite/Members/Details/jones'}
  
-Defining Our Workflows
-----------------------
+Connecting Our Pages
+--------------------
 
 Now that our two page scrapers work separately, we can wire them together.
 
 .. code-block:: python
+   :emphasize-lines: 8-14
 
-    # one more import
-    from spatula import HtmlListPage, CSS, XPath, HtmlPage, SimilarLink, Workflow
+    class RosterList(HtmlListPage):
+        selector = CSS("#myDIV div.member-index-cell")
 
-    # ... at the bottom ...
+        def process_item(self, item):
+            dd_text = XPath(".//dd/text()").match(item)
+            district = dd_text[2].strip()
+            party = dd_text[4].strip()
+            return PersonDetail(
+              PartialPerson(
+                  district=district,
+                  party=party,
+                  url=XPath(".//dd/a[1]/@href").match_one(item),
+              )
+            )
 
-    senators = Workflow(
-        RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/senate"),
-        PersonDetail,
-    )
-    delegates = Workflow(
-        RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/house"),
-        PersonDetail,
-    )
+And let's instantiate two instances at the bottom of the file:
 
-These two workflows define a starting point, which will be our :py:class:`RosterList` instantiated with the two starting URLs.
+.. code-block:: python
+
+  house = RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/house")
+  senate = RosterList(source="https://mgaleg.maryland.gov/mgawebsite/Members/Index/senate")
+
+These two instances will define a starting point, our :py:class:`RosterList` instantiated with the two starting URLs.
 
 The individual results from that scrape will then be sent one at a time as input into :py:class:`PersonDetail`.
 

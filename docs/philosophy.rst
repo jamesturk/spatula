@@ -58,15 +58,3 @@ Scraper / Page Separation
 -------------------------
 
 Why don't page objects fetch themselves?  A big part of this is that we want to share a scraper among them for rate limiting and other configuration yet to come.  In theory this could mean that each one is instantiated with a scraper parameter, but that'd be a bit more cumbersome.  This also can make testing even easier, as there's no need to mock HTTP requests/etc. as just passing a mock object into the :py:class:`Page` will suffice.
-
-
-Open Questions
---------------
-
-Spatula isn't quite done, these are things that need to be solved:
-
-1. How do we want to handle pagination?  This is a special case where a list scraper should do multiple fetches.
-
-2. What types of objects should be valid to pass between stages?  Right now it is assumed they are either dicts or ``attr.s`` classes.  It might be better to standardize on one, or even allow ``dataclasses`` and/or ``namedtuples``.
-
-3. What edge cases are we aware of that seem hard to implement in this structure? 

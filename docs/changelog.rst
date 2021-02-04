@@ -7,6 +7,7 @@ Changelog
 * add :py:class:`ExcelListPage`
 * improve ``Page.logger`` and CLI output
 * move to simpler ``Workflow`` class
+* ``spatula scrape`` can now take the name of a page, will use default Workflow
 * bugfix: inconsistent name for ``process_error_response``
 
 
