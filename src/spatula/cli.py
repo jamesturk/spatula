@@ -11,6 +11,7 @@ import click
 from scrapelib import Scraper
 from .utils import _display
 from .sources import URL
+from .workflow import Workflow
 
 try:
     from attr import has as attr_has
@@ -210,7 +211,11 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     Run full workflow, and output data to disk.
     """
     configure_logging(logging.INFO)
-    workflow = get_class(workflow_name)
+    workflow_or_page = get_class(workflow_name)
+    if isinstance(workflow_or_page, Workflow):
+        workflow = workflow_or_page
+    else:
+        workflow = Workflow(workflow_or_page)
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
