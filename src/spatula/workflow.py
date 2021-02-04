@@ -46,7 +46,10 @@ class Workflow:
     """
 
     def __init__(
-        self, initial_page: typing.Any[type, Page], *, scraper: scrapelib.Scraper = None
+        self,
+        initial_page: typing.Union[type, Page],
+        *,
+        scraper: scrapelib.Scraper = None
     ):
         if isinstance(initial_page, type):
             self.initial_page = initial_page()

@@ -31,7 +31,7 @@ def configure_logging(level: int) -> None:
     logging.basicConfig(level=level)
 
 
-def get_class(dotted_name: str) -> typing.Any[type, Workflow]:
+def get_class(dotted_name: str) -> typing.Union[type, Workflow]:
     mod_name, cls_name = dotted_name.rsplit(".", 1)
     mod = importlib.import_module(mod_name)
     return getattr(mod, cls_name)

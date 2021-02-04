@@ -21,7 +21,7 @@ class HandledError(Exception):
 
 
 class Page:
-    source: typing.Any[None, str, Source] = None
+    source: typing.Union[None, str, Source] = None
     dependencies: typing.Dict[str, "Page"] = {}
 
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
@@ -57,7 +57,10 @@ class Page:
             self.postprocess_response()
 
     def __init__(
-        self, input_val: typing.Any = None, *, source: typing.Any[str, Source] = None
+        self,
+        input_val: typing.Any = None,
+        *,
+        source: typing.Union[None, str, Source] = None,
     ):
         self.input = input_val
         # allow possibility to override default source, useful during dev
@@ -100,7 +103,7 @@ class Page:
         """
         raise NotImplementedError()
 
-    def get_next_source(self) -> typing.Any[str, Source]:
+    def get_next_source(self) -> typing.Union[None, str, Source]:
         """
         To be overriden for paginated pages.
 
