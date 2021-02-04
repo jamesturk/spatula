@@ -3,12 +3,15 @@ import json
 import uuid
 import typing
 import scrapelib
-from .pages import Page
+from .pages import Page, HandledError
 
 
 def page_to_items(scraper, page):
     # fetch data for a page, and then call the process_page entrypoint
-    page._fetch_data(scraper)
+    try:
+        page._fetch_data(scraper)
+    except HandledError:
+        return
     result = page.process_page()
 
     # if we got back a generator, we need to process each result

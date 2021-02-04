@@ -14,6 +14,11 @@ class MissingSourceError(Exception):
         super().__init__(msg)
 
 
+class HandledError(Exception):
+    def __init__(self, exc):
+        super().__init__(exc)
+
+
 class Page:
     source = None
     dependencies = {}
@@ -46,6 +51,7 @@ class Page:
             self.response = self.source.get_response(scraper)
         except scrapelib.HTTPError as e:
             self.process_error_response(e)
+            raise HandledError(e)
         else:
             self.postprocess_response()
 
