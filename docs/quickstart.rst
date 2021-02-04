@@ -64,7 +64,7 @@ It can be tested from the command line like:
 .. code-block:: console
 
   $ spatula test example.RFC --source "https://tools.ietf.org/html/rfc1945"
-  fetching https://tools.ietf.org/html/rfc1945 for RFC
+  INFO:rfc.RFC:fetching https://tools.ietf.org/html/rfc1945
   {'authors': ['Nielsen, Henrik Frystyk', 'Berners-Lee, Tim', 'Fielding, Roy T.'],
    'title': 'Hypertext Transfer Protocol -- HTTP/1.0'}
 
@@ -89,7 +89,7 @@ Example::
       selector = SimilarLink(r"http://tools.ietf.org/html/\d$")
 
       def process_item(self, item):
-          return dict(url=item.get("href"))
+          return item.get("href")
 
 This will extract all links on the page in the format specified by the given regular expression.
 It can be tested from the command line like:
@@ -97,50 +97,66 @@ It can be tested from the command line like:
 .. code-block:: console
 
   $ spatula test example.RFCList
-  fetching https://tools.ietf.org/rfc/ for RFCList
-  0: {'url': 'http://tools.ietf.org/html/1'}
-  1: {'url': 'http://tools.ietf.org/html/2'}
+  INFO:rfc.RFCList:fetching https://tools.ietf.org/rfc/
+  1: http://tools.ietf.org/html/1
+  2: http://tools.ietf.org/html/2
   ...
-  8: {'url': 'http://tools.ietf.org/html/9'}
+  9: http://tools.ietf.org/html/9
 
 
-Defining a Simple Workflow
---------------------------
+Chaining Pages Together
+-----------------------
 
 Notice that :py:class:`RFCList` returns URLs, and we need to instantiate :py:class:`RFC` with a source on the command line.
 
-We can chain these together into what we'll call a :py:class:`Workflow`, like so:
+We can chain these together by having :py:class:`RFCList` return instances of :py:class:`RFC`,
+which will tell *spatula* more work is needed.
 
 .. code-block:: python
-  :emphasize-lines: 3-7,11-12
+  :emphasize-lines: 9-10
 
-  class RFC(HtmlPage):
-    ...
-    # add this method to RFC
-    # it is called if no source is provided to determine the URL to
-    # scrape, it will be getting the output from RFCList as self.input
-    def get_source_from_input(self):
-        return self.input["url"]
+  class RFCList(HtmlListPage):
+      # by providing this here, it can be omitted on the command line
+      # useful in cases where the scraper is only meant for one page
+      source = "https://tools.ietf.org/rfc/"
 
-  ...
+      # for this demo we just want to get the one digit RFCs
+      selector = SimilarLink(r"http://tools.ietf.org/html/\d$")
 
-  # this line added at the bottom of the file, defines a workflow
-  rfc_details = Workflow(RFCList(), RFC)
+      def process_item(self, item):
+          return RFC(source=item.get("href"))
 
-Running a workflow will write the output as JSON (or a format of your selection) to disk.
-
-Doing so looks like:
+Now a run looks like:
 
 .. code-block:: console
 
-  $ spatula scrape example.rfc_details
+  $ spatula test example.RFCList
+  INFO:rfc.RFCList:fetching https://tools.ietf.org/rfc/
+  1: RFC(source=http://tools.ietf.org/html/1)
+  2: RFC(source=http://tools.ietf.org/html/2)
   ...
-  fetching http://tools.ietf.org/html/7 for RFC
-  fetching http://tools.ietf.org/html/8 for RFC
+  9: RFC(source=http://tools.ietf.org/html/9)
+ 
+
+By default, ``spatula test`` just shows the result of the page you're working on.
+
+Running a Scrape
+----------------
+
+Now that we're happy with our individual pages, we might want to have the data output to disk.
+
+For this we use the ``spatula scrape`` command:
+
+.. code-block:: console
+
+  $ spatula scrape example.RFCList
+  INFO:rfc.RFCList:fetching https://tools.ietf.org/rfc/
+  INFO:rfc.RFC:fetching http://tools.ietf.org/html/1
+  INFO:rfc.RFC:fetching http://tools.ietf.org/html/2
   ...
   scrapelib.HTTPError: 404 while retrieving https://tools.ietf.org/html/8
 
-Oops, a bad link!  
+Oops, a bad link!
 
 Handling Errors
 ---------------
@@ -157,9 +173,9 @@ We'll add to :py:class:`RFC`:
   class RFC(HtmlPage):
     ...
 
-    def handle_error_response(self, exception):
+    def process_error_response(self, exception):
         # self.logger is configured for you already on all Page classes
-        self.logger.warning("skipping", self.source.url)
+        self.logger.warning(f"skipping {self.source.url}")
 
 Wrapping Up
 -----------
@@ -170,11 +186,11 @@ Let's try to run the scrape again:
 
   $ spatula scrape example.rfc_details
   ...
-  fetching http://tools.ietf.org/html/8 for RFC
-  skipping http://tools.ietf.org/html/8
-  fetching http://tools.ietf.org/html/9 for RFC
-  skipping http://tools.ietf.org/html/9
-  success: wrote 7 objects to _scrapes/2021-01-18/001
+  INFO:rfc.RFC:fetching http://tools.ietf.org/html/8
+  WARNING:rfc.RFC:skipping http://tools.ietf.org/html/8
+  INFO:rfc.RFC:fetching http://tools.ietf.org/html/9
+  WARNING:rfc.RFC:skipping http://tools.ietf.org/html/9
+  success: wrote 7 objects to _scrapes/2021-02-01/001
 
 
 And now our scraped data is on disk, ready for you to use.
