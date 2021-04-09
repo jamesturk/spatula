@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 import typing
-import lxml.html
+import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
 from .utils import _display
@@ -17,8 +17,8 @@ try:
     from attr import has as attr_has
     from attr import fields as attr_fields
 except ImportError:  # pragma: no cover
-    attr_has = lambda x: False  # noqa
-    attr_fields = lambda x: []  # noqa
+    attr_has = lambda x: False  # type: ignore # noqa
+    attr_fields = lambda x: []  # type: ignore # noqa
 
 
 VERSION = "0.5.0"
@@ -57,7 +57,7 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     Start an interactive Python session to interact with a particular page.
     """
     try:
-        from IPython import embed
+        from IPython import embed  # type: ignore
     except ImportError:  # pragma: no cover
         click.secho("shell command requires IPython", fg="red")
         return

@@ -70,7 +70,7 @@ class Workflow:
         with open(filename, "w") as f:
             json.dump(dd, f)
 
-    def execute(self, output_dir: str = None) -> int:
+    def execute(self, output_dir: str) -> int:
         count = 0
         for item in page_to_items(self.scraper, self.initial_page):
             self.save_object(item, output_dir=output_dir)

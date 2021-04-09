@@ -5,8 +5,8 @@ import subprocess
 import logging
 import typing
 import scrapelib
-import lxml.html
-from openpyxl import load_workbook
+import lxml.html  # type: ignore
+from openpyxl import load_workbook  # type: ignore
 from .sources import Source, URL
 
 

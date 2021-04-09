@@ -1,6 +1,6 @@
 import pprint
 import typing
-from lxml.etree import _Element
+from lxml.etree import _Element  # type: ignore
 
 
 def _display_element(obj: _Element) -> str:

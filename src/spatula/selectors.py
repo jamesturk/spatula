@@ -1,6 +1,6 @@
 import re
 from typing import Optional, List, Iterator
-from lxml.etree import _Element
+from lxml.etree import _Element  # type: ignore
 from .utils import _display
 
 
