@@ -168,8 +168,11 @@ class PdfPage(Page):  # pragma: no cover
                 raise EnvironmentError(
                     f"error running pdftotext, missing executable? [{e}]"
                 )
-            data = pipe.read()
-            pipe.close()
+            if pipe is None:
+                raise EnvironmentError("no stdout from pdftotext")
+            else:
+                data = pipe.read()
+                pipe.close()
         self.text = data.decode("utf8")
 
 
