@@ -159,22 +159,22 @@ def test(
     # TODO: remove if workflow goes away
     Cls = typing.cast(type, get_class(class_name))
     s = Scraper()
-    source_obj: Source
+    source_obj: typing.Optional[Source] = None
 
     fake_input = _get_fake_input(Cls, data, interactive)
 
-    # special case for passing a single URL source
+    # special case for passing a single URL source as a string
     if source:
         source_obj = URL(source)
     if not source_obj and hasattr(Cls, "example_source"):
-        source = Cls.example_source  # type: ignore
+        source_obj = Cls.example_source  # type: ignore
 
     # we need to do the request-response-next-page loop at least once
     once = True
     num_items = 0
-    while source or once:
+    while source_obj or once:
         once = False
-        page = Cls(fake_input, source=source)
+        page = Cls(fake_input, source=source_obj)
 
         # fetch data after input is handled, since we might need to build the source
         page._fetch_data(s)
@@ -190,17 +190,17 @@ def test(
             click.secho(_display(result))
 
         # will be None in most cases, existing the loop, otherwise we restart
-        source = page.get_next_source()
-        if source:
+        source_obj = page.get_next_source()
+        if source_obj:
             if pagination:
                 click.secho(
-                    f"paginating for {page.__class__.__name__} source={source}",
+                    f"paginating for {page.__class__.__name__} source={source_obj}",
                     fg="blue",
                 )
             else:
                 click.secho(
                     "pagination disabled: would paginate for "
-                    f"{page.__class__.__name__} source={source}",
+                    f"{page.__class__.__name__} source={source_obj}",
                     fg="yellow",
                 )
                 break
