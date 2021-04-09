@@ -1,4 +1,5 @@
 import pprint
+import typing
 from lxml.etree import _Element
 
 
@@ -19,7 +20,7 @@ def _display_element(obj: _Element) -> str:
     return elem_str + f"> @ line {obj.sourceline}"
 
 
-def _display(obj) -> str:
+def _display(obj: typing.Any) -> str:
     if isinstance(obj, dict):
         return pprint.pformat(obj)
     elif hasattr(obj, "to_dict"):

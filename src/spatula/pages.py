@@ -24,6 +24,9 @@ class Page:
     source: typing.Union[None, str, Source] = None
     dependencies: typing.Dict[str, "Page"] = {}
 
+    def get_source_from_input(self) -> typing.Union[None, str, Source]:
+        raise NotImplementedError()
+
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
         """
         ensure that the page has all of its data, this is guaranteed to be called
@@ -37,19 +40,21 @@ class Page:
             setattr(self, val, dep.process_page())
 
         if not self.source:
-            if hasattr(self, "get_source_from_input"):
+            try:
                 self.source = self.get_source_from_input()
-            elif hasattr(self.input, "url"):
-                self.source = URL(self.input.url)
-            else:
-                raise MissingSourceError(
-                    f"{self.__class__.__name__} has no source or get_source_from_input"
-                )
+            except NotImplementedError:
+                if hasattr(self.input, "url"):
+                    self.source = URL(self.input.url)  # type: ignore
+                else:
+                    raise MissingSourceError(
+                        f"{self.__class__.__name__} has no source or get_source_from_input"
+                    )
         if isinstance(self.source, str):
             self.source = URL(self.source)
+        # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
         try:
-            self.response = self.source.get_response(scraper)
+            self.response = self.source.get_response(scraper)  # type: ignore
         except scrapelib.HTTPError as e:
             self.process_error_response(e)
             raise HandledError(e)
@@ -120,7 +125,7 @@ class HtmlPage(Page):
     def postprocess_response(self) -> None:
         self.root = lxml.html.fromstring(self.response.content)
         if hasattr(self.source, "url"):
-            self.root.make_links_absolute(self.source.url)
+            self.root.make_links_absolute(self.source.url)  # type: ignore
 
 
 class XmlPage(Page):
