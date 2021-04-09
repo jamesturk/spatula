@@ -10,7 +10,7 @@ import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
 from .utils import _display
-from .sources import URL
+from .sources import URL, Source
 from .workflow import Workflow
 
 try:
@@ -96,7 +96,10 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
         if dataclasses.is_dataclass(input_type):
             fields = dataclasses.fields(input_type)
         elif attr_has(input_type):
-            fields = attr_fields(input_type)
+            # ignore type rules here since dataclasses/attr do not share a base
+            # but fields will have a name no matter what
+            # TODO: consider interface?
+            fields = attr_fields(input_type)  # type: ignore
         for field in fields:
             if field.name in fake_input:
                 click.secho(f"  {field.name}: {fake_input[field.name]}")
@@ -153,16 +156,18 @@ def test(
     provided URL.
     """
     configure_logging(logging.DEBUG)
-    Cls = get_class(class_name)
+    # TODO: remove if workflow goes away
+    Cls = typing.cast(type, get_class(class_name))
     s = Scraper()
+    source_obj: Source
 
     fake_input = _get_fake_input(Cls, data, interactive)
 
     # special case for passing a single URL source
     if source:
-        source = URL(source)
-    if not source and hasattr(Cls, "example_source"):
-        source = Cls.example_source
+        source_obj = URL(source)
+    if not source_obj and hasattr(Cls, "example_source"):
+        source = Cls.example_source  # type: ignore
 
     # we need to do the request-response-next-page loop at least once
     once = True
