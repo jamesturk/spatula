@@ -1,10 +1,10 @@
 Quickstart
 ==========
 
-This guide contains quick examples of how you could scrape a small list of `RFCs <https://en.wikipedia.org/wiki/Request_for_Comments>`_ to demonstrate what it looks like to write a scraper using **spatula**.
+This guide contains quick examples of how you could scrape a small list of employees of the fictional `Yoyodyne Propulsion Systems <https://yoyodyne-propulsion.herokuapp.com/>`_, a site developed for demonstrating web scraping.  This will give you an idea of what it looks like to write a scraper using **spatula**.
 
 You can skip ahead if you want to read about **spatula**'s :ref:`Design Philosophy`,
-or check out the :ref:`Tutorial` or :ref:`API Reference`.
+or check out the Full :ref:`Tutorial` or :ref:`API Reference`.
 
 Installation
 ------------
@@ -21,23 +21,31 @@ or::
 Scraping a Single Page
 ----------------------
 
-RFCs live on pages like `RFC 1945 <https://tools.ietf.org/html/rfc1945>`_.
+Employees have their details on pages like `this one <https://yoyodyne-propulsion.herokuapp.com/staff/52>`_.
 
 We're going to pull some data elements from the page that look like:
 
 .. code-block:: html
 
-  <meta name="DC.Creator" content="Nielsen, Henrik Frystyk" />
-  <meta name="DC.Creator" content="Berners-Lee, Tim" />
-  <meta name="DC.Creator" content="Fielding, Roy T." />
-  <meta name="DC.Date.Issued" content="May, 1996" />
-  <meta name="DC.Title" content="Hypertext Transfer Protocol -- HTTP/1.0" />
+    <h2 class="section">Employee Details for John Barnett</h2>
+    <div class="section">
+      <dl>
+        <dt>Position</dt>
+        <dd id="position">Scheduling</dd>
+        <dt>Marital Status</dt>
+        <dd id="status">Married</dd>
+        <dt>Number of Children</dt>
+        <dd id="children">1</dd>
+        <dt>Hired</dt>
+        <dd id="hired">3/6/1963</dd>
+      </dl>
+    </div>
 
-To demonstrate extracting the title & authors from special `<meta>` elements, we'll write a small class to handle individual pages.
+To demonstrate extracting the details from this page, we'll write a small class to handle individual employee pages.
 
 To do so we subclass :py:class:`HtmlPage`, and override the :py:meth:`process_page` function.
 
-Example::
+Open a file named quickstart.py and add the following code::
 
   # imports we'll use in this example
   from spatula import (
@@ -45,28 +53,32 @@ Example::
   )
 
 
-  class RFC(HtmlPage):
+  class EmployeeDetail(HtmlPage):
       def process_page(self):
-          title_elem = CSS("meta[name='DC.Title']").match_one(self.root)
+          position = CSS("#position").match_one(self.root)
+          marital_status = CSS("#status").match_one(self.root)
+          children = CSS("#children").match_one(self.root)
+          hired = CSS("#hired").match_one(self.root)
           return dict(
-              title=title_elem.get("content"),
-              authors=[
-                e.get("content")
-                for e in CSS("meta[name='DC.Creator']").match(self.root)
-              ]
+              position=position.text,
+              marital_status=marital_status.text,
+              children=children.text,
+              hired=hired.text,
           )
 
 
-This will extract the title and authors elements from the page.
+This will extract the elements from the page and return them in a dictionary.
 
 It can be tested from the command line like:
 
 .. code-block:: console
 
-  $ spatula test example.RFC --source "https://tools.ietf.org/html/rfc1945"
-  INFO:rfc.RFC:fetching https://tools.ietf.org/html/rfc1945
-  {'authors': ['Nielsen, Henrik Frystyk', 'Berners-Lee, Tim', 'Fielding, Roy T.'],
-   'title': 'Hypertext Transfer Protocol -- HTTP/1.0'}
+  $ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52"
+  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/52
+  {'children': '1',
+   'hired': '3/6/1963',
+   'marital_status': 'Married',
+   'position': 'Scheduling'}
 
 
 Scraping a List Page
