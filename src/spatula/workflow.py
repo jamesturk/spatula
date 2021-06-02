@@ -6,8 +6,15 @@ import scrapelib
 from .pages import Page, HandledError
 
 
+def _to_scout_result(page: Page) -> dict[str, typing.Any]:
+    return {
+        "data": page.input,
+        "__next__": f"{page.__class__.__name__} source={page.source}",
+    }
+
+
 def page_to_items(
-    scraper: scrapelib.Scraper, page: Page
+    scraper: scrapelib.Scraper, page: Page, *, scout: bool = False
 ) -> typing.Iterable[typing.Any]:
     # fetch data for a page, and then call the process_page entrypoint
     try:
@@ -21,7 +28,10 @@ def page_to_items(
         # each item yielded might be a Page or an end-result
         for item in result:
             if isinstance(item, Page):
-                yield from page_to_items(scraper, item)
+                if scout:
+                    yield _to_scout_result(item)
+                else:
+                    yield from page_to_items(scraper, item)
             else:
                 yield item
 
@@ -30,11 +40,14 @@ def page_to_items(
         if next_source:
             # instantiate the same class with same input, but increment the source
             yield from page_to_items(
-                scraper, type(page)(page.input, source=next_source)
+                scraper, type(page)(page.input, source=next_source), scout=scout
             )
     elif isinstance(result, Page):
-        # single Page result, recurse deeper
-        yield from page_to_items(scraper, result)
+        if scout:
+            yield _to_scout_result(result)
+        else:
+            # single Page result, recurse deeper
+            yield from page_to_items(scraper, result)
     else:
         # end-result, just return as-is
         yield result
@@ -49,7 +62,7 @@ class Workflow:
         self,
         initial_page: typing.Union[type, Page],
         *,
-        scraper: scrapelib.Scraper = None
+        scraper: scrapelib.Scraper = None,
     ):
         if isinstance(initial_page, type):
             self.initial_page = initial_page()
@@ -76,3 +89,9 @@ class Workflow:
             self.save_object(item, output_dir=output_dir)
             count += 1
         return count
+
+    def scout(self, output_file: str) -> int:
+        items = list(page_to_items(self.scraper, self.initial_page))
+        with open(output_file, "w") as f:
+            json.dump(items, f, indent=2)
+        return len(items)
