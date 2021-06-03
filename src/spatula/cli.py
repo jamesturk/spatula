@@ -250,11 +250,23 @@ def scrape(workflow_name: str, output_dir: str) -> None:
 @cli.command()
 @click.argument("workflow_name")
 @click.option(
-    "-o", "--output-file", default="scout.json", help="override default output file."
+    "-o",
+    "--output-file",
+    default="scout.json",
+    help="override default output file [default: scout.json].",
 )
 def scout(workflow_name: str, output_file: str) -> None:
     """
-    Run first step of workflow, and output data to a JSON file.
+    Run first step of workflow, and output data to a neatly-formatted JSON file.
+
+    This command is intended to be used to detect at a first approximation whether
+    or not a full scrape might need to be run. If the first layer detects any changes
+    it is safe to say that the full run will as well.
+
+    This will work in the common case where a new subpage is added or removed.
+    Of course in more advanced cases this depends upon the first page being scraped
+    (typically a ListPage derivative) surfacing enough information (perhaps a
+    last_updated date) to know whether any of the other pages have been scraped.
     """
     configure_logging(logging.INFO)
     workflow = get_workflow(workflow_name)
