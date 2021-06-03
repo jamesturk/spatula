@@ -6,11 +6,16 @@ import scrapelib
 from .pages import Page, HandledError
 
 
-def _to_scout_result(page: Page) -> dict[str, typing.Any]:
+def _to_scout_result(page: Page) -> typing.Dict[str, typing.Any]:
+    data: typing.Optional[typing.Dict]
+
     if isinstance(page.input, dict):
         data = page.input
+    elif hasattr(page.input, "to_dict"):
+        data = page.input.to_dict()  # type: ignore
     else:
-        data = page.input.to_dict()
+        data = None
+
     return {
         "data": data,
         "__next__": f"{page.__class__.__name__} source={page.source}",
