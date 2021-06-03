@@ -249,13 +249,15 @@ def scrape(workflow_name: str, output_dir: str) -> None:
 
 @cli.command()
 @click.argument("workflow_name")
-def scout(workflow_name: str) -> None:
+@click.option(
+    "-o", "--output-file", default="scout.json", help="override default output file."
+)
+def scout(workflow_name: str, output_file: str) -> None:
     """
     Run first step of workflow, and output data to a JSON file.
     """
     configure_logging(logging.INFO)
     workflow = get_workflow(workflow_name)
-    output_file = "scout.json"
     count = workflow.scout(output_file=output_file)
     click.secho(f"success: wrote {count} records to {output_file}", fg="green")
 
