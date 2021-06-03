@@ -7,8 +7,12 @@ from .pages import Page, HandledError
 
 
 def _to_scout_result(page: Page) -> dict[str, typing.Any]:
+    if isinstance(page.input, dict):
+        data = page.input
+    else:
+        data = page.input.to_dict()
     return {
-        "data": page.input,
+        "data": data,
         "__next__": f"{page.__class__.__name__} source={page.source}",
     }
 
@@ -16,6 +20,7 @@ def _to_scout_result(page: Page) -> dict[str, typing.Any]:
 def page_to_items(
     scraper: scrapelib.Scraper, page: Page, *, scout: bool = False
 ) -> typing.Iterable[typing.Any]:
+
     # fetch data for a page, and then call the process_page entrypoint
     try:
         page._fetch_data(scraper)
@@ -91,7 +96,7 @@ class Workflow:
         return count
 
     def scout(self, output_file: str) -> int:
-        items = list(page_to_items(self.scraper, self.initial_page))
+        items = list(page_to_items(self.scraper, self.initial_page, scout=True))
         with open(output_file, "w") as f:
             json.dump(items, f, indent=2)
         return len(items)
