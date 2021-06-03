@@ -14,6 +14,22 @@ class ExampleListPage(Page):
         yield {"val": "5"}
 
 
+class Subpage(Page):
+    source = NullSource()
+
+
+class ExampleListPageSubpages(Page):
+    # need this here to test that default source is used
+    source = NullSource()
+
+    def process_page(self):
+        yield Subpage({"val": "1"})
+        yield Subpage({"val": "2"})
+        yield Subpage({"val": "3"})
+        yield Subpage({"val": "4"})
+        yield Subpage({"val": "5"})
+
+
 class ExamplePaginatedPage(Page):
     source = NullSource()
     another_page = True
