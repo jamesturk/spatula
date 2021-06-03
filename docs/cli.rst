@@ -13,7 +13,7 @@ Or with poetry::
   ~/scrape-proj $ poetry run spatula --version
   spatula, version 0.6.0
 
-The CLI provides three useful subcommands for different stages of development:
+The CLI provides four useful subcommands for different stages of development:
 
 .. click:: spatula.cli:shell
    :prog: spatula shell
@@ -25,4 +25,8 @@ The CLI provides three useful subcommands for different stages of development:
 
 .. click:: spatula.cli:scrape
    :prog: spatula scrape
+   :nested: full
+
+.. click:: spatula.cli:scout
+   :prog: spatula scout
    :nested: full

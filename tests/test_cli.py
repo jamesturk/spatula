@@ -1,4 +1,5 @@
 import datetime
+import json
 from click.testing import CliRunner
 from spatula.cli import cli
 
@@ -43,6 +44,37 @@ def test_scrape_command_output_dir_flag():
         )
         assert result.exit_code == 1
         assert "mydir exists and is not empty" in result.output
+
+
+def test_scout_command_basic():
+    runner = CliRunner()
+
+    with runner.isolated_filesystem():
+        result = runner.invoke(cli, ["scout", "tests.examples.ExampleListPage"])
+        assert result.exit_code == 0
+        assert "success: wrote 5 records to scout.json" in result.output
+
+        with open("scout.json") as f:
+            data = json.load(f)
+            assert len(data) == 5
+            assert data[0] == {"val": "1"}
+
+
+def test_scout_command_subpages():
+    runner = CliRunner()
+
+    with runner.isolated_filesystem():
+        result = runner.invoke(cli, ["scout", "tests.examples.ExampleListPageSubpages"])
+        assert result.exit_code == 0
+        assert "success: wrote 5 records to scout.json" in result.output
+
+        with open("scout.json") as f:
+            data = json.load(f)
+            assert len(data) == 5
+            assert data[0] == {
+                "data": {"val": "1"},
+                "__next__": "Subpage source=NullSource",
+            }
 
 
 def test_test_command_basic():

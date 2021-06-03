@@ -1,9 +1,17 @@
 Changelog
 =========
 
-0.5.1 -
+0.7.0 -
 ------------------
-* add typing
+
+* add scout command
+
+
+0.6.0 - 2021-04-12
+------------------
+
+* add full typing to library
+* small bugfixes
 
 0.5.0 - 2021-02-04
 ------------------

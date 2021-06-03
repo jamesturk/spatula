@@ -21,7 +21,7 @@ except ImportError:  # pragma: no cover
     attr_fields = lambda x: []  # type: ignore # noqa
 
 
-VERSION = "0.5.0"
+VERSION = "0.6.0"
 
 
 def configure_logging(level: int) -> None:
@@ -206,6 +206,15 @@ def test(
                 break
 
 
+def get_workflow(workflow_name: str) -> Workflow:
+    workflow_or_page = get_class(workflow_name)
+    if isinstance(workflow_or_page, Workflow):
+        workflow = workflow_or_page
+    else:
+        workflow = Workflow(workflow_or_page)
+    return workflow
+
+
 @cli.command()
 @click.argument("workflow_name")
 @click.option(
@@ -216,11 +225,7 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     Run full workflow, and output data to disk.
     """
     configure_logging(logging.INFO)
-    workflow_or_page = get_class(workflow_name)
-    if isinstance(workflow_or_page, Workflow):
-        workflow = workflow_or_page
-    else:
-        workflow = Workflow(workflow_or_page)
+    workflow = get_workflow(workflow_name)
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -240,6 +245,33 @@ def scrape(workflow_name: str, output_dir: str) -> None:
                 sys.exit(1)
     count = workflow.execute(output_dir=output_dir)
     click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
+
+
+@cli.command()
+@click.argument("workflow_name")
+@click.option(
+    "-o",
+    "--output-file",
+    default="scout.json",
+    help="override default output file [default: scout.json].",
+)
+def scout(workflow_name: str, output_file: str) -> None:
+    """
+    Run first step of workflow, and output data to a neatly-formatted JSON file.
+
+    This command is intended to be used to detect at a first approximation whether
+    or not a full scrape might need to be run. If the first layer detects any changes
+    it is safe to say that the full run will as well.
+
+    This will work in the common case where a new subpage is added or removed.
+    Of course in more advanced cases this depends upon the first page being scraped
+    (typically a ListPage derivative) surfacing enough information (perhaps a
+    last_updated date) to know whether any of the other pages have been scraped.
+    """
+    configure_logging(logging.INFO)
+    workflow = get_workflow(workflow_name)
+    count = workflow.scout(output_file=output_file)
+    click.secho(f"success: wrote {count} records to {output_file}", fg="green")
 
 
 if __name__ == "__main__":  # pragma: no cover
