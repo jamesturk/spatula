@@ -6,12 +6,12 @@ Command Line Usage
 Once installed within your Python environment, spatula can be invoked on the command line.  E.g.::
 
   (scrape-venv) ~/scrape-proj $ spatula --version
-  spatula, version 0.6.0
+  spatula, version 0.7.0
 
 Or with poetry::
 
   ~/scrape-proj $ poetry run spatula --version
-  spatula, version 0.6.0
+  spatula, version 0.7.0
 
 The CLI provides four useful subcommands for different stages of development:
 
