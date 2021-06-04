@@ -1,8 +1,13 @@
 Changelog
 =========
 
-0.7.0 -
--------
+0.7.0 - 2021-06-04
+------------------
+
+* add ``spatula scout`` command
+* make error messages a bit more clear
+* improvements to documentation
+* added more CLI options to control verbosity, user agent, etc.
 
 0.6.0 - 2021-04-12
 ------------------

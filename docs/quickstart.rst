@@ -197,7 +197,7 @@ to tell **spatula** that more work is needed:
 And we can revisit :py:class:`EmployeeDetail` to tell it to combine the data it collects with the data passed in from the parent page:
 
 .. code-block:: python
-   :emphasize-lines: 12-14
+   :emphasize-lines: 12-13
 
    class EmployeeDetail(HtmlPage):
        def process_page(self):

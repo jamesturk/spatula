@@ -5,7 +5,7 @@ Design Philosophy
 
 While several of the decisions made are best understood through this lens, the goal of spatula is to remain lightweight so that even simple projects can benefit from its structure.
 
-Common Problems 
+Common Problems
 ---------------
 
 If you've written a few web scrapers, you're likely to have run into a few common issues:
@@ -27,14 +27,15 @@ Goals
 
   By encouraging users to structure their scrapers in a readable way, scrapers will be easier to read later, and issues/maintenance can often be identified with specific components instead of forcing maintainers to comprehend a single gnarly script.
 
-3. **Iterative development of scrapers should be the norm.** 
+3. **Iterative development of scrapers should be the norm.**
 
    It should be possible to test changes to a single part of the scrape without running the entire process.  The user shouldn't have to comment out code or add temporary debug statements to do something that is extremely common when authoring scrapers.
+
 
 Pages & Page Roles
 ------------------
 
-A key component of using **spatula** is thinking of the scraper in terms of types of "pages". 
+A key component of using **spatula** is thinking of the scraper in terms of types of "pages".
 
 For each type of page you encounter, you'll write a subclass of :py:class:`Page` to extract the data from it.
 

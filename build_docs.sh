@@ -1,3 +1,3 @@
 #!/bin/sh
 cd docs/
-poetry run make html
+poetry run make $1 html
