@@ -22,7 +22,7 @@ except ImportError:  # pragma: no cover
     attr_fields = lambda x: []  # type: ignore # noqa
 
 
-VERSION = "0.6.0"
+VERSION = "0.7.0"
 
 
 def scraper_params(func: typing.Callable) -> typing.Callable:
