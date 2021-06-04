@@ -25,7 +25,7 @@ except ImportError:  # pragma: no cover
 VERSION = "0.6.0"
 
 
-def scraper_params(func):
+def scraper_params(func: typing.Callable) -> typing.Callable:
     @functools.wraps(func)
     @click.option(
         "-ua",
@@ -47,12 +47,18 @@ def scraper_params(func):
         type=int,
         default=-1,
     )
-    def newfunc(user_agent, rpm, header, verbosity, **kwargs):
+    def newfunc(
+        user_agent: str,
+        rpm: int,
+        header: typing.List[str],
+        verbosity: int,
+        **kwargs: str,
+    ) -> None:
         scraper = Scraper(requests_per_minute=rpm)
         scraper.user_agent = user_agent
         scraper.headers = {
             k.strip(): v.strip() for k, v in [h.split(":") for h in header]
-        }
+        }  # type: ignore
 
         if verbosity == -1:
             level = logging.INFO if func.__name__ != "test" else logging.DEBUG
@@ -69,7 +75,7 @@ def scraper_params(func):
             logging.getLogger("urllib3").setLevel(logging.WARNING)
         logging.basicConfig(level=level)
 
-        func(**kwargs, scraper=scraper)
+        return func(**kwargs, scraper=scraper)
 
     return newfunc
 
