@@ -155,7 +155,7 @@ It can be tested from the command line like:
 .. code-block:: console
 
   $ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52"
-  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/52
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
   {'children': '1', 'hired': '3/6/1963', 'marital_status': 'Married'}
 
 One thing to note is that since we didn't define a single source attribute like we did in :py:class:`EmployeeList`, we need to pass one on the command line with ``--source``.  This lets you quickly try your scraper against multiple variants of a page if desired.
@@ -220,12 +220,12 @@ Now a run looks like:
 .. code-block:: console
 
   $ spatula test quickstart.EmployeeList
-  INFO:quickstart.EmployeeList:fetching http://localhost:5000/staff
-  1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=http://localhost:5000/staff/52)
-  2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=http://localhost:5000/staff/2)
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+  1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://yoyodyne-propulsion.herokuapp.com/staff)
+  2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/2)
   ...
-  44: EmployeeDetail(input={'first': 'John', 'last': 'Wright', 'position': 'Orbital Mechanics Supervisor'} source=http://localhost:5000/staff/100)
-  45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=http://localhost:5000/staff/101)
+  44: EmployeeDetail(input={'first': 'John', 'last': 'Wright', 'position': 'Orbital Mechanics Supervisor'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/100)
+  45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)
 
 
 By default, ``spatula test`` just shows the result of the page you're working on, but you can see that it is now returning page objects with the data and a ``source`` set.
@@ -241,12 +241,12 @@ For this we use the ``spatula scrape`` command:
 .. code-block:: console
 
   $ spatula scrape quickstart.EmployeeList
-  INFO:quickstart.EmployeeList:fetching http://localhost:5000/staff
-  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/52
-  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/2
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/2
   ...
-  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/100
-  INFO:quickstart.EmployeeDetail:fetching http://localhost:5000/staff/101
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/100
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
   success: wrote 45 objects to _scrapes/2021-06-03/001
 
 And now our scraped data is on disk, ready for you to use!
