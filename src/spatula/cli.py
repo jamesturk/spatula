@@ -3,6 +3,7 @@ import datetime
 import glob
 import importlib
 import logging
+import functools
 import os
 import sys
 import typing
@@ -24,16 +25,70 @@ except ImportError:  # pragma: no cover
 VERSION = "0.6.0"
 
 
-def configure_logging(level: int) -> None:
-    # replace scrapelib's logging
-    logging.getLogger("scrapelib").setLevel(logging.ERROR)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
-    logging.basicConfig(level=level)
+def scraper_params(func: typing.Callable) -> typing.Callable:
+    @functools.wraps(func)
+    @click.option(
+        "-ua",
+        "--user-agent",
+        default=f"spatula {VERSION}",
+        help="override default user-agent",
+    )
+    @click.option("--rpm", default=60, help="set requests per minute (default: 60)")
+    @click.option(
+        "-H",
+        "--header",
+        help="add a header to all requests. example format: 'Accept: application/json'",
+        multiple=True,
+    )
+    @click.option(
+        "-v",
+        "--verbosity",
+        help="override default verbosity for command (0-3)",
+        type=int,
+        default=-1,
+    )
+    def newfunc(
+        user_agent: str,
+        rpm: int,
+        header: typing.List[str],
+        verbosity: int,
+        **kwargs: str,
+    ) -> None:
+        scraper = Scraper(requests_per_minute=rpm)
+        scraper.user_agent = user_agent
+        # double ignore, weird issue on 3.7?
+        scraper.headers = {  # type: ignore
+            k.strip(): v.strip() for k, v in [h.split(":") for h in header]
+        }  # type: ignore
+
+        if verbosity == -1:
+            level = logging.INFO if func.__name__ != "test" else logging.DEBUG
+        elif verbosity == 0:
+            level = logging.ERROR
+        elif verbosity == 1:
+            level = logging.INFO
+        elif verbosity >= 2:
+            level = logging.DEBUG
+
+        if verbosity < 3:
+            # replace parent library logging
+            logging.getLogger("scrapelib").setLevel(logging.ERROR)
+            logging.getLogger("urllib3").setLevel(logging.WARNING)
+        logging.basicConfig(level=level)
+
+        return func(**kwargs, scraper=scraper)
+
+    return newfunc
 
 
 def get_class(dotted_name: str) -> typing.Union[type, Workflow]:
     mod_name, cls_name = dotted_name.rsplit(".", 1)
-    mod = importlib.import_module(mod_name)
+    try:
+        mod = importlib.import_module(mod_name)
+    except ImportError:
+        logging.getLogger("spatula").debug("appending current directory to PYTHONPATH")
+        sys.path.append(".")
+        mod = importlib.import_module(mod_name)
     return getattr(mod, cls_name)
 
 
@@ -45,16 +100,11 @@ def cli() -> None:
 
 @cli.command()
 @click.argument("url")
-@click.option(
-    "-ua",
-    "--user-agent",
-    default=f"spatula {VERSION}",
-    help="override default user-agent",
-)
 @click.option("-X", "--verb", default="GET", help="set HTTP verb such as POST")
-def shell(url: str, user_agent: str, verb: str) -> None:
+@scraper_params
+def shell(url: str, verb: str, scraper: Scraper) -> None:
     """
-    Start an interactive Python session to interact with a particular page.
+    Start a session to interact with a particular page.
     """
     try:
         from IPython import embed  # type: ignore
@@ -65,8 +115,6 @@ def shell(url: str, user_agent: str, verb: str) -> None:
     # import selectors so they can be used without import
     from .selectors import SelectorError, XPath, SimilarLink, CSS  # noqa
 
-    scraper = Scraper()
-    scraper.user_agent = user_agent
     resp = scraper.request(verb, url)
     root = lxml.html.fromstring(resp.content)  # noqa
     click.secho(f"spatula {VERSION} shell", fg="blue")
@@ -131,15 +179,18 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
     help="Determine whether or not pagination should be followed or one page is "
     "enough for testing",
 )
+@scraper_params
 def test(
     class_name: str,
     interactive: bool,
     data: typing.List[str],
     source: str,
     pagination: bool,
+    scraper: Scraper,
 ) -> None:
     """
-    This command allows you to scrape a single page and see the output immediately.
+    Scrape a single page and see output immediately.
+
     This eases the common cycle of making modifications to a scraper, running a scrape
     (possibly with long-running but irrelevant portions commented out), and comparing
     output to what is expected.
@@ -155,10 +206,8 @@ def test(
     This will run the scraper defined at :py:class:`path.to.ClassName` against the
     provided URL.
     """
-    configure_logging(logging.DEBUG)
     # TODO: remove if workflow goes away
     Cls = typing.cast(type, get_class(class_name))
-    s = Scraper()
     source_obj: typing.Optional[Source] = None
 
     fake_input = _get_fake_input(Cls, data, interactive)
@@ -177,7 +226,7 @@ def test(
         page = Cls(fake_input, source=source_obj)
 
         # fetch data after input is handled, since we might need to build the source
-        page._fetch_data(s)
+        page._fetch_data(scraper)
 
         result = page.process_page()
 
@@ -220,11 +269,11 @@ def get_workflow(workflow_name: str) -> Workflow:
 @click.option(
     "-o", "--output-dir", default=None, help="override default output directory."
 )
-def scrape(workflow_name: str, output_dir: str) -> None:
+@scraper_params
+def scrape(workflow_name: str, output_dir: str, scraper: Scraper) -> None:
     """
     Run full workflow, and output data to disk.
     """
-    configure_logging(logging.INFO)
     workflow = get_workflow(workflow_name)
     if not output_dir:
         dirn = 1
@@ -255,9 +304,10 @@ def scrape(workflow_name: str, output_dir: str) -> None:
     default="scout.json",
     help="override default output file [default: scout.json].",
 )
-def scout(workflow_name: str, output_file: str) -> None:
+@scraper_params
+def scout(workflow_name: str, output_file: str, scraper: Scraper) -> None:
     """
-    Run first step of workflow, and output data to a neatly-formatted JSON file.
+    Run first step of workflow & output data to a JSON file.
 
     This command is intended to be used to detect at a first approximation whether
     or not a full scrape might need to be run. If the first layer detects any changes
@@ -268,7 +318,6 @@ def scout(workflow_name: str, output_file: str) -> None:
     (typically a ListPage derivative) surfacing enough information (perhaps a
     last_updated date) to know whether any of the other pages have been scraped.
     """
-    configure_logging(logging.INFO)
     workflow = get_workflow(workflow_name)
     count = workflow.scout(output_file=output_file)
     click.secho(f"success: wrote {count} records to {output_file}", fg="green")

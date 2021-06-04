@@ -51,17 +51,17 @@ class Selector:
 
         if num_items is not None and len(items) != num_items:
             raise SelectorError(
-                f"{self} on {_display(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)} results, "
                 f"expected {num_items}"
             )
         if min_items is not None and len(items) < min_items:
             raise SelectorError(
-                f"{self} on {_display(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)} results, "
                 f"expected at least {min_items}"
             )
         if max_items is not None and len(items) > max_items:
             raise SelectorError(
-                f"{self} on {_display(element)} got {len(items)}, "
+                f"{self} on {_display(element)} got {len(items)} results, "
                 f"expected at most {max_items}"
             )
 

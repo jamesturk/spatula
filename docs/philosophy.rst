@@ -5,7 +5,7 @@ Design Philosophy
 
 While several of the decisions made are best understood through this lens, the goal of spatula is to remain lightweight so that even simple projects can benefit from its structure.
 
-Common Problems 
+Common Problems
 ---------------
 
 If you've written a few web scrapers, you're likely to have run into a few common issues:
@@ -27,14 +27,15 @@ Goals
 
   By encouraging users to structure their scrapers in a readable way, scrapers will be easier to read later, and issues/maintenance can often be identified with specific components instead of forcing maintainers to comprehend a single gnarly script.
 
-3. **Iterative development of scrapers should be the norm.** 
+3. **Iterative development of scrapers should be the norm.**
 
    It should be possible to test changes to a single part of the scrape without running the entire process.  The user shouldn't have to comment out code or add temporary debug statements to do something that is extremely common when authoring scrapers.
+
 
 Pages & Page Roles
 ------------------
 
-A key component of using **spatula** is thinking of the scraper in terms of types of "pages". 
+A key component of using **spatula** is thinking of the scraper in terms of types of "pages".
 
 For each type of page you encounter, you'll write a subclass of :py:class:`Page` to extract the data from it.
 
@@ -54,7 +55,7 @@ There are two other roles that a page can play, we'll get into these in more det
 One is what we'll call an 'auxillary detail' page, essentially a subpage of a detail page that contains additional information we need to collect. (An example would be if each detail page had a subpage listing a legislator's committee assignments that we wanted to collect.)
 The final role is what we call 'augmentation' pages, which provide data with which we want to augment the entire data set.  (An example would be a separate page that is a photo directory of all legislators.  We'll need to scrape this and match the photos to the legislators we scraped from the listing/detail pages.)
 
-Scraper / Page Separation
--------------------------
+Why don't page objects fetch themselves?
+----------------------------------------
 
-Why don't page objects fetch themselves?  A big part of this is that we want to share a scraper among them for rate limiting and other configuration yet to come.  In theory this could mean that each one is instantiated with a scraper parameter, but that'd be a bit more cumbersome.  This also can make testing even easier, as there's no need to mock HTTP requests/etc. as just passing a mock object into the :py:class:`Page` will suffice.
+A big part of this is that we want to share some state among them for rate limiting and other configuration yet to come.  In theory this could mean that each one is instantiated with a session parameter or similar, but that'd be a bit more cumbersome.  This also can make testing even easier, as there's no need to mock HTTP requests/etc. as just passing a mock object into the :py:class:`Page` will suffice.
