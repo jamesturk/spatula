@@ -82,7 +82,12 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
 
 def get_class(dotted_name: str) -> typing.Union[type, Workflow]:
     mod_name, cls_name = dotted_name.rsplit(".", 1)
-    mod = importlib.import_module(mod_name)
+    try:
+        mod = importlib.import_module(mod_name)
+    except ImportError:
+        logging.getLogger("spatula").debug("appending current directory to PYTHONPATH")
+        sys.path.append(".")
+        mod = importlib.import_module(mod_name)
     return getattr(mod, cls_name)
 
 
