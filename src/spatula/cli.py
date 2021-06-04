@@ -56,7 +56,8 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
     ) -> None:
         scraper = Scraper(requests_per_minute=rpm)
         scraper.user_agent = user_agent
-        scraper.headers = {
+        # double ignore, weird issue on 3.7?
+        scraper.headers = {  # type: ignore
             k.strip(): v.strip() for k, v in [h.split(":") for h in header]
         }  # type: ignore
 
