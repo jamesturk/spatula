@@ -97,12 +97,11 @@ It can be tested from the command line like:
   2: {'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'}
   3: {'first': 'John', 'last': 'Camp', 'position': 'Human Resources'}
   ...
-  43: {'first': 'John', 'last': 'Wood', 'position': 'Sales'}
-  44: {'first': 'John', 'last': 'Wright', 'position': 'Orbital Mechanics Supervisor'}
-  45: {'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'}
-
+  10: {'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'}
 
 The ``spatula test`` command lets us quickly see the output of the part of the scraper we're working on.
+
+You may notice that we're only grabbing the first page for now, we'll come back in a bit to handle pagination.
 
 
 Scraping a Single Page
@@ -158,7 +157,7 @@ It can be tested from the command line like:
   INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
   {'children': '1', 'hired': '3/6/1963', 'marital_status': 'Married'}
 
-One thing to note is that since we didn't define a single source attribute like we did in :py:class:`EmployeeList`, we need to pass one on the command line with ``--source``.  This lets you quickly try your scraper against multiple variants of a page if desired.
+One thing to note is that since we didn't define a single source attribute like we did in :py:class:`EmployeeList`, we need to pass one on the command line with ``--source``.  This lets you quickly try your scraper against multiple variants of a page as needed.
 
 
 Chaining Pages Together
@@ -197,7 +196,7 @@ to tell **spatula** that more work is needed:
 And we can revisit :py:class:`EmployeeDetail` to tell it to combine the data it collects with the data passed in from the parent page:
 
 .. code-block:: python
-   :emphasize-lines: 12-13
+   :emphasize-lines: 10-12
 
    class EmployeeDetail(HtmlPage):
        def process_page(self):
@@ -214,7 +213,6 @@ And we can revisit :py:class:`EmployeeDetail` to tell it to combine the data it 
            )
 
 
-
 Now a run looks like:
 
 .. code-block:: console
@@ -224,8 +222,7 @@ Now a run looks like:
   1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://yoyodyne-propulsion.herokuapp.com/staff)
   2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/2)
   ...
-  44: EmployeeDetail(input={'first': 'John', 'last': 'Wright', 'position': 'Orbital Mechanics Supervisor'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/100)
-  45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)
+  10: EmployeeDetail(input={'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/20)
 
 
 By default, ``spatula test`` just shows the result of the page you're working on, but you can see that it is now returning page objects with the data and a ``source`` set.
@@ -247,7 +244,7 @@ For this we use the ``spatula scrape`` command:
   ...
   INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/100
   INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
-  success: wrote 45 objects to _scrapes/2021-06-03/001
+  success: wrote 10 objects to _scrapes/2021-06-03/001
 
 And now our scraped data is on disk, ready for you to use!
 
@@ -262,5 +259,89 @@ If you look at a data file you'll see that it has the full data for an individua
     "position": "Imports & Exports"
   }
 
-Now that you've seen the basics, you might want to read a bit more about **spatula**'s :ref:`Design Philosophy`,
-or check out the :ref:`Tutorial` or :ref:`API Reference`.
+
+Pagination
+----------
+
+While writing the list page we ignored pagination, let's go ahead and add it now.
+
+If we override the :py:meth:`get_next_source` method on our :py:meth:`EmployeeLList` class, **spatula** will continue to the next page once it has called :py:meth:`process_item` on all elements on the current page.
+
+.. code-block:: python
+
+    # add this within EmployeeList
+    def get_next_source(self):
+        try:
+            return XPath("//a[contains(text(), 'Next')]/@href").match_one(self.root)
+        except SelectorError:
+            pass
+
+You'll notice the output of ``spatula test quickstart.EmployeeList`` has now changed:
+
+.. code-block:: console
+
+  $ spatula test quickstart.EmployeeList
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+  1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
+  ...
+  paginating for EmployeeList source=https://yoyodyne-propulsion.herokuapp.com/staff?page=2
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff?page=2
+  ...
+  45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)
+
+
+Error Handling
+--------------
+
+Now that we're grabbing all 45 employees, kick off another full scrape:
+
+.. code-block:: console
+
+  $ spatula scrape quickstart.EmployeeList
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+  ...
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/404
+  Traceback (most recent call last):
+  ...
+  scrapelib.HTTPError: 404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404
+
+An error!  It turns out that one of the employee pages isn't loading correctly.
+
+Sometimes it is best to let these errors propagate so you can try to fix the broken scraper.
+
+Other times it makes more sense to handle the error and move on.  If you wish to do that, you can override
+:py:meth:`process_error_response`.
+
+Add the following to :py:class:`EmployeeDetail`:
+
+.. code-block:: python
+
+    def process_error_response(self, exception):
+        # every Page subclass has a built-in logger object
+        self.logger.warning(exception)
+
+Run the scrape again to see this in action:
+
+.. code-block:: console
+
+  $ spatula scrape quickstart.EmployeeList
+  INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+  ...
+  WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404
+  ...
+  INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
+  success: wrote 44 objects to _scrapes/2021-06-03/002
+
+Defining Scraper Input
+----------------------
+TODO: introduce validation and CLI testing
+
+Making Testing Better
+---------------------
+TODO: add more ways to make testing work
+
+Workflows
+---------
+TODO: figure out what if anything to teach on these
+
+Now that you've seen the basics, you might want to read a bit more about **spatula**'s :ref:`Design Philosophy`, or :ref:`API Reference`.
