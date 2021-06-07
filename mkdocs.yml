@@ -3,6 +3,7 @@ copyright: Copyright &copy; 2021 James Turk
 repo_url: https://github.com/jamesturk/spatula
 repo_name: jamesturk/spatula
 theme:
+  logo: assets/white-spatula.svg
   name: material
   palette:
     primary: teal
@@ -35,7 +36,7 @@ plugins:
     watch:
       - src/spatula
 extra_css:
-  - extra.css
+  - assets/extra.css
 nav:
   - Introduction:
     - 'index.md'
