@@ -4,23 +4,90 @@
 
 ### Page
 
+::: spatula.Page
+    rendering:
+      heading_level: 4
+
 ### HtmlPage
+
+::: spatula.HtmlPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
 
 ### JsonPage
 
-### XmlPage
+::: spatula.JsonPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
 
 ### PdfPage
+
+::: spatula.PdfPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
+
+### XmlPage
+
+::: spatula.XmlPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
+
 
 ## ListPages
 
 ### ListPage
 
-### CSVListPage
+::: spatula.ListPage
+    rendering:
+      heading_level: 4
+
+### CsvListPage
+
+::: spatula.CsvListPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
+
+### ExcelListPage
+
+::: spatula.ExcelListPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
+
+### HtmlListPage
+
+::: spatula.HtmlListPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
 
 ### JsonListPage
 
+::: spatula.JsonListPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
+
 ### XmlListPage
+
+::: spatula.XmlListPage
+    selection:
+      members: False
+    rendering:
+      heading_level: 4
 
 ## Selectors
 

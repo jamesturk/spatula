@@ -22,22 +22,30 @@ class HandledError(Exception):
 
 class Page:
     """
-    Base class for all `Page` objects.
+    Base class for all *Page* scrapers, used for scraping information from a single type of page.
+
+    **Attributes**
+
+    `source`
+    :   Can be set on subclasses of `Page` to define the initial HTTP request
+        that the page will handle in its `process_response` method.
+
+        For simple GET requests, `source` can be a string.
+        `URL` should be used for more advanced use cases.
+
+    `response`
+    :   [`requests.Response`](https://docs.python-requests.org/en/master/api/#requests.Response)
+        object available if access is needed to the raw response for any reason.
+
+
+    `dependencies`
+    :   TODO: document
+
+    **Methods**
     """
 
     source: typing.Union[None, str, Source] = None
-    """
-    Can be set on subclasses of :py:class:`Page` to define the initial HTTP
-    request that the page will handle in its :py:meth:`process_response`.
-
-    For simple GET requests, :py:data:`source` can be a string.
-    :py:class:`URL` should be used for more advanced use cases.
-    """
-
     dependencies: typing.Dict[str, "Page"] = {}
-    """
-    TODO: document dependencies
-    """
 
     def get_source_from_input(self) -> typing.Union[None, str, Source]:
         raise NotImplementedError()
@@ -134,7 +142,16 @@ class Page:
 
 class HtmlPage(Page):
     """
-    self.root: preprocessed lxml.html-parsed HTML element
+    Page that automatically handles parsing and normalizing links in an HTML response.
+
+    **Attributes**
+
+    `root`
+    :   [`lxml.etree.Element`](https://lxml.de/api/lxml.etree._Element-class.html)
+    object representing the root element (e.g. `<html>`) on the page.
+
+        Can use the normal lxml methods (such as `cssselect` and `getchildren`), or
+        use this element as the target of a `Selector` subclass.
     """
 
     def postprocess_response(self) -> None:
@@ -145,7 +162,13 @@ class HtmlPage(Page):
 
 class XmlPage(Page):
     """
-    self.root: preprocessed lxml.etree-parsed XML element
+    Page that automatically handles parsing a XML response.
+
+    **Attributes**
+
+    `root`
+    :   [`lxml.etree.Element`](https://lxml.de/api/lxml.etree._Element-class.html)
+    object representing the root XML element on the page.
     """
 
     def postprocess_response(self) -> None:
@@ -154,7 +177,12 @@ class XmlPage(Page):
 
 class JsonPage(Page):
     """
-    self.data: preprocessed JSON
+    Page that automatically handles parsing a JSON response.
+
+    **Attributes**
+
+    `data`
+    :   JSON data from response.  (same as `self.response.json()`)
     """
 
     def postprocess_response(self) -> None:
@@ -162,6 +190,20 @@ class JsonPage(Page):
 
 
 class PdfPage(Page):  # pragma: no cover
+    """
+    Page that automatically handles converting a PDF response to text using `pdftotext`.
+
+    **Attributes**
+
+    `preserve_layout`
+    :   set to `True` on derived class if you want the conversion function to use pdftotext's
+        -layout option to attempt to preserve the layout of text.
+        (`False` by default)
+
+    `text`
+    :   UTF8 text extracted by pdftotext.
+    """
+
     preserve_layout = False
 
     def postprocess_response(self) -> None:
@@ -192,11 +234,24 @@ class PdfPage(Page):  # pragma: no cover
 
 
 class ListPage(Page):
+    """
+    Base class for common pattern of extracting many homogenous items from one page.
+
+    Instead of overriding `process_response`, subclasses should provide a `process_item`.
+
+    **Methods**
+    """
+
     class SkipItem(Exception):
         def __init__(self, msg: str):
             super().__init__(msg)
 
     def skip(self, msg: str = "") -> None:
+        """
+        Can be called from within `process_item` to skip a given item.
+
+        Typically used if there is some known bad data.
+        """
         raise self.SkipItem(msg)
 
     def _process_or_skip_loop(
@@ -211,10 +266,20 @@ class ListPage(Page):
             yield item
 
     def process_item(self, item: typing.Any) -> typing.Any:
+        """
+        To be overridden.
+
+        Called once per subitem on page, as defined by the particular subclass being used.
+        """
         return item
 
 
 class CsvListPage(ListPage):
+    """
+    Processes each row in a CSV (after the first, assumed to be headers) as an item
+    with `process_item`.
+    """
+
     def postprocess_response(self) -> None:
         self.reader = csv.DictReader(io.StringIO(self.response.text))
 
@@ -223,6 +288,10 @@ class CsvListPage(ListPage):
 
 
 class ExcelListPage(ListPage):
+    """
+    Processes each row in an Excel file as an item with `process_item`.
+    """
+
     def postprocess_response(self) -> None:
         workbook = load_workbook(io.BytesIO(self.response.content))
         # TODO: allow selecting this with a class property
@@ -253,13 +322,35 @@ class LxmlListPage(ListPage):
 
 
 class HtmlListPage(LxmlListPage, HtmlPage):
+    """
+    Selects homogenous items from HTML page using `selector` and passes them to `process_item`.
+
+    **Attributes**
+
+    `selector`
+    :   `Selector` subclass which matches list of homogenous elements to process.  (e.g. `CSS("tbody tr")`)
+    """
+
     pass
 
 
 class XmlListPage(LxmlListPage, XmlPage):
+    """
+    Selects homogenous items from XML document using `selector` and passes them to `process_item`.
+
+    **Attributes**
+
+    `selector`
+    :   `Selector` subclass which matches list of homogenous elements to process.  (e.g. `XPath("//item")`)
+    """
+
     pass
 
 
 class JsonListPage(ListPage, JsonPage):
+    """
+    Processes each element in a JSON list as an item with `process_item`.
+    """
+
     def process_page(self) -> typing.Iterable[typing.Any]:
         yield from self._process_or_skip_loop(self.data)
