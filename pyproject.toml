@@ -1,12 +1,12 @@
 [tool.poetry]
 name = "spatula"
 version = "0.7.0"
-description = "lightweight structured scraping toolkit"
+description = "A modern Python library for writing maintainable web scrapers."
 authors = ["James Turk <dev@jamesturk.net>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jamesturk/spatula/"
-documentation = "https://spatula.github.io"
+documentation = "https://jamesturk.github.io/spatula/"
 
 [tool.poetry.scripts]
 spatula = 'spatula.cli:cli'
