@@ -8,19 +8,19 @@ class Source:
 
 
 class URL(Source):
-    """
-    Defines a resource to fetch via URL, particularly useful for handling non-GET
-    requests.
-
-    :param url: URL to fetch
-    :param method: HTTP method to use, defaults to "GET"
-    :param data: POST data to include in request body.
-    :param headers: dictionary of HTTP headers to set for the request.
-    """
-
     def __init__(
         self, url: str, method: str = "GET", data: dict = None, headers: dict = None
     ):
+        """
+        Defines a resource to fetch via URL, particularly useful for handling non-GET
+        requests.
+
+        :param url: URL to fetch
+        :param method: HTTP method to use, defaults to "GET"
+        :param data: POST data to include in request body.
+        :param headers: dictionary of HTTP headers to set for the request.
+        """
+
         self.url = url
         self.method = method
         self.data = data
@@ -39,7 +39,7 @@ class URL(Source):
 
 class NullSource(Source):
     """
-    Special class to set as a page's :py:attr:`source` to indicate no HTTP request needs
+    Special class to set as a page's `source` to indicate no HTTP request needs
     to be performed.
     """
 

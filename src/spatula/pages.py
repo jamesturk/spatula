@@ -21,8 +21,23 @@ class HandledError(Exception):
 
 
 class Page:
+    """
+    Base class for all `Page` objects.
+    """
+
     source: typing.Union[None, str, Source] = None
+    """
+    Can be set on subclasses of :py:class:`Page` to define the initial HTTP
+    request that the page will handle in its :py:meth:`process_response`.
+
+    For simple GET requests, :py:data:`source` can be a string.
+    :py:class:`URL` should be used for more advanced use cases.
+    """
+
     dependencies: typing.Dict[str, "Page"] = {}
+    """
+    TODO: document dependencies
+    """
 
     def get_source_from_input(self) -> typing.Union[None, str, Source]:
         raise NotImplementedError()

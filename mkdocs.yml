@@ -1,0 +1,51 @@
+site_name: spatula
+copyright: Copyright &copy; 2021 James Turk
+repo_url: https://github.com/jamesturk/spatula
+repo_name: jamesturk/spatula
+theme:
+  name: material
+  palette:
+    primary: teal
+  features:
+    #- navigation.tabs
+    - navigation.sections
+    - navigation.top
+  icon:
+    repo: fontawesome/brands/github
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - mkdocs-click
+  - toc:
+      permalink: true
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        selection:
+          docstring_style: restructured-text
+        rendering:
+          show_source: false
+          show_root_full_path: false
+          show_root_toc_entry: false
+
+    watch:
+      - src/spatula
+extra:
+  version:
+    provider: mike
+extra_css:
+  - extra.css
+nav:
+  - Introduction:
+    - 'index.md'
+  - Quickstart:
+    - 'quickstart.md'
+  - Usage:
+    - 'cli.md'
+    - 'reference.md'
+  - About Spatula:
+    - 'philosophy.md'
+    - 'changelog.md'

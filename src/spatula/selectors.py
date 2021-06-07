@@ -36,7 +36,7 @@ class Selector:
         Return all matches of the given selector within `element`.
 
         If the number of elements matched is outside the prescribed boundaries, a
-        :py:class:`SelectorError` is raised.
+        `SelectorError` is raised.
 
         :param element: The element to match within. When used from within a `Page` will
                         usually be `self.root`.
@@ -76,22 +76,10 @@ class Selector:
         return self.match(element, num_items=1)[0]
 
     def get_items(self, element: _Element) -> Iterator[_Element]:  # pragma: no cover
-        """
-        :meta private:
-        """
         raise NotImplementedError()
 
 
 class XPath(Selector):
-    """
-    Utilize `XPath <https://en.wikipedia.org/wiki/XPath#Examples>`_ selectors.
-
-    :param xpath: XPath expression to use.
-    :param min_items: A minimum number of items to match.
-    :param max_items: A maximum number of items to match.
-    :param num_items: An exact number of items to match.
-    """
-
     def __init__(
         self,
         xpath: str,
@@ -100,6 +88,14 @@ class XPath(Selector):
         max_items: Optional[int] = None,
         num_items: Optional[int] = None,
     ):
+        """
+        Utilize [XPath](https://en.wikipedia.org/wiki/XPath#Examples) selectors.
+
+        :param xpath: XPath expression to use.
+        :param min_items: A minimum number of items to match.
+        :param max_items: A maximum number of items to match.
+        :param num_items: An exact number of items to match.
+        """
         super().__init__(min_items=min_items, max_items=max_items, num_items=num_items)
         self.xpath = xpath
 
@@ -111,15 +107,6 @@ class XPath(Selector):
 
 
 class SimilarLink(Selector):
-    """
-    Match links that fit a provided pattern.
-
-    :param pattern: Regular expression for link hrefs.
-    :param min_items: A minimum number of items to match.
-    :param max_items: A maximum number of items to match.
-    :param num_items: An exact number of items to match.
-    """
-
     def __init__(
         self,
         pattern: str,
@@ -128,6 +115,14 @@ class SimilarLink(Selector):
         max_items: Optional[int] = None,
         num_items: Optional[int] = None,
     ):
+        """
+        Match links that fit a provided pattern.
+
+        :param pattern: Regular expression for link hrefs.
+        :param min_items: A minimum number of items to match.
+        :param max_items: A maximum number of items to match.
+        :param num_items: An exact number of items to match.
+        """
         super().__init__(min_items=min_items, max_items=max_items, num_items=num_items)
         self.pattern = re.compile(pattern)
 
@@ -148,15 +143,6 @@ class SimilarLink(Selector):
 
 
 class CSS(Selector):
-    """
-    Utilize CSS-style selectors.
-
-    :param css_selector: CSS selector expression to use.
-    :param min_items: A minimum number of items to match.
-    :param max_items: A maximum number of items to match.
-    :param num_items: An exact number of items to match.
-    """
-
     def __init__(
         self,
         css_selector: str,
@@ -165,6 +151,14 @@ class CSS(Selector):
         max_items: Optional[int] = None,
         num_items: Optional[int] = None,
     ):
+        """
+        Utilize CSS-style selectors.
+
+        :param css_selector: CSS selector expression to use.
+        :param min_items: A minimum number of items to match.
+        :param max_items: A maximum number of items to match.
+        :param num_items: An exact number of items to match.
+        """
         super().__init__(min_items=min_items, max_items=max_items, num_items=num_items)
         self.css_selector = css_selector
 
