@@ -1,12 +1,29 @@
 site_name: spatula
+site_url: https://jamesturk.github.io/spatula/
+site_author: James Turk
+site_description: >-
+  A modern Python library for writing maintainable web scrapers.
 copyright: Copyright &copy; 2021 James Turk
 repo_url: https://github.com/jamesturk/spatula
 repo_name: jamesturk/spatula
+
 theme:
   logo: assets/white-spatula.svg
   name: material
   palette:
-    primary: teal
+    - scheme: default
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      primary: teal
+      accent: teal
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
   features:
     #- navigation.tabs
     - navigation.sections
