@@ -2,10 +2,8 @@ from invoke import task
 
 
 @task
-def docs(c, clean=False):
-    if clean:
-        c.run("rm -rf docs/_build", pty=True)
-    c.run("poetry run sphinx-build docs/ docs/_build/html", pty=True)
+def docs(c):
+    c.run("poetry run mkdocs serve", pty=True)
 
 
 @task
@@ -33,3 +31,4 @@ def release(c, old, new):
     # c.run("git push", pty=True)
     # c.run("git push --tags", pty=True)
     c.run("poetry publish --build", pty=True)
+    c.run("poetry run mkdocs gh-deploy", pty=True)

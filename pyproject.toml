@@ -6,6 +6,7 @@ authors = ["James Turk <dev@jamesturk.net>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jamesturk/spatula/"
+documentation = "https://spatula.github.io"
 
 [tool.poetry.scripts]
 spatula = 'spatula.cli:cli'
@@ -19,9 +20,6 @@ cssselect = "^1.1.0"
 openpyxl = "^3.0.6"
 attrs = {version = "^20.3.0", extras = ["attrs"]}
 ipython = {version = "^7.19.0", extras = ["shell"]}
-Sphinx = {version = "^3.4.3", extras = ["docs"]}
-sphinx-rtd-theme = {version = "^0.5.1", extras = ["docs"]}
-sphinx-click = {version = "^2.5.0", extras = ["docs"]}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
