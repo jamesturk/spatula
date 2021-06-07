@@ -3,6 +3,7 @@
 *spatula* is a lightweight scraping framework, designed to encourage best practices and ease development and testing of scrapers.
 
 Source: [https://github.com/jamesturk/spatula](https://github.com/jamesturk/spatula)
+
 Documentation: [https://jamesturk.github.io/spatula/](https://jamesturk.github.io/spatula/)
 
 [![PyPI badge](https://badge.fury.io/py/spatula.svg)](https://badge.fury.io/py/spatula)
