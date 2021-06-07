@@ -14,7 +14,7 @@
     
     
       
-        <title>Quickstart - spatula</title>
+        <title>A First Scraper - spatula</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#quickstart" class="md-skip">
+        <a href="#a-first-scraper" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Quickstart
+              A First Scraper
             
           </span>
         </div>
@@ -257,13 +257,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
-        Quickstart
+        Tutorial
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Quickstart" data-md-level="1">
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Quickstart
+          Tutorial
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -282,12 +282,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Quickstart
+          A First Scraper
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Quickstart
+        A First Scraper
       </a>
       
         
@@ -303,13 +303,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#scraping-a-list-page" class="md-nav__link">
@@ -339,45 +332,22 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pagination" class="md-nav__link">
-    Pagination
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-handling" class="md-nav__link">
-    Error Handling
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#defining-scraper-input" class="md-nav__link">
-    Defining Scraper Input
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#making-testing-better" class="md-nav__link">
-    Making Testing Better
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workflows" class="md-nav__link">
-    Workflows
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../next-steps/" class="md-nav__link">
+        Next Steps
+      </a>
     </li>
   
 
@@ -526,13 +496,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#scraping-a-list-page" class="md-nav__link">
     Scraping a List Page
   </a>
@@ -560,41 +523,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#pagination" class="md-nav__link">
-    Pagination
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#error-handling" class="md-nav__link">
-    Error Handling
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#defining-scraper-input" class="md-nav__link">
-    Defining Scraper Input
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#making-testing-better" class="md-nav__link">
-    Making Testing Better
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workflows" class="md-nav__link">
-    Workflows
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -607,26 +535,17 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/quickstart.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/scraper-basics.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="quickstart">Quickstart<a class="headerlink" href="#quickstart" title="Permanent link">&para;</a></h1>
+                <h1 id="a-first-scraper">A First Scraper<a class="headerlink" href="#a-first-scraper" title="Permanent link">&para;</a></h1>
 <p>This guide contains quick examples of how you could scrape a small list
 of employees of the fictional <a href="https://yoyodyne-propulsion.herokuapp.com/">Yoyodyne Propulsion
 Systems</a>, a site developed
 for demonstrating web scraping. This will give you an idea of what it
 looks like to write a scraper using <em>spatula</em>.</p>
-<p>TODO: you can skip ahead to...</p>
-<h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
-<p><em>spatula</em> is on PyPI, and can be installed via any standard package
-management tool:</p>
-<div class="highlight"><pre><span></span><code>poetry add spatula
-</code></pre></div>
-<p>or:</p>
-<div class="highlight"><pre><span></span><code>pip install spatula
-</code></pre></div>
 <h2 id="scraping-a-list-page">Scraping a List Page<a class="headerlink" href="#scraping-a-list-page" title="Permanent link">&para;</a></h2>
 <p>It is fairly common for a scrape to begin on some sort of directory or
 listing page.</p>
@@ -819,68 +738,7 @@ individual:</p>
   <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="s2">&quot;Imports &amp; Exports&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
-<h2 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">&para;</a></h2>
-<p>While writing the list page we ignored pagination, let's go ahead and
-add it now.</p>
-<p>If we override the <code>get_next_source</code>
-method on our <code>EmployeeLList</code> class,
-<em>spatula</em> will continue to the next page once it has called
-<code>process_item</code> on all elements on the current page.</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># add this within EmployeeList</span>
-<span class="k">def</span> <span class="nf">get_next_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;//a[contains(text(), &#39;Next&#39;)]/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-    <span class="k">except</span> <span class="n">SelectorError</span><span class="p">:</span>
-        <span class="k">pass</span>
-</code></pre></div>
-<p>You'll notice the output of <code>spatula test quickstart.EmployeeList</code> has now changed:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeList
-<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
-<span class="go">1: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;}</span>
-<span class="go">...</span>
-<span class="go">paginating for EmployeeList source=https://yoyodyne-propulsion.herokuapp.com/staff?page=2</span>
-<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff?page=2</span>
-<span class="go">...</span>
-<span class="go">45: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Ya Ya&#39;, &#39;position&#39;: &#39;Computer Design Specialist&#39;} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)</span>
-</code></pre></div>
-<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
-<p>Now that we're grabbing all 45 employees, kick off another full scrape:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
-<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
-<span class="go">...</span>
-<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
-<span class="go">Traceback (most recent call last):</span>
-<span class="go">...</span>
-<span class="go">scrapelib.HTTPError: 404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
-</code></pre></div>
-<p>An error! It turns out that one of the employee pages isn't loading correctly.</p>
-<p>Sometimes it is best to let these errors propagate so you can try to fix
-the broken scraper.</p>
-<p>Other times it makes more sense to handle the error and move on. If you
-wish to do that, you can override
-<code>process_error_response</code>.</p>
-<p>Add the following to <code>EmployeeDetail</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
-    <span class="c1"># every Page subclass has a built-in logger object</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
-</code></pre></div>
-<p>Run the scrape again to see this in action:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
-<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
-<span class="go">...</span>
-<span class="go">WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
-<span class="go">...</span>
-<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101</span>
-<span class="go">success: wrote 44 objects to _scrapes/2021-06-03/002</span>
-</code></pre></div>
-<h2 id="defining-scraper-input">Defining Scraper Input<a class="headerlink" href="#defining-scraper-input" title="Permanent link">&para;</a></h2>
-<p>TODO: introduce validation and CLI testing</p>
-<h2 id="making-testing-better">Making Testing Better<a class="headerlink" href="#making-testing-better" title="Permanent link">&para;</a></h2>
-<p>TODO: add more ways to make testing work</p>
-<h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
-<p>TODO: figure out what if anything to teach on these</p>
-<p>Now that you've seen the basics, you might want to read a bit more
-about <em>spatula</em>'s <code>Design Philosophy</code>, or <code>API Reference</code>.</p>
+<p>In <a href="../next-steps/">Next Steps</a> we'll take a look at how to handle pagination, error handling, and validating scraped data.</p>
                 
               
               
@@ -920,13 +778,13 @@ about <em>spatula</em>'s <code>Design Philosophy</code>, or <code>API Reference<
       
       
         
-        <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Command Line Usage" rel="next">
+        <a href="../next-steps/" class="md-footer__link md-footer__link--next" aria-label="Next: Next Steps" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Command Line Usage
+              Next Steps
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -959,7 +817,7 @@ about <em>spatula</em>'s <code>Design Philosophy</code>, or <code>API Reference<
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.76f349be.min.js"></script>

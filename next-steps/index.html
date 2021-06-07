@@ -14,7 +14,7 @@
     
     
       
-        <title>Design Philosophy - spatula</title>
+        <title>Next Steps - spatula</title>
       
     
     
@@ -67,7 +67,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#design-philosophy" class="md-skip">
+        <a href="#next-steps" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Design Philosophy
+              Next Steps
             
           </span>
         </div>
@@ -245,14 +245,16 @@
 
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
         Tutorial
@@ -280,11 +282,79 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../next-steps/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Next Steps
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Next Steps
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pagination" class="md-nav__link">
+    Pagination
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#error-handling" class="md-nav__link">
+    Error Handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-scraper-input" class="md-nav__link">
+    Defining Scraper Input
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-testing-better" class="md-nav__link">
+    Making Testing Better
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows" class="md-nav__link">
+    Workflows
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -357,16 +427,14 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
       
       <label class="md-nav__link" for="__nav_4">
         About Spatula
@@ -382,72 +450,11 @@
             
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Design Philosophy
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../philosophy/" class="md-nav__link">
         Design Philosophy
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    Common Problems
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pages-page-roles" class="md-nav__link">
-    Pages &amp; Page Roles
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-dont-page-objects-fetch-themselves" class="md-nav__link">
-    Why don't page objects fetch themselves?
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -496,29 +503,36 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#common-problems" class="md-nav__link">
-    Common Problems
+  <a href="#pagination" class="md-nav__link">
+    Pagination
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
+  <a href="#error-handling" class="md-nav__link">
+    Error Handling
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#pages-page-roles" class="md-nav__link">
-    Pages &amp; Page Roles
+  <a href="#defining-scraper-input" class="md-nav__link">
+    Defining Scraper Input
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-dont-page-objects-fetch-themselves" class="md-nav__link">
-    Why don't page objects fetch themselves?
+  <a href="#making-testing-better" class="md-nav__link">
+    Making Testing Better
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflows" class="md-nav__link">
+    Workflows
   </a>
   
 </li>
@@ -535,108 +549,74 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/philosophy.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/next-steps.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="design-philosophy">Design Philosophy<a class="headerlink" href="#design-philosophy" title="Permanent link">&para;</a></h1>
-<p><em>spatula</em> came out of several years of maintaining a very large,
-community-driven scraper project, <a href="https://openstates.org">Open States</a>.</p>
-<p>While several of the decisions made are best understood through this
-lens, the goal of <em>spatula</em> is to remain lightweight so that even simple
-projects can benefit from its structure.</p>
-<h2 id="common-problems">Common Problems<a class="headerlink" href="#common-problems" title="Permanent link">&para;</a></h2>
-<p>If you've written a few web scrapers, you're likely to have run into a
-few common issues:</p>
-<ul>
-<li>Scrapers are inherently messy as they tend to reflect the
-    cleanliness (or lack thereof) of the underlying site.</li>
-<li>Scrapers are often written and then left alone for months or years,
-    only needing maintenance when the underlying site changes.</li>
-<li>Some scrapes take hours to complete, making the development cycle
-    for testing changes and fixes quite difficult.</li>
-</ul>
-<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p><strong>The framework should make it as easy as possible to get started
-    and write clean scraper code.</strong></p>
-<p>While it is often easy, and tempting, to write a scraper as a dirty
-one-off script, spatula makes an attempt to provide an easy framework
-that most scrapers fit within without additional overhead.</p>
-<p>This reflects the reality that many scraper projects start small but grow
-quickly, so reaching for a heavyweight tool from the start often does
-not seem practical.</p>
-<p>The initial overhead imposed by the framework
-should be as light as possible, providing benefits even for authors
-that do not wish to use every feature available to them.</p>
-</li>
-<li>
-<p><strong>The framework should make it easy to read code that was written,
-    with as many of the underlying assumptions of the scraper presented
-    as clearly as possible for future maintenance.</strong></p>
-<p>By encouraging users to structure their scrapers in a readable way,
-scrapers will be easier to read later, and issues/maintenance can
-often be identified with specific components instead of forcing
-maintainers to comprehend a single gnarly script.</p>
-</li>
-<li>
-<p><strong>Iterative development of scrapers should be the norm.</strong></p>
-<p>It should be possible to test changes to a single part of the scrape
-without running the entire process. The user shouldn't have to
-comment out code or add temporary debug statements to do something
-that is extremely common when authoring scrapers.</p>
-</li>
-<li>
-<p><strong>Leverage modern Python to improve the experience.</strong></p>
-<p>There are some great things about Python 3 that we can leverage to
-make writing &amp; maintaining scrapers easier.</p>
-<p>To that end, <em>spatula</em> is fully type-annotated, and integrates well with
-<a href="https://docs.python.org/3/library/dataclasses.html"><code>dataclasses</code></a>,
-<a href="https://www.attrs.org/en/stable/"><code>attrs</code></a>,
-and <a href="https://pydantic-docs.helpmanual.io/"><code>pydantic</code></a>.</p>
-</li>
-</ol>
-<h2 id="pages-page-roles">Pages &amp; Page Roles<a class="headerlink" href="#pages-page-roles" title="Permanent link">&para;</a></h2>
-<p>A key component of using <strong>spatula</strong> is thinking of the scraper in terms
-of types of "pages".</p>
-<p>For each type of page you encounter, you'll write a subclass of
-<code>Page</code> to extract the data from it.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-</div>
-<p>If you're familiar with MVC frameworks, a good way to think of this
-concept is the inverse of a view: a <code>Page</code>
-takes some kind of presentation (e.g. an HTML page or CSV
-file) and converts it back to the underlying data that it is comprised of.</p>
-<p>There are a few types of pages we generally encounter when scraping
-sites. How we write and use our <code>Page</code> subclasses will depend upon which of these four roles the
-page fulfills.</p>
-<p>The two most common are what we'll call "listing" and "detail" pages.</p>
-<p>Listing pages contain some kind of list of information, perhaps all of
-the members of a given legislature. They'll often provide links to our
-second type of page, which we'll call a "detail" page. A "detail"
-page in our example would contain additional information on a single
-legislator.</p>
-<p>(TODO: revisit this section later) There are two other roles that a page
-can play, we'll get into these in more detail in advanced topics.</p>
-<p>One is what we'll call an 'auxillary detail' page, essentially a
-subpage of a detail page that contains additional information we need to
-collect. (An example would be if each detail page had a subpage listing
-a legislator's committee assignments that we wanted to collect.) The
-final role is what we call 'augmentation' pages, which provide data
-with which we want to augment the entire data set. (An example would be
-a separate page that is a photo directory of all legislators. We'll
-need to scrape this and match the photos to the legislators we scraped
-from the listing/detail pages.)</p>
-<h2 id="why-dont-page-objects-fetch-themselves">Why don't page objects fetch themselves?<a class="headerlink" href="#why-dont-page-objects-fetch-themselves" title="Permanent link">&para;</a></h2>
-<p>A big part of this is that we want to share some state among them for
-rate limiting and other configuration yet to come. In theory this could
-mean that each one is instantiated with a session parameter or similar,
-but that'd be a bit more cumbersome. This also can make testing even
-easier, as there's no need to mock HTTP requests/etc. as just passing a
-mock object into the <code>Page</code> will suffice.</p>
+                <h1 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h1>
+<h2 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">&para;</a></h2>
+<p>While writing the list page we ignored pagination, let's go ahead and
+add it now.</p>
+<p>If we override the <code>get_next_source</code>
+method on our <code>EmployeeLList</code> class,
+<em>spatula</em> will continue to the next page once it has called
+<code>process_item</code> on all elements on the current page.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># add this within EmployeeList</span>
+<span class="k">def</span> <span class="nf">get_next_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;//a[contains(text(), &#39;Next&#39;)]/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">SelectorError</span><span class="p">:</span>
+        <span class="k">pass</span>
+</code></pre></div>
+<p>You'll notice the output of <code>spatula test quickstart.EmployeeList</code> has now changed:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeList
+<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
+<span class="go">1: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;}</span>
+<span class="go">...</span>
+<span class="go">paginating for EmployeeList source=https://yoyodyne-propulsion.herokuapp.com/staff?page=2</span>
+<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff?page=2</span>
+<span class="go">...</span>
+<span class="go">45: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Ya Ya&#39;, &#39;position&#39;: &#39;Computer Design Specialist&#39;} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)</span>
+</code></pre></div>
+<h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
+<p>Now that we're grabbing all 45 employees, kick off another full scrape:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
+<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
+<span class="go">...</span>
+<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">...</span>
+<span class="go">scrapelib.HTTPError: 404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
+</code></pre></div>
+<p>An error! It turns out that one of the employee pages isn't loading correctly.</p>
+<p>Sometimes it is best to let these errors propagate so you can try to fix
+the broken scraper.</p>
+<p>Other times it makes more sense to handle the error and move on. If you
+wish to do that, you can override
+<code>process_error_response</code>.</p>
+<p>Add the following to <code>EmployeeDetail</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">process_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">):</span>
+    <span class="c1"># every Page subclass has a built-in logger object</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
+</code></pre></div>
+<p>Run the scrape again to see this in action:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
+<span class="go">INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff</span>
+<span class="go">...</span>
+<span class="go">WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404</span>
+<span class="go">...</span>
+<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101</span>
+<span class="go">success: wrote 44 objects to _scrapes/2021-06-03/002</span>
+</code></pre></div>
+<h2 id="defining-scraper-input">Defining Scraper Input<a class="headerlink" href="#defining-scraper-input" title="Permanent link">&para;</a></h2>
+<p>TODO: introduce validation and CLI testing</p>
+<h2 id="making-testing-better">Making Testing Better<a class="headerlink" href="#making-testing-better" title="Permanent link">&para;</a></h2>
+<p>TODO: add more ways to make testing work</p>
+<h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
+<p>TODO: figure out what if anything to teach on these</p>
+<p>Now that you've seen the basics, you might want to read a bit more
+about <em>spatula</em>'s <code>Design Philosophy</code>, or <code>API Reference</code>.</p>
                 
               
               
@@ -660,7 +640,7 @@ mock object into the <code>Page</code> will suffice.</p>
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../reference/" class="md-footer__link md-footer__link--prev" aria-label="Previous: API Reference" rel="prev">
+        <a href="../scraper-basics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: A First Scraper" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -669,20 +649,20 @@ mock object into the <code>Page</code> will suffice.</p>
               <span class="md-footer__direction">
                 Previous
               </span>
-              API Reference
+              A First Scraper
             </div>
           </div>
         </a>
       
       
         
-        <a href="../changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog" rel="next">
+        <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Command Line Usage" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Changelog
+              Command Line Usage
             </div>
           </div>
           <div class="md-footer__button md-icon">
