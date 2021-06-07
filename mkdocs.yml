@@ -34,16 +34,14 @@ plugins:
 
     watch:
       - src/spatula
-extra:
-  version:
-    provider: mike
 extra_css:
   - extra.css
 nav:
   - Introduction:
     - 'index.md'
-  - Quickstart:
-    - 'quickstart.md'
+  - Tutorial:
+    - 'scraper-basics.md'
+    - 'next-steps.md'
   - Usage:
     - 'cli.md'
     - 'reference.md'

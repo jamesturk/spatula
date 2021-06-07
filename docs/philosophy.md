@@ -24,23 +24,26 @@ few common issues:
 1.  **The framework should make it as easy as possible to get started
     and write clean scraper code.**
 
-> While it is often easy, and tempting, to write a scraper as a dirty
-> one-off script, spatula makes an attempt to provide an easy framework
-> that most scrapers fit within without additional overhead. This
-> reflects the reality that many scraper projects start small but grow
-> quickly, so reaching for a heavyweight tool from the start often does
-> not seem practical. The initial overhead imposed by the framework
-> should be as light as possible, providing benefits even for authors
-> that do not wish to use every feature available to them.
+    While it is often easy, and tempting, to write a scraper as a dirty
+    one-off script, spatula makes an attempt to provide an easy framework
+    that most scrapers fit within without additional overhead.
+
+    This reflects the reality that many scraper projects start small but grow
+    quickly, so reaching for a heavyweight tool from the start often does
+    not seem practical.
+
+    The initial overhead imposed by the framework
+    should be as light as possible, providing benefits even for authors
+    that do not wish to use every feature available to them.
 
 2.  **The framework should make it easy to read code that was written,
     with as many of the underlying assumptions of the scraper presented
     as clearly as possible for future maintenance.**
 
-> By encouraging users to structure their scrapers in a readable way,
-> scrapers will be easier to read later, and issues/maintenance can
-> often be identified with specific components instead of forcing
-> maintainers to comprehend a single gnarly script.
+    By encouraging users to structure their scrapers in a readable way,
+    scrapers will be easier to read later, and issues/maintenance can
+    often be identified with specific components instead of forcing
+    maintainers to comprehend a single gnarly script.
 
 3.  **Iterative development of scrapers should be the norm.**
 
@@ -48,6 +51,16 @@ few common issues:
     without running the entire process. The user shouldn't have to
     comment out code or add temporary debug statements to do something
     that is extremely common when authoring scrapers.
+
+4.  **Leverage modern Python to improve the experience.**
+
+    There are some great things about Python 3 that we can leverage to
+    make writing & maintaining scrapers easier.
+
+    To that end, *spatula* is fully type-annotated, and integrates well with
+    [`dataclasses`](https://docs.python.org/3/library/dataclasses.html),
+    [`attrs`](https://www.attrs.org/en/stable/),
+    and [`pydantic`](https://pydantic-docs.helpmanual.io/).
 
 ## Pages & Page Roles
 
