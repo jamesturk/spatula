@@ -37,6 +37,13 @@ class Page:
     :   [`requests.Response`](https://docs.python-requests.org/en/master/api/#requests.Response)
         object available if access is needed to the raw response for any reason.
 
+    `input`
+    :   Instance of data being passed upon instantiation of this page.
+        Must be of type `input_type`.
+
+    `input_type`
+    :   `dataclass`, `attrs` class, or `pydantic` model.
+        If set will be used to prompt for and/or validate `self.input`
 
     `dependencies`
     :   TODO: document

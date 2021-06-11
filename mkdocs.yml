@@ -28,12 +28,14 @@ theme:
     #- navigation.tabs
     - navigation.sections
     - navigation.top
+    - content.tabs.link
   icon:
     repo: fontawesome/brands/github
 markdown_extensions:
   - admonition
   - def_list
   - pymdownx.highlight
+  - pymdownx.tabbed
   - pymdownx.superfences
   - mkdocs-click
   - toc:
@@ -59,7 +61,7 @@ nav:
     - 'index.md'
   - Tutorial:
     - 'scraper-basics.md'
-    - 'next-steps.md'
+    - 'scraper-input.md'
   - Usage:
     - 'cli.md'
     - 'reference.md'
