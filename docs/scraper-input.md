@@ -3,7 +3,7 @@
 
 ## Data Models
 
-Back in [scraper-basics.md#chaining-pages-together] we saw that when chaining pages we can pass data through from the parent page.
+Back in [Part One](scraper-basics.md#chaining-pages-together) we saw that when chaining pages we can pass data through from the parent page.
 
 ``` python hl_lines="10 11 12"
 class EmployeeDetail(HtmlPage):
@@ -21,9 +21,9 @@ class EmployeeDetail(HtmlPage):
         )
 ```
 
-Dictionaries seem to work well for this since we can decide what data we want to grab on each page and combine them easily, but as scrapers tend to evolve over time it can be nice to have something a bit more self-documenting.
+Dictionaries seem to work well for this since we can decide what data we want to grab on each page and combine them easily, but as scrapers tend to evolve over time it can be nice to have something a bit more self-documenting, and add the possibility to validate the data we're collecting.
 
-That's where we can introduce `dataclasses`, `attrs`, or `pydaantic` models:
+That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
 
 === "dataclasses"
 
@@ -100,8 +100,6 @@ Of course!  We're expecting `self.input` to contain these values, but when we're
 
 ## Defining `input_type`
 
-It is common to have the final data object dependent upon input data in some way.
-
 *spatula* provides a way to make the dependency on `self.input` more explicit, and restore our ability to test as a bonus side effect.
 
 Let's add a new data model that just includes the fields we're getting from the `EmployeeList` page:
@@ -114,7 +112,7 @@ Let's add a new data model that just includes the fields we're getting from the 
     class PartialEmployee:
         first: str
         last: str
-        }
+        position: str
     ```
 
 === "attrs"
@@ -172,6 +170,68 @@ Employee(first='~first', last='~last', position='~position', marital_status='Mar
 
 Test data has been used, so even though `EmployeeList` didn't pass data into `EmployeeDetail` we can still see roughly what the data would look like if it had.
 
+## Partial Data Models
+
+The above pattern is pretty useful & common.
+Often part of the data comes from one page, and the rest from another (or perhaps even more).
+
+A nice way to handle this without introducing a ton of redundancy is by setting up your models to inherit from one another:
+
+=== "dataclasses"
+
+    ``` python
+    from dataclasses import dataclass
+
+    @dataclass
+    class PartialEmployee:
+        first: str
+        last: str
+        position: str
+
+    @dataclass
+    class Employee(PartialEmployee):
+        marital_status: str
+        children: int
+        hired: str
+    ```
+
+=== "attrs"
+
+    ``` python
+    import attr
+
+    @attr.s(auto_attribs=True)
+    class Employee:
+        first: str
+        last: str
+        position: str
+
+    @attr.s(auto_attribs=True)
+    class PartialEmployee(Employee):
+        marital_status: str
+        children: int
+        hired: str
+    ```
+
+=== "pydantic"
+
+    ``` python
+    from pydantic import BaseModel
+
+    class PartialEmployee(BaseModel):
+        first: str
+        last: str
+        position: str
+
+    class Employee(PartialEmployee):
+        marital_status: str
+        children: int
+        hired: str
+    ```
+
+!!! note
+    Be sure to remember to decorate the derived class(es) if using `dataclasses` or `attrs`.
+
 ## Overriding Default Values
 
 Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).
@@ -203,13 +263,128 @@ class EmployeeDetail(HtmlPage):
     example_input = PartialEmployee("John", "Neptune", "Engineer")
 ```
 
-## Making Testing Better
+## Example Source
 
-TODO: add more ways to make testing work
+Like the above `example_input` you can define `example_source` to set a default value for the `--source` parameter when invoking `spatula test`
 
-## Workflows
+``` python hl_lines="4"
+class EmployeeDetail(HtmlPage):
+    input_type = PartialEmployee
+    example_input = PartialEmployee("John", "Neptune", "Engineer")
+    example_source = "https://yoyodyne-propulsion.herokuapp.com/staff/52"
+```
 
-TODO: figure out what if anything to teach on these
+!!! warning
+    Be sure not to confuse `source` with `example_source`.  The former is used whenever
+    the class is invoked without a `source` parameter, while `example_source` is only used
+    when running `spatula test`.
 
-Now that you've seen the basics, you might want to read a bit more
-about *spatula*'s `Design Philosophy`, or `API Reference`.
+## Fixing `EmployeeList`
+
+Don't forget to have `EmployeeList` return a `PartialEmployee` instance now instead of a `dict`:
+
+``` python hl_lines="6"
+    def process_item(self, item):
+        # this function is called for each <tr> we get from the selector
+        # we know there are 4 <tds>
+        first, last, position, details = item.getchildren()
+        return EmployeeDetail(
+            PartialEmployee(
+                first=first.text,
+                last=last.text,
+                position=position.text,
+            ),
+            source=XPath("./a/@href").match_one(details),
+        )
+```
+
+## `get_source_from_input`
+
+It is not uncommon to want to capture a URL as part of the data and then use that URL as the next `source`.
+
+Let's go ahead and modify `PartialEmployee` to collect a URL:
+
+=== "dataclasses"
+
+    ``` python hl_lines="6"
+    @dataclass
+    class PartialEmployee:
+        first: str
+        last: str
+        position: str
+        url: str
+    ```
+
+=== "attrs"
+
+    ``` python hl_lines="6"
+    @attr.s(auto_attribs=True)
+    class PartialEmployee:
+        first: str
+        last: str
+        position: str
+        url: str
+    ```
+
+=== "pydantic"
+
+    ``` python hl_lines="5"
+    class PartialEmployee(BaseModel):
+        first: str
+        last: str
+        position: str
+        url: str
+    ```
+
+And then we'll modify `EmployeeList.process_item` to capture this URL, and stop providing a redundant `source`:
+
+``` python hl_lines="10"
+    def process_item(self, item):
+        # this function is called for each <tr> we get from the selector
+        # we know there are 4 <tds>
+        first, last, position, details = item.getchildren()
+        return EmployeeDetail(
+            PartialEmployee(
+                first=first.text,
+                last=last.text,
+                position=position.text,
+                url=XPath("./a/@href").match_one(details),
+            ),
+        )
+```
+
+And finally, add a `get_source_from_input` method to `EmployeeDetail` (as well as updating the other uses of `Employee` to have URL):
+
+``` python hl_lines="7 10-11 21"
+class EmployeeDetail(HtmlPage):
+    input_type = PartialEmployee
+    example_input = PartialEmployee(
+        "John",
+        "Neptune",
+        "Engineer",
+        "https://yoyodyne-propulsion.herokuapp.com/staff/1",
+    )
+
+    def get_source_from_input(self):
+        return self.input.url
+
+    def process_page(self):
+        marital_status = CSS("#status").match_one(self.root)
+        children = CSS("#children").match_one(self.root)
+        hired = CSS("#hired").match_one(self.root)
+        return Employee(
+            first=self.input.first,
+            last=self.input.last,
+            position=self.input.position,
+            url=self.input.url,
+            marital_status=marital_status.text,
+            children=children.text,
+            hired=hired.text,
+        )
+```
+
+Of course, if you have a more complex situation you can do whatever you like in `get_source_from_input`.
+
+## Input To Initial Scraper
+
+TODO: coming soon
