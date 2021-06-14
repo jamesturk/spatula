@@ -60,9 +60,6 @@ class Page:
     source: typing.Union[None, str, Source] = None
     dependencies: typing.Dict[str, "Page"] = {}
 
-    def get_source_from_input(self) -> typing.Union[None, str, Source]:
-        raise NotImplementedError()
-
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
         """
         ensure that the page has all of its data, this is guaranteed to be called
@@ -116,6 +113,14 @@ class Page:
             s += f"source={self.source}"
         s += ")"
         return s
+
+    def get_source_from_input(self) -> typing.Union[None, str, Source]:
+        """
+        To be overridden.
+
+        Convert `self.input` to a `Source` object such as a `URL`.
+        """
+        raise NotImplementedError()
 
     def postprocess_response(self) -> None:
         """

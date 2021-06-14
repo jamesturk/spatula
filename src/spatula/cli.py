@@ -193,12 +193,13 @@ def test(
     what a single step of the scrape is providing, to help narrow down where
     erroneous data is coming from.
 
-    Example::
+    Example:
 
+    ``` console
     $ spatula test path.to.ClassName --source https://example.com
+    ```
 
-    This will run the scraper defined at :py:class:`path.to.ClassName` against the
-    provided URL.
+    This will run the scraper defined at `path.to.ClassName` against the provided URL.
     """
     # TODO: remove if workflow goes away
     Cls = typing.cast(type, get_class(class_name))
