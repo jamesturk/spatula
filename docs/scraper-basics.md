@@ -53,7 +53,7 @@ Open a file named quickstart.py and add the following code:
 ``` python
 # imports we'll use in this example
 from spatula import (
-    HtmlPage, HtmlListPage, CSS, XPath
+    HtmlPage, HtmlListPage, CSS, XPath, SelectorError
 )
 
 

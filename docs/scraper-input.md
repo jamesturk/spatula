@@ -69,6 +69,13 @@ That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
         hired: str
     ```
 
+!!! question "Aren't sure which one to pick?"
+
+    [`dataclasses`](https://docs.python.org/3/library/dataclasses.html) are built in to Python and easy to start with.
+    You'll notice the examples barely differ, so it is easy to switch between them later on.
+
+    If you want to add validation, [`pydantic`](https://pydantic-docs.helpmanual.io/) is a great choice.
+
 And then we'll update `EmployeeDetail.process_page` to return our new `Employee` class:
 
 ``` python hl_lines="5"
@@ -229,7 +236,7 @@ A nice way to handle this without introducing a ton of redundancy is by setting 
         hired: str
     ```
 
-!!! note
+!!! warning
     Be sure to remember to decorate the derived class(es) if using `dataclasses` or `attrs`.
 
 ## Overriding Default Values
