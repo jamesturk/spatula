@@ -291,13 +291,16 @@ def scrape(workflow_name: str, output_dir: str, scraper: Scraper) -> None:
     click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
 
 
+UNSET_OUTPUT_FILE = "<scraper_path>.json"
+
+
 @cli.command()
 @click.argument("workflow_name")
 @click.option(
     "-o",
     "--output-file",
-    default="scout.json",
-    help="override default output file [default: scout.json].",
+    default=UNSET_OUTPUT_FILE,
+    help="override default output file [default: <scraper_path>.json].",
 )
 @scraper_params
 def scout(workflow_name: str, output_file: str, scraper: Scraper) -> None:
@@ -314,6 +317,8 @@ def scout(workflow_name: str, output_file: str, scraper: Scraper) -> None:
     last_updated date) to know whether any of the other pages have been scraped.
     """
     workflow = get_workflow(workflow_name)
+    if output_file == UNSET_OUTPUT_FILE:
+        output_file = workflow_name.replace(".", "_") + ".json"
     count = workflow.scout(output_file=output_file)
     click.secho(f"success: wrote {count} records to {output_file}", fg="green")
 
