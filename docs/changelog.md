@@ -3,11 +3,11 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
-## WIP
+## 0.7.1 - 2021-06-14
 
 - remove undocumented default behavior for `get_source_from_input`
 - major documentation overhaul
-- fixes for scout scrape with non-page returns
+- fixes for scout scrape when working with raw data returns
 
 ## 0.7.0 - 2021-06-04
 
