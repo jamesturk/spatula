@@ -54,18 +54,6 @@ def test_fetch_data_dependencies():
     assert p.a_dependency == "dependency fulfilled"
 
 
-def test_fetch_data_get_source_from_input_url_default():
-    # TODO: re-evaluate if this behavior is desired still?
-    # a url attribute will be used if present
-    class InputObj:
-        url = "https://example.com"
-
-    p = DummyPage(InputObj())
-    p._fetch_data(DummyScraper())
-    # will be wrapped in URL object
-    assert p.source.url == SOURCE
-
-
 def test_get_source_from_input_called():
     class SimpleInputPage(Page):
         def get_source_from_input(self):
