@@ -45,6 +45,12 @@ class Page:
     :   `dataclass`, `attrs` class, or `pydantic` model.
         If set will be used to prompt for and/or validate `self.input`
 
+    `example_input`
+    :   Instance of `input_type` to be used when invoking `spatula test`.
+
+    `example_source`
+    :   Source to fetch when invokking `spatula test`.
+
     `dependencies`
     :   TODO: document
 
