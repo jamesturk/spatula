@@ -23,6 +23,7 @@ def _to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
 
 
 def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
+    _next: typing.Optional[str]
     if isinstance(result, Page):
         data = _to_dict(result.input)
         _next = f"{result.__class__.__name__} source={result.source}"
