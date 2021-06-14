@@ -6,6 +6,7 @@ site_description: >-
 copyright: Copyright &copy; 2021 James Turk
 repo_url: https://github.com/jamesturk/spatula
 repo_name: jamesturk/spatula
+edit_uri: edit/main/docs/
 
 theme:
   logo: assets/white-spatula.svg

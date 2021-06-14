@@ -6,6 +6,8 @@ Source: [https://github.com/jamesturk/spatula](https://github.com/jamesturk/spat
 
 Documentation: [https://jamesturk.github.io/spatula/](https://jamesturk.github.io/spatula/)
 
+Issues: [https://github.com/jamesturk/spatula/issues](https://github.com/jamesturk/spatula/issues)
+
 [![PyPI badge](https://badge.fury.io/py/spatula.svg)](https://badge.fury.io/py/spatula)
 [![Test badge](https://github.com/jamesturk/spatula/workflows/Test%20&%20Lint/badge.svg)](https://github.com/jamesturk/spatula/actions?query=workflow%3A%22Test+%26+Lint%22)
 
