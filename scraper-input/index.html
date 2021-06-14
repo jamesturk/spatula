@@ -720,6 +720,12 @@
 </code></pre></div>
 </div>
 </div>
+<div class="admonition question">
+<p class="admonition-title">Aren't sure which one to pick?</p>
+<p><a href="https://docs.python.org/3/library/dataclasses.html"><code>dataclasses</code></a> are built in to Python and easy to start with.
+You'll notice the examples barely differ, so it is easy to switch between them later on.</p>
+<p>If you want to add validation, <a href="https://pydantic-docs.helpmanual.io/"><code>pydantic</code></a> is a great choice.</p>
+</div>
 <p>And then we'll update <code>EmployeeDetail.process_page</code> to return our new <code>Employee</code> class:</p>
 <div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
@@ -847,8 +853,8 @@ Often part of the data comes from one page, and the rest from another (or perhap
 </code></pre></div>
 </div>
 </div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>Be sure to remember to decorate the derived class(es) if using <code>dataclasses</code> or <code>attrs</code>.</p>
 </div>
 <h2 id="overriding-default-values">Overriding Default Values<a class="headerlink" href="#overriding-default-values" title="Permanent link">&para;</a></h2>
