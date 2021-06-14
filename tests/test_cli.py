@@ -57,7 +57,7 @@ def test_scout_command_basic():
         with open("scout.json") as f:
             data = json.load(f)
             assert len(data) == 5
-            assert data[0] == {"val": "1"}
+            assert data[0] == {"data": {"val": "1"}, "__next__": None}
 
 
 def test_scout_command_subpages():
