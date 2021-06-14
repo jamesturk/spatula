@@ -24,11 +24,11 @@ def testall(c):
 @task(testall)
 def release(c, old, new):
     c.run(
-        "poetry run bump2version src/spatula/cli.py pyproject.toml docs/conf.py docs/cli.rst"
+        "poetry run bump2version src/spatula/cli.py pyproject.toml docs/cli.md"
         "--current-version {old} --new-version {new} --commit --tag",
         pty=True,
     )
-    # c.run("git push", pty=True)
-    # c.run("git push --tags", pty=True)
+    c.run("git push", pty=True)
+    c.run("git push --tags", pty=True)
     c.run("poetry publish --build", pty=True)
     c.run("poetry run mkdocs gh-deploy", pty=True)

@@ -16,7 +16,7 @@ from .workflow import Workflow
 from .maybe import attr_has, attr_fields
 
 
-VERSION = "0.7.0"
+VERSION = "0.7.1"
 
 
 def scraper_params(func: typing.Callable) -> typing.Callable:
