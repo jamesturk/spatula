@@ -7,6 +7,7 @@
 
 - remove undocumented default behavior for `get_source_from_input`
 - major documentation overhaul
+- fixes for scout scrape with non-page returns
 
 ## 0.7.0 - 2021-06-04
 

@@ -22,11 +22,16 @@ def _to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
         raise ValueError(f"invalid type: {obj} ({type(obj)})")
 
 
-def _to_scout_result(page: Page) -> typing.Dict[str, typing.Any]:
-    data = _to_dict(page.input)
+def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
+    if isinstance(result, Page):
+        data = _to_dict(result.input)
+        _next = (f"{result.__class__.__name__} source={result.source}",)
+    else:
+        data = _to_dict(result)
+        _next = None
     return {
         "data": data,
-        "__next__": f"{page.__class__.__name__} source={page.source}",
+        "__next__": _next,
     }
 
 
@@ -51,7 +56,10 @@ def page_to_items(
                 else:
                     yield from page_to_items(scraper, item)
             else:
-                yield item
+                if scout:
+                    yield _to_scout_result(item)
+                else:
+                    yield item
 
         # after handling a list, check for pagination
         next_source = page.get_next_source()
@@ -60,12 +68,11 @@ def page_to_items(
             yield from page_to_items(
                 scraper, type(page)(page.input, source=next_source), scout=scout
             )
+    elif scout:
+        yield _to_scout_result(result)
     elif isinstance(result, Page):
-        if scout:
-            yield _to_scout_result(result)
-        else:
-            # single Page result, recurse deeper
-            yield from page_to_items(scraper, result)
+        # single Page result, recurse deeper
+        yield from page_to_items(scraper, result)
     else:
         # end-result, just return as-is
         yield result
