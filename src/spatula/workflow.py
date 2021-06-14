@@ -9,7 +9,7 @@ from .maybe import attr_has, attr_asdict
 
 
 def _to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
-    if obj is None or isinstance(obj, (str, dict)):
+    if obj is None or isinstance(obj, dict):
         return obj
     elif dataclasses.is_dataclass(obj):
         return dataclasses.asdict(obj)
