@@ -1,0 +1,1061 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A modern Python library for writing maintainable web scrapers.">
+      
+      
+      
+        <meta name="author" content="James Turk">
+      
+      
+        <link rel="canonical" href="https://jamesturk.github.io/spatula/scraper-input/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.7">
+    
+    
+      
+        <title>Scraper Input - spatula</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#scraper-input" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="spatula" class="md-header__button md-logo" aria-label="spatula" data-md-component="logo">
+      
+  <img src="../assets/white-spatula.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            spatula
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Scraper Input
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/jamesturk/spatula/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/spatula
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="spatula" class="md-nav__button md-logo" aria-label="spatula" data-md-component="logo">
+      
+  <img src="../assets/white-spatula.svg" alt="logo">
+
+    </a>
+    spatula
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/jamesturk/spatula/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/spatula
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      <label class="md-nav__link" for="__nav_1">
+        Introduction
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Introduction
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        About Spatula
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Tutorial
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Tutorial
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scraper-basics/" class="md-nav__link">
+        A First Scraper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Scraper Input
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Scraper Input
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-models" class="md-nav__link">
+    Data Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-input_type" class="md-nav__link">
+    Defining input_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-data-models" class="md-nav__link">
+    Partial Data Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-default-values" class="md-nav__link">
+    Overriding Default Values
+  </a>
+  
+    <nav class="md-nav" aria-label="Overriding Default Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-command-line" class="md-nav__link">
+    via Command Line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-example_input" class="md-nav__link">
+    via example_input
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-source" class="md-nav__link">
+    Example Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-employeelist" class="md-nav__link">
+    Fixing EmployeeList
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_source_from_input" class="md-nav__link">
+    get_source_from_input
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-to-initial-scraper" class="md-nav__link">
+    Input To Initial Scraper
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Usage
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        Command Line Usage
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        API Reference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        About Spatula
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="About Spatula" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          About Spatula
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../philosophy/" class="md-nav__link">
+        Design Philosophy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#data-models" class="md-nav__link">
+    Data Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-input_type" class="md-nav__link">
+    Defining input_type
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-data-models" class="md-nav__link">
+    Partial Data Models
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overriding-default-values" class="md-nav__link">
+    Overriding Default Values
+  </a>
+  
+    <nav class="md-nav" aria-label="Overriding Default Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#via-command-line" class="md-nav__link">
+    via Command Line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#via-example_input" class="md-nav__link">
+    via example_input
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-source" class="md-nav__link">
+    Example Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing-employeelist" class="md-nav__link">
+    Fixing EmployeeList
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_source_from_input" class="md-nav__link">
+    get_source_from_input
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-to-initial-scraper" class="md-nav__link">
+    Input To Initial Scraper
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/scraper-input.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="scraper-input">Scraper Input<a class="headerlink" href="#scraper-input" title="Permanent link">&para;</a></h1>
+<h2 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h2>
+<p>Back in <a href="../scraper-basics/#chaining-pages-together">Part One</a> we saw that when chaining pages we can pass data through from the parent page.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+<span class="hll">            <span class="c1"># self.input is the data passed in from the prior scrape,</span>
+</span><span class="hll">            <span class="c1"># in this case a dict we can expand here</span>
+</span><span class="hll">            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span>
+</span>        <span class="p">)</span>
+</code></pre></div>
+<p>Dictionaries seem to work well for this since we can decide what data we want to grab on each page and combine them easily, but as scrapers tend to evolve over time it can be nice to have something a bit more self-documenting, and add the possibility to validate the data we're collecting.</p>
+<p>That's where we can introduce <code>dataclasses</code>, <code>attrs</code>, or <code>pydantic</code> models:</p>
+<div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">dataclasses</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">attrs</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">pydantic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+</div>
+<p>And then we'll update <code>EmployeeDetail.process_page</code> to return our new <code>Employee</code> class:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+<span class="hll">        <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
+</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="c1"># self.input is the data passed in from the prior scrape,</span>
+            <span class="c1"># in this case a dict we can expand here</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div>
+<p>Let's give this a run:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff/52&quot;</span>
+<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52</span>
+<span class="go">Traceback (most recent call last):</span>
+<span class="go">...</span>
+<span class="go">TypeError: __init__() missing 3 required positional arguments: &#39;first&#39;, &#39;last&#39;, and &#39;position&#39;</span>
+</code></pre></div>
+<p>Of course!  We're expecting <code>self.input</code> to contain these values, but when we're running <code>spatula test</code> it doesn't know what data would have been passed in.</p>
+<h2 id="defining-input_type">Defining <code>input_type</code><a class="headerlink" href="#defining-input_type" title="Permanent link">&para;</a></h2>
+<p><em>spatula</em> provides a way to make the dependency on <code>self.input</code> more explicit, and restore our ability to test as a bonus side effect.</p>
+<p>Let's add a new data model that just includes the fields we're getting from the <code>EmployeeList</code> page:</p>
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">dataclasses</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">attrs</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">pydantic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+</div>
+<p>And then we'll update <code>PersonDetail</code> to set an <code>input_type</code> and stop assuming <code>self.input</code> is a <code>dict</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+<span class="hll">    <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
+</span>
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
+<span class="hll">            <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
+</span><span class="hll">            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div>
+<p>And now when we re-run the test command:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff/52&quot;</span>
+<span class="go">EmployeeDetail expects input (PartialEmployee):</span>
+<span class="go">  first: ~first</span>
+<span class="go">  last: ~last</span>
+<span class="go">  position: ~position</span>
+<span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52</span>
+<span class="go">Employee(first=&#39;~first&#39;, last=&#39;~last&#39;, position=&#39;~position&#39;, marital_status=&#39;Married&#39;, children=&#39;1&#39;, hired=&#39;3/6/1963&#39;)</span>
+</code></pre></div>
+<p>Test data has been used, so even though <code>EmployeeList</code> didn't pass data into <code>EmployeeDetail</code> we can still see roughly what the data would look like if it had.</p>
+<h2 id="partial-data-models">Partial Data Models<a class="headerlink" href="#partial-data-models" title="Permanent link">&para;</a></h2>
+<p>The above pattern is pretty useful &amp; common.
+Often part of the data comes from one page, and the rest from another (or perhaps even more).</p>
+<p>A nice way to handle this without introducing a ton of redundancy is by setting up your models to inherit from one another:</p>
+<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">dataclasses</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">attrs</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">attr</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">pydantic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be sure to remember to decorate the derived class(es) if using <code>dataclasses</code> or <code>attrs</code>.</p>
+</div>
+<h2 id="overriding-default-values">Overriding Default Values<a class="headerlink" href="#overriding-default-values" title="Permanent link">&para;</a></h2>
+<p>Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).</p>
+<h3 id="via-command-line">via Command Line<a class="headerlink" href="#via-command-line" title="Permanent link">&para;</a></h3>
+<p>The <code>--data</code> flag to <code>spatula test</code> allows overriding input values with key=value pairs.</p>
+<p><div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff/52&quot;</span> --data <span class="nv">first</span><span class="o">=</span>John --data <span class="nv">last</span><span class="o">=</span>Neptune
+<span class="go">EmployeeDetail expects input (PartialEmployee):</span>
+<span class="go">  first: John</span>
+<span class="go">  last: Neptune</span>
+<span class="go">  position: ~position</span>
+<span class="go">INFO:ex03_data.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52</span>
+<span class="go">Employee(first=&#39;John&#39;, last=&#39;Neptune&#39;, position=&#39;~position&#39;, marital_status=&#39;Married&#39;, children=&#39;1&#39;, hired=&#39;3/6/1963&#39;)</span>
+</code></pre></div>
+Alternately, <code>--interactive</code> will prompt for input data.</p>
+<h3 id="via-example_input">via <code>example_input</code><a class="headerlink" href="#via-example_input" title="Permanent link">&para;</a></h3>
+<p>You can also provide the <code>example_input</code> attribute on the class in question.  This value is assumed to be of type <code>example_type</code>.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
+<span class="hll">    <span class="n">example_input</span> <span class="o">=</span> <span class="n">PartialEmployee</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Neptune&quot;</span><span class="p">,</span> <span class="s2">&quot;Engineer&quot;</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="example-source">Example Source<a class="headerlink" href="#example-source" title="Permanent link">&para;</a></h2>
+<p>Like the above <code>example_input</code> you can define <code>example_source</code> to set a default value for the <code>--source</code> parameter when invoking <code>spatula test</code></p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
+    <span class="n">example_input</span> <span class="o">=</span> <span class="n">PartialEmployee</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Neptune&quot;</span><span class="p">,</span> <span class="s2">&quot;Engineer&quot;</span><span class="p">)</span>
+<span class="hll">    <span class="n">example_source</span> <span class="o">=</span> <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff/52&quot;</span>
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be sure not to confuse <code>source</code> with <code>example_source</code>.  The former is used whenever
+the class is invoked without a <code>source</code> parameter, while <code>example_source</code> is only used
+when running <code>spatula test</code>.</p>
+</div>
+<h2 id="fixing-employeelist">Fixing <code>EmployeeList</code><a class="headerlink" href="#fixing-employeelist" title="Permanent link">&para;</a></h2>
+<p>Don't forget to have <code>EmployeeList</code> return a <code>PartialEmployee</code> instance now instead of a <code>dict</code>:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>
+        <span class="c1"># we know there are 4 &lt;tds&gt;</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">EmployeeDetail</span><span class="p">(</span>
+<span class="hll">            <span class="n">PartialEmployee</span><span class="p">(</span>
+</span>                <span class="n">first</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">last</span><span class="o">=</span><span class="n">last</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;./a/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">details</span><span class="p">),</span>
+        <span class="p">)</span>
+</code></pre></div>
+<h2 id="get_source_from_input"><code>get_source_from_input</code><a class="headerlink" href="#get_source_from_input" title="Permanent link">&para;</a></h2>
+<p>It is not uncommon to want to capture a URL as part of the data and then use that URL as the next <code>source</code>.</p>
+<p>Let's go ahead and modify <code>PartialEmployee</code> to collect a URL:</p>
+<div class="tabbed-set" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">dataclasses</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+</span></code></pre></div>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">attrs</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+</span></code></pre></div>
+</div>
+<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">pydantic</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
+</span></code></pre></div>
+</div>
+</div>
+<p>And then we'll modify <code>EmployeeList.process_item</code> to capture this URL, and stop providing a redundant <code>source</code>:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>
+        <span class="c1"># we know there are 4 &lt;tds&gt;</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">EmployeeDetail</span><span class="p">(</span>
+            <span class="n">PartialEmployee</span><span class="p">(</span>
+                <span class="n">first</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">last</span><span class="o">=</span><span class="n">last</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+<span class="hll">                <span class="n">url</span><span class="o">=</span><span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;./a/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">details</span><span class="p">),</span>
+</span>            <span class="p">),</span>
+        <span class="p">)</span>
+</code></pre></div>
+<p>And finally, add a <code>get_source_from_input</code> method to <code>EmployeeDetail</code> (as well as updating the other uses of <code>Employee</code> to have URL):</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
+    <span class="n">example_input</span> <span class="o">=</span> <span class="n">PartialEmployee</span><span class="p">(</span>
+        <span class="s2">&quot;John&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Neptune&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Engineer&quot;</span><span class="p">,</span>
+<span class="hll">        <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff/1&quot;</span><span class="p">,</span>
+</span>    <span class="p">)</span>
+
+<span class="hll">    <span class="k">def</span> <span class="nf">get_source_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class="hll">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span>
+</span>
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
+            <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
+            <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+<span class="hll">            <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+        <span class="p">)</span>
+</code></pre></div>
+<p>Of course, if you have a more complex situation you can do whatever you like in <code>get_source_from_input</code>.</p>
+<h2 id="input-to-initial-scraper">Input To Initial Scraper<a class="headerlink" href="#input-to-initial-scraper" title="Permanent link">&para;</a></h2>
+<p>TODO: coming soon</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" title="Back to top" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../scraper-basics/" class="md-footer__link md-footer__link--prev" aria-label="Previous: A First Scraper" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              A First Scraper
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Command Line Usage" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Command Line Usage
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 James Turk
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.76f349be.min.js"></script>
+      
+    
+  </body>
+</html>

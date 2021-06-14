@@ -308,8 +308,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../next-steps/" class="md-nav__link">
-        Next Steps
+      <a href="../scraper-input/" class="md-nav__link">
+        Scraper Input
       </a>
     </li>
   
@@ -1063,6 +1063,16 @@ that the page will handle in its <code>process_response</code> method.</p>
 <dt><code>response</code></dt>
 <dd><a href="https://docs.python-requests.org/en/master/api/#requests.Response"><code>requests.Response</code></a>
 object available if access is needed to the raw response for any reason.</dd>
+<dt><code>input</code></dt>
+<dd>Instance of data being passed upon instantiation of this page.
+Must be of type <code>input_type</code>.</dd>
+<dt><code>input_type</code></dt>
+<dd><code>dataclass</code>, <code>attrs</code> class, or <code>pydantic</code> model.
+If set will be used to prompt for and/or validate <code>self.input</code></dd>
+<dt><code>example_input</code></dt>
+<dd>Instance of <code>input_type</code> to be used when invoking <code>spatula test</code>.</dd>
+<dt><code>example_source</code></dt>
+<dd>Source to fetch when invokking <code>spatula test</code>.</dd>
 <dt><code>dependencies</code></dt>
 <dd>TODO: document</dd>
 </dl>
@@ -1926,7 +1936,7 @@ to be performed.</p>
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.76f349be.min.js"></script>
