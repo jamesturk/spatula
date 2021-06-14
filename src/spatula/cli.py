@@ -13,13 +13,7 @@ from scrapelib import Scraper
 from .utils import _display
 from .sources import URL, Source
 from .workflow import Workflow
-
-try:
-    from attr import has as attr_has
-    from attr import fields as attr_fields
-except ImportError:  # pragma: no cover
-    attr_has = lambda x: False  # type: ignore # noqa
-    attr_fields = lambda x: []  # type: ignore # noqa
+from .maybe import attr_has, attr_fields
 
 
 VERSION = "0.7.0"

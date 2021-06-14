@@ -2,20 +2,28 @@ import os
 import json
 import uuid
 import typing
+import dataclasses
 import scrapelib
 from .pages import Page, HandledError
+from .maybe import attr_has, attr_asdict
+
+
+def _to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
+    if obj is None or isinstance(obj, (str, dict)):
+        return obj
+    elif dataclasses.is_dataclass(obj):
+        return dataclasses.asdict(obj)
+    elif attr_has(obj):
+        return attr_asdict(obj)
+    elif hasattr(obj, "to_dict"):
+        # TODO: remove this option in favor of above
+        return obj.to_dict()  # type: ignore
+    else:
+        raise ValueError(f"invalid type: {obj} ({type(obj)})")
 
 
 def _to_scout_result(page: Page) -> typing.Dict[str, typing.Any]:
-    data: typing.Optional[typing.Dict]
-
-    if isinstance(page.input, dict):
-        data = page.input
-    elif hasattr(page.input, "to_dict"):
-        data = page.input.to_dict()  # type: ignore
-    else:
-        data = None
-
+    data = _to_dict(page.input)
     return {
         "data": data,
         "__next__": f"{page.__class__.__name__} source={page.source}",
@@ -86,12 +94,9 @@ class Workflow:
 
     def save_object(self, obj: typing.Any, output_dir: str) -> None:
         filename = os.path.join(output_dir, self.get_new_filename(obj))
-        if isinstance(obj, dict):
-            dd = obj
-        else:
-            dd = obj.to_dict()
+        data = _to_dict(obj)
         with open(filename, "w") as f:
-            json.dump(dd, f)
+            json.dump(data, f)
 
     def execute(self, output_dir: str) -> int:
         count = 0

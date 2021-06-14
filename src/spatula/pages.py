@@ -79,12 +79,9 @@ class Page:
             try:
                 self.source = self.get_source_from_input()
             except NotImplementedError:
-                if hasattr(self.input, "url"):
-                    self.source = URL(self.input.url)  # type: ignore
-                else:
-                    raise MissingSourceError(
-                        f"{self.__class__.__name__} has no source or get_source_from_input"
-                    )
+                raise MissingSourceError(
+                    f"{self.__class__.__name__} has no source or get_source_from_input"
+                )
         if isinstance(self.source, str):
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
