@@ -129,11 +129,3 @@
 ::: spatula.NullSource
     rendering:
       heading_level: 4
-
-## Workflows
-
-### Workflow
-
-::: spatula.Workflow
-    rendering:
-      heading_level: 4
