@@ -13,6 +13,7 @@ import click
 from scrapelib import Scraper
 from .utils import _display, _obj_to_dict, page_to_items
 from .sources import URL, Source
+from .pages import Page
 from .maybe import attr_has, attr_fields
 
 
@@ -85,6 +86,14 @@ def get_page_class(dotted_name: str) -> type:
         mod = importlib.import_module(mod_name)
     Cls = getattr(mod, cls_name)
     return Cls
+
+
+def get_page(dotted_name: str) -> Page:
+    Cls = get_page_class(dotted_name)
+    if isinstance(Cls, Page):
+        return Cls
+    else:
+        return Cls()
 
 
 def get_new_filename(obj: typing.Any) -> str:
@@ -274,7 +283,7 @@ def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
     """
     Run full scrape, and output data to disk.
     """
-    initial_page = get_page_class(initial_page_name)()
+    initial_page = get_page(initial_page_name)
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -322,7 +331,7 @@ def scout(initial_page_name: str, output_file: str, scraper: Scraper) -> None:
     (typically a ListPage derivative) surfacing enough information (perhaps a
     last_updated date) to know whether any of the other pages have been scraped.
     """
-    initial_page = get_page_class(initial_page_name)()
+    initial_page = get_page(initial_page_name)
     items = list(page_to_items(scraper, initial_page, scout=True))
     with open(output_file, "w") as f:
         json.dump(items, f, indent=2)
