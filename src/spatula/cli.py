@@ -11,9 +11,8 @@ from pathlib import Path
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
-from .utils import _display, _obj_to_dict
+from .utils import _display, _obj_to_dict, page_to_items
 from .sources import URL, Source
-from .workflow import page_to_items
 from .maybe import attr_has, attr_fields
 
 
