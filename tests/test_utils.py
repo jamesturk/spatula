@@ -56,7 +56,8 @@ def test_page_to_items_scout():
 
 
 @pytest.mark.parametrize(
-    "data", [{}, {"a": 1, "b": ["x", "y", "z"]}],
+    "data",
+    [{}, {"a": 1, "b": ["x", "y", "z"]}],
 )
 def test_display_pretty(data):
     assert _display(data) == pprint.pformat(data)

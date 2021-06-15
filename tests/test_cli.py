@@ -169,6 +169,9 @@ def test_test_command_input_interactive_flag():
 def test_test_command_input_with_example():
     runner = CliRunner()
 
-    result = runner.invoke(cli, ["test", "tests.examples.ExampleInputPage"],)
+    result = runner.invoke(
+        cli,
+        ["test", "tests.examples.ExampleInputPage"],
+    )
     assert result.exit_code == 0
     assert "{'name': 'Tony', 'number': 65}" in result.output

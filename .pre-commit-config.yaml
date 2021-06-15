@@ -12,6 +12,6 @@ repos:
     - id: flake8
       args: ["--ignore=E203,E501,W503", "src"]
 - repo: https://github.com/ambv/black
-  rev: 19.10b0
+  rev: 21.6b0
   hooks:
     - id: black
