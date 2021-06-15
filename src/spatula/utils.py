@@ -42,6 +42,9 @@ def _obj_to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
         return dataclasses.asdict(obj)
     elif attr_has(obj):
         return attr_asdict(obj)
+    elif hasattr(obj, "__fields__") and hasattr(obj, "dict"):
+        # pydantic
+        return obj.dict()
     elif hasattr(obj, "to_dict"):
         # TODO: remove this option in favor of above
         return obj.to_dict()  # type: ignore
