@@ -3,6 +3,12 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.0
+
+- remove undocumented `Workflow`
+- add check for `get_filename` on output classes
+- fix all commands to obey various scraper options like --rpm, --header, etc.
+
 ## 0.7.1 - 2021-06-14
 
 - remove undocumented default behavior for `get_source_from_input`

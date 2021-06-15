@@ -19,7 +19,7 @@ def _display_element(obj: _Element) -> str:
     else:
         elem_str += " ".join(f"{k}='{v}'" for k, v in obj.attrib.items())
 
-    return elem_str + f"> @ line {obj.sourceline}"
+    return f"{elem_str.strip()}> @ line {obj.sourceline}"
 
 
 def _display(obj: typing.Any) -> str:
