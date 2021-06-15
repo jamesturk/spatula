@@ -3,8 +3,17 @@ import typing
 import dataclasses
 import scrapelib
 from lxml.etree import _Element  # type: ignore
-from .maybe import attr_has, attr_asdict
 from .pages import Page, HandledError
+
+# utilities for working with optional dependencies
+try:
+    from attr import has as attr_has
+    from attr import fields as attr_fields
+    from attr import asdict as attr_asdict
+except ImportError:  # pragma: no cover
+    attr_has = lambda x: False  # type: ignore # noqa
+    attr_fields = lambda x: []  # type: ignore # noqa
+    attr_asdict = lambda x: {}  # type: ignore # noqa
 
 
 def _display_element(obj: _Element) -> str:
@@ -22,6 +31,10 @@ def _display_element(obj: _Element) -> str:
         elem_str += " ".join(f"{k}='{v}'" for k, v in obj.attrib.items())
 
     return f"{elem_str.strip()}> @ line {obj.sourceline}"
+
+
+def _is_pydantic(obj: typing.Any) -> bool:
+    return hasattr(obj, "__fields__") and hasattr(obj, "dict")
 
 
 def _display(obj: typing.Any) -> str:
@@ -42,12 +55,8 @@ def _obj_to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
         return dataclasses.asdict(obj)
     elif attr_has(obj):
         return attr_asdict(obj)
-    elif hasattr(obj, "__fields__") and hasattr(obj, "dict"):
-        # pydantic
+    elif _is_pydantic(obj):
         return obj.dict()
-    elif hasattr(obj, "to_dict"):
-        # TODO: remove this option in favor of above
-        return obj.to_dict()  # type: ignore
     else:
         raise ValueError(f"invalid type: {obj} ({type(obj)})")
 

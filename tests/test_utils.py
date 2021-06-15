@@ -87,13 +87,16 @@ def test_display_simple(item, output):
     assert _display(item) == output
 
 
-def test_display_to_dict():
+def test_display_pydantic():
     class ToDictDemo:
+        # fake a pydantic-looking class without depending upon pydantic for tests
+        __fields__ = ["a", "b"]
+
         def __init__(self, a, b):
             self.a = a
             self.b = b
 
-        def to_dict(self):
+        def dict(self):
             return {"val1": self.a, "b": self.b}
 
     d = ToDictDemo("a", [1, 2, 3, 4, 5, 6, 7, 8, 9])

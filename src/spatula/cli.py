@@ -11,10 +11,9 @@ from pathlib import Path
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
-from .utils import _display, _obj_to_dict, page_to_items
+from .utils import _display, _obj_to_dict, page_to_items, attr_has, attr_fields
 from .sources import URL, Source
 from .pages import Page
-from .maybe import attr_has, attr_fields
 
 
 VERSION = "0.7.1"
@@ -190,7 +189,6 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
         elif attr_has(input_type):
             # ignore type rules here since dataclasses/attr do not share a base
             # but fields will have a name no matter what
-            # TODO: consider interface?
             fields = attr_fields(input_type)  # type: ignore
         for field in fields:
             if field.name in fake_input:
