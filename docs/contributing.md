@@ -1,7 +1,5 @@
 # Contributing
 
-Contributions to 
-
 ## Issues
 
 Bug reports, questions, or feature requests can be submitted as [GitHub issues](https://github.com/jamesturk/spatula/issues).
