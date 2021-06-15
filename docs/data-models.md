@@ -2,7 +2,7 @@
 
 ## Why Use Data Models?
 
-Back in [Part One](scraper-basics.md#chaining-pages-together) we saw that when chaining pages we can pass data through from the parent page.
+Back in [Chaining Pages Together](scraper-basics.md#chaining-pages-together) we saw that when chaining pages we can pass data through from the parent page.
 
 ``` python hl_lines="10 11 12"
 class EmployeeDetail(HtmlPage):
@@ -288,7 +288,7 @@ class EmployeeDetail(HtmlPage):
     example_input = PartialEmployee("John", "Neptune", "Engineer")
 ```
 
-## Example Source
+## `example_source`
 
 Like the above `example_input` you can define `example_source` to set a default value for the `--source` parameter when invoking `spatula test`
 
@@ -405,7 +405,7 @@ Raw `dict`:    Output will match exactly.
 
 `pydantic`: the model's [`dict()`](https://pydantic-docs.helpmanual.io/usage/exporting_models/#modeldict) method will be used.
 
-By default the filename will be a UUID, but if you wish to provide your own filename you can add a `get_filename` method to yourmodel.
+By default the filename will be a UUID, but if you wish to provide your own filename you can add a `get_filename` method to your model.
 
 !!! warning
     When providing `get_filename` be sure that your filenames are still unique (you may wish to still incorporate a UUID if you don't have a key you're sure is unique.  *spatula* does not check for this, so you may overwrite data if your `get_filename` function does not guarantee uniqueness.

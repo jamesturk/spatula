@@ -71,10 +71,10 @@ For each type of page you encounter, you'll write a subclass of
 `Page` to extract the data from it.
 
 !!! tip
-If you're familiar with MVC frameworks, a good way to think of this
-concept is the inverse of a view: a `Page`
-takes some kind of presentation (e.g. an HTML page or CSV
-file) and converts it back to the underlying data that it is comprised of.
+    If you're familiar with MVC frameworks, a good way to think of this
+    concept is the inverse of a view: a `Page`
+    takes some kind of presentation (e.g. an HTML page or CSV
+    file) and converts it back to the underlying data that it is comprised of.
 
 There are a few types of pages we generally encounter when scraping
 sites. How we write and use our `Page` subclasses will depend upon which of these four roles the

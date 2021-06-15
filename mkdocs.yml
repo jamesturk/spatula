@@ -58,12 +58,11 @@ plugins:
 extra_css:
   - assets/extra.css
 nav:
-  - Introduction:
-    - 'index.md'
-  - Tutorial:
+  - 'index.md'
+  - Usage:
     - 'scraper-basics.md'
     - 'data-models.md'
-  - Usage:
+  - Reference:
     - 'cli.md'
     - 'reference.md'
   - About Spatula:

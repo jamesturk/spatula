@@ -324,5 +324,3 @@ WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsi
 INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
 success: wrote 44 objects to _scrapes/2021-06-03/002
 ```
-
-In [Data Models](data-models.md) we'll take a look at how to improve our scrapers by defining what input they expect.

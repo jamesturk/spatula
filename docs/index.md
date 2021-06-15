@@ -1,4 +1,4 @@
-# About Spatula
+# Overview
 
 *spatula* is a modern Python library for writing maintainable web scrapers.
 
