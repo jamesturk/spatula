@@ -11,6 +11,7 @@ from pathlib import Path
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
+from scrapelib.cache import SQLiteCache
 from .utils import _display, _obj_to_dict, page_to_items, attr_has, attr_fields
 from .sources import URL, Source
 from .pages import Page
@@ -54,8 +55,12 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         "-v",
         "--verbosity",
         help="override default verbosity for command (0-3)",
-        type=int,
         default=-1,
+    )
+    @click.option(
+        "--fastmode",
+        help="use a cache to avoid making unnecessary requests",
+        is_flag=True,
     )
     def newfunc(
         header: typing.List[str],
@@ -66,6 +71,7 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         user_agent: str,
         verbosity: int,
         verify: bool,
+        fastmode: bool,
         **kwargs: str,
     ) -> None:
         scraper = Scraper(
@@ -80,6 +86,9 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         scraper.headers = {  # type: ignore
             k.strip(): v.strip() for k, v in [h.split(":") for h in header]
         }  # type: ignore
+        if fastmode:
+            scraper.cache_storage = SQLiteCache("spatula-cache.db")
+            scraper.cache_write_only = False
 
         if verbosity == -1:
             level = logging.INFO if func.__name__ != "test" else logging.DEBUG
