@@ -25,8 +25,8 @@ def lint(c):
 @task(lint, mypy, test)
 def release(c, old, new):
     c.run(
-        "poetry run bump2version src/spatula/cli.py pyproject.toml docs/cli.md"
-        "--current-version {old} --new-version {new} --commit --tag",
+        "poetry run bump2version src/spatula/cli.py pyproject.toml docs/cli.md "
+        f"--current-version {old} --new-version {new} --commit --tag --allow-dirty",
         pty=True,
     )
     c.run("git push", pty=True)
