@@ -1,14 +1,13 @@
 import dataclasses
 import datetime
-import glob
-import json
-import importlib
-import logging
 import functools
-import os
-import uuid
+import importlib
+import json
+import logging
 import sys
 import typing
+import uuid
+from pathlib import Path
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
@@ -96,8 +95,8 @@ def get_new_filename(obj: typing.Any) -> str:
         return str(uuid.uuid4())
 
 
-def save_object(obj: typing.Any, output_dir: str) -> None:
-    filename = os.path.join(output_dir, get_new_filename(obj))
+def save_object(obj: typing.Any, output_path: Path) -> None:
+    filename = output_path / (get_new_filename(obj) + ".json")
     data = _obj_to_dict(obj)
     with open(filename, "w") as f:
         json.dump(data, f)
@@ -282,23 +281,24 @@ def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
         today = datetime.date.today().strftime("%Y-%m-%d")
         while True:
             try:
-                output_dir = f"_scrapes/{today}/{dirn:03d}"
-                os.makedirs(output_dir)
+                output_path = Path(f"_scrapes/{today}/{dirn:03d}")
+                output_path.mkdir(parents=True)
                 break
             except FileExistsError:
                 dirn += 1
     else:
+        output_path = Path(output_dir)
         try:
-            os.makedirs(output_dir)
+            output_path.mkdir(parents=True)
         except FileExistsError:
-            if len(glob.glob(output_dir + "/*")):
+            if len(list(output_path.iterdir())):
                 click.secho(f"{output_dir} exists and is not empty", fg="red")
                 sys.exit(1)
     count = 0
     for item in page_to_items(scraper, initial_page):
-        save_object(item, output_dir=output_dir)
+        save_object(item, output_path)
         count += 1
-    click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
+    click.secho(f"success: wrote {count} objects to {output_path}", fg="green")
 
 
 @cli.command()
