@@ -85,7 +85,7 @@ class Page:
         self.logger.info(f"fetching {self.source}")
         try:
             self.response = self.source.get_response(scraper)  # type: ignore
-            if getattr(self.response, "fromcache"):
+            if getattr(self.response, "fromcache", None):
                 self.logger.debug(f"retrieved {self.source} from cache")
         except scrapelib.HTTPError as e:
             self.process_error_response(e)
