@@ -13,7 +13,7 @@ spatula = 'spatula.cli:cli'
 
 [tool.poetry.dependencies]
 python = "^3.7"
-scrapelib = "^2.0.2"
+scrapelib = "^2.0.5"
 click = "^7.1.2"
 lxml = "^4.6.2"
 cssselect = "^1.1.0"
