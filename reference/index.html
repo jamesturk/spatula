@@ -16,7 +16,7 @@
         <link rel="canonical" href="https://jamesturk.github.io/spatula/reference/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.7">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.7">
     
     
       
@@ -228,39 +228,10 @@
   
   
   
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
-      
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
-        <label class="md-nav__title" for="__nav_1">
-          <span class="md-nav__icon md-icon"></span>
-          Introduction
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        About Spatula
+        Overview
       </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -281,13 +252,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
       
       <label class="md-nav__link" for="__nav_2">
-        Tutorial
+        Usage
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Tutorial
+          Usage
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -308,8 +279,8 @@
   
   
     <li class="md-nav__item">
-      <a href="../scraper-input/" class="md-nav__link">
-        Scraper Input
+      <a href="../data-models/" class="md-nav__link">
+        Data Models
       </a>
     </li>
   
@@ -339,13 +310,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
       
       <label class="md-nav__link" for="__nav_3">
-        Usage
+        Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
-          Usage
+          Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -422,6 +393,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#spatula.pages.Page.get_source_from_input" class="md-nav__link">
+    get_source_from_input()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#spatula.pages.Page.postprocess_response" class="md-nav__link">
     postprocess_response()
   </a>
@@ -643,26 +621,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#workflows" class="md-nav__link">
-    Workflows
-  </a>
-  
-    <nav class="md-nav" aria-label="Workflows">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    Workflow
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -710,6 +668,18 @@
     <li class="md-nav__item">
       <a href="../philosophy/" class="md-nav__link">
         Design Philosophy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
       </a>
     </li>
   
@@ -782,6 +752,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#spatula.pages.Page.get_source_from_input" class="md-nav__link">
+    get_source_from_input()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#spatula.pages.Page.postprocess_response" class="md-nav__link">
     postprocess_response()
   </a>
@@ -1003,26 +980,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#workflows" class="md-nav__link">
-    Workflows
-  </a>
-  
-    <nav class="md-nav" aria-label="Workflows">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#workflow" class="md-nav__link">
-    Workflow
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1035,7 +992,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/reference.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/jamesturk/spatula/edit/main/docs/reference.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -1114,6 +1071,26 @@ If set will be used to prompt for and/or validate <code>self.input</code></dd>
 
   </div>
 
+
+
+  <div class="doc doc-object doc-method">
+
+
+
+<h4 id="spatula.pages.Page.get_source_from_input" class="doc doc-heading">
+<code class="highlight language-python"><span class="n">get_source_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
+
+
+<a href="#spatula.pages.Page.get_source_from_input" class="headerlink" title="Permanent link">&para;</a></h4>
+
+    <div class="doc doc-contents ">
+
+      <p>To be overridden.</p>
+<p>Convert <code>self.input</code> to a <code>Source</code> object such as a <code>URL</code>.</p>
+
+    </div>
+
+  </div>
 
 
 
@@ -1803,43 +1780,6 @@ to be performed.</p>
 
 
   <div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-  </div>
-
-<h2 id="workflows">Workflows<a class="headerlink" href="#workflows" title="Permanent link">&para;</a></h2>
-<h3 id="workflow">Workflow<a class="headerlink" href="#workflow" title="Permanent link">&para;</a></h3>
-
-
-  <div class="doc doc-object doc-class">
-
-
-    <div class="doc doc-contents first">
-
-      <p>Define a complete workflow by which items can be scraped and saved to disk.</p>
-
-
-
-
-  <div class="doc doc-children">
-
-
-
 
 
 

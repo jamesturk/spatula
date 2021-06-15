@@ -13,14 +13,14 @@
         <meta name="author" content="James Turk">
       
       
-        <link rel="canonical" href="https://jamesturk.github.io/spatula/scraper-input/">
+        <link rel="canonical" href="https://jamesturk.github.io/spatula/data-models/">
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.7">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.7">
     
     
       
-        <title>Scraper Input - spatula</title>
+        <title>Data Models - spatula</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#scraper-input" class="md-skip">
+        <a href="#data-models" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Scraper Input
+              Data Models
             
           </span>
         </div>
@@ -228,39 +228,10 @@
   
   
   
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
-      
-      <label class="md-nav__link" for="__nav_1">
-        Introduction
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-      <nav class="md-nav" aria-label="Introduction" data-md-level="1">
-        <label class="md-nav__title" for="__nav_1">
-          <span class="md-nav__icon md-icon"></span>
-          Introduction
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-  
-  
-  
     <li class="md-nav__item">
       <a href=".." class="md-nav__link">
-        About Spatula
+        Overview
       </a>
-    </li>
-  
-
-          
-        </ul>
-      </nav>
     </li>
   
 
@@ -283,13 +254,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
       
       <label class="md-nav__link" for="__nav_2">
-        Tutorial
+        Usage
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Tutorial" data-md-level="1">
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
-          Tutorial
+          Usage
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -320,12 +291,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Scraper Input
+          Data Models
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Scraper Input
+        Data Models
       </a>
       
         
@@ -343,8 +314,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#data-models" class="md-nav__link">
-    Data Models
+  <a href="#why-use-data-models" class="md-nav__link">
+    Why Use Data Models?
   </a>
   
 </li>
@@ -354,12 +325,25 @@
     Defining input_type
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#partial-data-models" class="md-nav__link">
-    Partial Data Models
+    <nav class="md-nav" aria-label="Defining input_type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-inheritance" class="md-nav__link">
+    Using Inheritance
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixing-employeelist" class="md-nav__link">
+    Fixing EmployeeList
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -391,15 +375,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-source" class="md-nav__link">
-    Example Source
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fixing-employeelist" class="md-nav__link">
-    Fixing EmployeeList
+  <a href="#example_source" class="md-nav__link">
+    example_source
   </a>
   
 </li>
@@ -412,8 +389,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#input-to-initial-scraper" class="md-nav__link">
-    Input To Initial Scraper
+  <a href="#data-models-as-output" class="md-nav__link">
+    Data Models As Output
   </a>
   
 </li>
@@ -448,13 +425,13 @@
         <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
       
       <label class="md-nav__link" for="__nav_3">
-        Usage
+        Reference
         <span class="md-nav__icon md-icon"></span>
       </label>
-      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
         <label class="md-nav__title" for="__nav_3">
           <span class="md-nav__icon md-icon"></span>
-          Usage
+          Reference
         </label>
         <ul class="md-nav__list" data-md-scrollfix>
           
@@ -531,6 +508,18 @@
   
   
     <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../changelog/" class="md-nav__link">
         Changelog
       </a>
@@ -570,8 +559,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#data-models" class="md-nav__link">
-    Data Models
+  <a href="#why-use-data-models" class="md-nav__link">
+    Why Use Data Models?
   </a>
   
 </li>
@@ -581,12 +570,25 @@
     Defining input_type
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#partial-data-models" class="md-nav__link">
-    Partial Data Models
+    <nav class="md-nav" aria-label="Defining input_type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-inheritance" class="md-nav__link">
+    Using Inheritance
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixing-employeelist" class="md-nav__link">
+    Fixing EmployeeList
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -618,15 +620,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example-source" class="md-nav__link">
-    Example Source
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#fixing-employeelist" class="md-nav__link">
-    Fixing EmployeeList
+  <a href="#example_source" class="md-nav__link">
+    example_source
   </a>
   
 </li>
@@ -639,8 +634,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#input-to-initial-scraper" class="md-nav__link">
-    Input To Initial Scraper
+  <a href="#data-models-as-output" class="md-nav__link">
+    Data Models As Output
   </a>
   
 </li>
@@ -657,14 +652,14 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jamesturk/spatula/edit/master/docs/scraper-input.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/jamesturk/spatula/edit/main/docs/data-models.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                <h1 id="scraper-input">Scraper Input<a class="headerlink" href="#scraper-input" title="Permanent link">&para;</a></h1>
-<h2 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h2>
-<p>Back in <a href="../scraper-basics/#chaining-pages-together">Part One</a> we saw that when chaining pages we can pass data through from the parent page.</p>
+                <h1 id="data-models">Data Models<a class="headerlink" href="#data-models" title="Permanent link">&para;</a></h1>
+<h2 id="why-use-data-models">Why Use Data Models?<a class="headerlink" href="#why-use-data-models" title="Permanent link">&para;</a></h2>
+<p>Back in <a href="../scraper-basics/#chaining-pages-together">Chaining Pages Together</a> we saw that when chaining pages we can pass data through from the parent page.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
@@ -802,7 +797,7 @@ You'll notice the examples barely differ, so it is easy to switch between them l
 <span class="go">Employee(first=&#39;~first&#39;, last=&#39;~last&#39;, position=&#39;~position&#39;, marital_status=&#39;Married&#39;, children=&#39;1&#39;, hired=&#39;3/6/1963&#39;)</span>
 </code></pre></div>
 <p>Test data has been used, so even though <code>EmployeeList</code> didn't pass data into <code>EmployeeDetail</code> we can still see roughly what the data would look like if it had.</p>
-<h2 id="partial-data-models">Partial Data Models<a class="headerlink" href="#partial-data-models" title="Permanent link">&para;</a></h2>
+<h3 id="using-inheritance">Using Inheritance<a class="headerlink" href="#using-inheritance" title="Permanent link">&para;</a></h3>
 <p>The above pattern is pretty useful &amp; common.
 Often part of the data comes from one page, and the rest from another (or perhaps even more).</p>
 <p>A nice way to handle this without introducing a ton of redundancy is by setting up your models to inherit from one another:</p>
@@ -857,6 +852,21 @@ Often part of the data comes from one page, and the rest from another (or perhap
 <p class="admonition-title">Warning</p>
 <p>Be sure to remember to decorate the derived class(es) if using <code>dataclasses</code> or <code>attrs</code>.</p>
 </div>
+<h3 id="fixing-employeelist">Fixing <code>EmployeeList</code><a class="headerlink" href="#fixing-employeelist" title="Permanent link">&para;</a></h3>
+<p>Don't forget to have <code>EmployeeList</code> return a <code>PartialEmployee</code> instance now instead of a <code>dict</code>:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>
+        <span class="c1"># we know there are 4 &lt;tds&gt;</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">EmployeeDetail</span><span class="p">(</span>
+<span class="hll">            <span class="n">PartialEmployee</span><span class="p">(</span>
+</span>                <span class="n">first</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">last</span><span class="o">=</span><span class="n">last</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;./a/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">details</span><span class="p">),</span>
+        <span class="p">)</span>
+</code></pre></div>
 <h2 id="overriding-default-values">Overriding Default Values<a class="headerlink" href="#overriding-default-values" title="Permanent link">&para;</a></h2>
 <p>Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).</p>
 <h3 id="via-command-line">via Command Line<a class="headerlink" href="#via-command-line" title="Permanent link">&para;</a></h3>
@@ -877,7 +887,7 @@ Alternately, <code>--interactive</code> will prompt for input data.</p>
     <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
 <span class="hll">    <span class="n">example_input</span> <span class="o">=</span> <span class="n">PartialEmployee</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Neptune&quot;</span><span class="p">,</span> <span class="s2">&quot;Engineer&quot;</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="example-source">Example Source<a class="headerlink" href="#example-source" title="Permanent link">&para;</a></h2>
+<h2 id="example_source"><code>example_source</code><a class="headerlink" href="#example_source" title="Permanent link">&para;</a></h2>
 <p>Like the above <code>example_input</code> you can define <code>example_source</code> to set a default value for the <code>--source</code> parameter when invoking <code>spatula test</code></p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
@@ -890,21 +900,6 @@ Alternately, <code>--interactive</code> will prompt for input data.</p>
 the class is invoked without a <code>source</code> parameter, while <code>example_source</code> is only used
 when running <code>spatula test</code>.</p>
 </div>
-<h2 id="fixing-employeelist">Fixing <code>EmployeeList</code><a class="headerlink" href="#fixing-employeelist" title="Permanent link">&para;</a></h2>
-<p>Don't forget to have <code>EmployeeList</code> return a <code>PartialEmployee</code> instance now instead of a <code>dict</code>:</p>
-<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>
-        <span class="c1"># we know there are 4 &lt;tds&gt;</span>
-        <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">EmployeeDetail</span><span class="p">(</span>
-<span class="hll">            <span class="n">PartialEmployee</span><span class="p">(</span>
-</span>                <span class="n">first</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-                <span class="n">last</span><span class="o">=</span><span class="n">last</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="p">),</span>
-            <span class="n">source</span><span class="o">=</span><span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;./a/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">details</span><span class="p">),</span>
-        <span class="p">)</span>
-</code></pre></div>
 <h2 id="get_source_from_input"><code>get_source_from_input</code><a class="headerlink" href="#get_source_from_input" title="Permanent link">&para;</a></h2>
 <p>It is not uncommon to want to capture a URL as part of the data and then use that URL as the next <code>source</code>.</p>
 <p>Let's go ahead and modify <code>PartialEmployee</code> to collect a URL:</p>
@@ -977,8 +972,18 @@ when running <code>spatula test</code>.</p>
         <span class="p">)</span>
 </code></pre></div>
 <p>Of course, if you have a more complex situation you can do whatever you like in <code>get_source_from_input</code>.</p>
-<h2 id="input-to-initial-scraper">Input To Initial Scraper<a class="headerlink" href="#input-to-initial-scraper" title="Permanent link">&para;</a></h2>
-<p>TODO: coming soon</p>
+<h2 id="data-models-as-output">Data Models As Output<a class="headerlink" href="#data-models-as-output" title="Permanent link">&para;</a></h2>
+<p>When running <code>spatula scrape</code> data is written to disk as JSON.
+The exact method of obtaining that JSON varies a bit depending on what type of output you have:</p>
+<p>Raw <code>dict</code>:    Output will match exactly.</p>
+<p><code>dataclasses</code>:  <a href="https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict"><code>dataclass.asdict</code></a> will be used.</p>
+<p><code>attrs</code>: <a href="https://www.attrs.org/en/stable/api.html"><code>attr.asdict</code></a> will be used to obtain a serializable representation.</p>
+<p><code>pydantic</code>: the model's <a href="https://pydantic-docs.helpmanual.io/usage/exporting_models/#modeldict"><code>dict()</code></a> method will be used.</p>
+<p>By default the filename will be a UUID, but if you wish to provide your own filename you can add a <code>get_filename</code> method to your model.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When providing <code>get_filename</code> be sure that your filenames are still unique (you may wish to still incorporate a UUID if you don't have a key you're sure is unique.  <em>spatula</em> does not check for this, so you may overwrite data if your <code>get_filename</code> function does not guarantee uniqueness.</p>
+</div>
                 
               
               
