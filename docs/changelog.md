@@ -6,7 +6,9 @@
 ## 0.8.0
 
 - remove undocumented `Workflow`
-- add check for `get_filename` on output classes
+- allow using `Page` instances (as opposed to just the type) for scout & scrape
+- add check for `get_filename` on output classes to override default filename
+- improved automatic `pydantic` support
 - fix all commands to obey various scraper options like --rpm, --header, etc.
 
 ## 0.7.1 - 2021-06-14
