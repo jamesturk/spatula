@@ -16,12 +16,13 @@ def mypy(c):
     c.run("poetry run mypy src/", pty=True)
 
 
-@task(test, mypy)
-def testall(c):
-    pass
+@task
+def lint(c):
+    c.run("poetry run flake8 src/ tests/ --ignore=E203,E501,W503", pty=True)
+    c.run("poetry run black --check src/ tests/", pty=True)
 
 
-@task(testall)
+@task(lint, mypy, test)
 def release(c, old, new):
     c.run(
         "poetry run bump2version src/spatula/cli.py pyproject.toml docs/cli.md"

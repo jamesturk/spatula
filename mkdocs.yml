@@ -67,4 +67,5 @@ nav:
     - 'reference.md'
   - About Spatula:
     - 'philosophy.md'
+    - 'contributing.md'
     - 'changelog.md'
