@@ -19,12 +19,12 @@ def test_scrape_command_basic():
     today = datetime.date.today().strftime("%Y-%m-%d")
 
     with runner.isolated_filesystem():
-        result = runner.invoke(cli, ["scrape", "tests.examples.simple_5"])
+        result = runner.invoke(cli, ["scrape", "tests.examples.ExampleListPage"])
         assert result.exit_code == 0
         assert f"success: wrote 5 objects to _scrapes/{today}/001" in result.output
 
         # run again, ensure the directory increments
-        result = runner.invoke(cli, ["scrape", "tests.examples.simple_5"])
+        result = runner.invoke(cli, ["scrape", "tests.examples.ExampleListPage"])
         assert result.exit_code == 0
         assert f"success: wrote 5 objects to _scrapes/{today}/002" in result.output
 
@@ -34,13 +34,13 @@ def test_scrape_command_output_dir_flag():
 
     with runner.isolated_filesystem():
         result = runner.invoke(
-            cli, ["scrape", "tests.examples.simple_5", "-o", "mydir"]
+            cli, ["scrape", "tests.examples.ExampleListPage", "-o", "mydir"]
         )
         assert result.exit_code == 0
         assert "success: wrote 5 objects to mydir" in result.output
 
         result = runner.invoke(
-            cli, ["scrape", "tests.examples.simple_5", "-o", "mydir"]
+            cli, ["scrape", "tests.examples.ExampleListPage", "-o", "mydir"]
         )
         assert result.exit_code == 1
         assert "mydir exists and is not empty" in result.output

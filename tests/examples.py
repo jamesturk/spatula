@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from spatula import Page, Workflow, NullSource
+from spatula import Page, NullSource
 
 
 class ExampleListPage(Page):
@@ -69,6 +69,3 @@ class SimpleInputPage(Page):
 
 class ExampleInputPage(SimpleInputPage):
     example_input = Input("Tony", 65)
-
-
-simple_5 = Workflow(ExampleListPage)

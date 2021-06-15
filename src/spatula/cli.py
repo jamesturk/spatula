@@ -1,18 +1,20 @@
 import dataclasses
 import datetime
 import glob
+import json
 import importlib
 import logging
 import functools
 import os
+import uuid
 import sys
 import typing
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper
-from .utils import _display
+from .utils import _display, _obj_to_dict
 from .sources import URL, Source
-from .workflow import Workflow
+from .workflow import page_to_items
 from .maybe import attr_has, attr_fields
 
 
@@ -75,7 +77,7 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
     return newfunc
 
 
-def get_class(dotted_name: str) -> typing.Union[type, Workflow]:
+def get_page_class(dotted_name: str) -> type:
     mod_name, cls_name = dotted_name.rsplit(".", 1)
     try:
         mod = importlib.import_module(mod_name)
@@ -83,7 +85,22 @@ def get_class(dotted_name: str) -> typing.Union[type, Workflow]:
         logging.getLogger("spatula").debug("appending current directory to PYTHONPATH")
         sys.path.append(".")
         mod = importlib.import_module(mod_name)
-    return getattr(mod, cls_name)
+    Cls = getattr(mod, cls_name)
+    return Cls
+
+
+def get_new_filename(obj: typing.Any) -> str:
+    if hasattr(obj, "get_filename"):
+        return obj.get_filename()
+    else:
+        return str(uuid.uuid4())
+
+
+def save_object(obj: typing.Any, output_dir: str) -> None:
+    filename = os.path.join(output_dir, get_new_filename(obj))
+    data = _obj_to_dict(obj)
+    with open(filename, "w") as f:
+        json.dump(data, f)
 
 
 @click.group()
@@ -201,8 +218,7 @@ def test(
 
     This will run the scraper defined at `path.to.ClassName` against the provided URL.
     """
-    # TODO: remove if workflow goes away
-    Cls = typing.cast(type, get_class(class_name))
+    Cls = get_page_class(class_name)
     source_obj: typing.Optional[Source] = None
 
     fake_input = _get_fake_input(Cls, data, interactive)
@@ -250,26 +266,17 @@ def test(
                 break
 
 
-def get_workflow(workflow_name: str) -> Workflow:
-    workflow_or_page = get_class(workflow_name)
-    if isinstance(workflow_or_page, Workflow):
-        workflow = workflow_or_page
-    else:
-        workflow = Workflow(workflow_or_page)
-    return workflow
-
-
 @cli.command()
-@click.argument("workflow_name")
+@click.argument("initial_page_name")
 @click.option(
     "-o", "--output-dir", default=None, help="override default output directory."
 )
 @scraper_params
-def scrape(workflow_name: str, output_dir: str, scraper: Scraper) -> None:
+def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
     """
-    Run full workflow, and output data to disk.
+    Run full scrape, and output data to disk.
     """
-    workflow = get_workflow(workflow_name)
+    initial_page = get_page_class(initial_page_name)()
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -287,12 +294,15 @@ def scrape(workflow_name: str, output_dir: str, scraper: Scraper) -> None:
             if len(glob.glob(output_dir + "/*")):
                 click.secho(f"{output_dir} exists and is not empty", fg="red")
                 sys.exit(1)
-    count = workflow.execute(output_dir=output_dir)
+    count = 0
+    for item in page_to_items(scraper, initial_page):
+        save_object(item, output_dir=output_dir)
+        count += 1
     click.secho(f"success: wrote {count} objects to {output_dir}", fg="green")
 
 
 @cli.command()
-@click.argument("workflow_name")
+@click.argument("initial_page_name")
 @click.option(
     "-o",
     "--output-file",
@@ -300,9 +310,9 @@ def scrape(workflow_name: str, output_dir: str, scraper: Scraper) -> None:
     help="override default output file [default: scout.json].",
 )
 @scraper_params
-def scout(workflow_name: str, output_file: str, scraper: Scraper) -> None:
+def scout(initial_page_name: str, output_file: str, scraper: Scraper) -> None:
     """
-    Run first step of workflow & output data to a JSON file.
+    Run first step of scrape & output data to a JSON file.
 
     This command is intended to be used to detect at a first approximation whether
     or not a full scrape might need to be run. If the first layer detects any changes
@@ -313,9 +323,11 @@ def scout(workflow_name: str, output_file: str, scraper: Scraper) -> None:
     (typically a ListPage derivative) surfacing enough information (perhaps a
     last_updated date) to know whether any of the other pages have been scraped.
     """
-    workflow = get_workflow(workflow_name)
-    count = workflow.scout(output_file=output_file)
-    click.secho(f"success: wrote {count} records to {output_file}", fg="green")
+    initial_page = get_page_class(initial_page_name)()
+    items = list(page_to_items(scraper, initial_page, scout=True))
+    with open(output_file, "w") as f:
+        json.dump(items, f, indent=2)
+    click.secho(f"success: wrote {len(items)} records to {output_file}", fg="green")
 
 
 if __name__ == "__main__":  # pragma: no cover
