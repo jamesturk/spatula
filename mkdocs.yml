@@ -62,7 +62,7 @@ nav:
     - 'index.md'
   - Tutorial:
     - 'scraper-basics.md'
-    - 'scraper-input.md'
+    - 'data-models.md'
   - Usage:
     - 'cli.md'
     - 'reference.md'

@@ -325,4 +325,4 @@ INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.co
 success: wrote 44 objects to _scrapes/2021-06-03/002
 ```
 
-In [Scraper Input](scraper-input.md) we'll take a look at how to improve our scrapers by defining what input they expect.
+In [Data Models](data-models.md) we'll take a look at how to improve our scrapers by defining what input they expect.

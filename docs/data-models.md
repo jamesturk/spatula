@@ -1,7 +1,6 @@
-# Scraper Input
+# Data Models
 
-
-## Data Models
+## Why Use Data Models?
 
 Back in [Part One](scraper-basics.md#chaining-pages-together) we saw that when chaining pages we can pass data through from the parent page.
 
@@ -177,7 +176,7 @@ Employee(first='~first', last='~last', position='~position', marital_status='Mar
 
 Test data has been used, so even though `EmployeeList` didn't pass data into `EmployeeDetail` we can still see roughly what the data would look like if it had.
 
-## Partial Data Models
+### Using Inheritance
 
 The above pattern is pretty useful & common.
 Often part of the data comes from one page, and the rest from another (or perhaps even more).
@@ -239,6 +238,25 @@ A nice way to handle this without introducing a ton of redundancy is by setting 
 !!! warning
     Be sure to remember to decorate the derived class(es) if using `dataclasses` or `attrs`.
 
+### Fixing `EmployeeList`
+
+Don't forget to have `EmployeeList` return a `PartialEmployee` instance now instead of a `dict`:
+
+``` python hl_lines="6"
+    def process_item(self, item):
+        # this function is called for each <tr> we get from the selector
+        # we know there are 4 <tds>
+        first, last, position, details = item.getchildren()
+        return EmployeeDetail(
+            PartialEmployee(
+                first=first.text,
+                last=last.text,
+                position=position.text,
+            ),
+            source=XPath("./a/@href").match_one(details),
+        )
+```
+
 ## Overriding Default Values
 
 Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).
@@ -286,24 +304,6 @@ class EmployeeDetail(HtmlPage):
     the class is invoked without a `source` parameter, while `example_source` is only used
     when running `spatula test`.
 
-## Fixing `EmployeeList`
-
-Don't forget to have `EmployeeList` return a `PartialEmployee` instance now instead of a `dict`:
-
-``` python hl_lines="6"
-    def process_item(self, item):
-        # this function is called for each <tr> we get from the selector
-        # we know there are 4 <tds>
-        first, last, position, details = item.getchildren()
-        return EmployeeDetail(
-            PartialEmployee(
-                first=first.text,
-                last=last.text,
-                position=position.text,
-            ),
-            source=XPath("./a/@href").match_one(details),
-        )
-```
 
 ## `get_source_from_input`
 
@@ -392,6 +392,20 @@ class EmployeeDetail(HtmlPage):
 
 Of course, if you have a more complex situation you can do whatever you like in `get_source_from_input`.
 
-## Input To Initial Scraper
+## Data Models As Output
 
-TODO: coming soon
+When running `spatula scrape` data is written to disk as JSON.
+The exact method of obtaining that JSON varies a bit depending on what type of output you have:
+
+Raw `dict`:    Output will match exactly.
+
+`dataclasses`:  [`dataclass.asdict`](https://docs.python.org/3/library/dataclasses.html#dataclasses.asdict) will be used.
+
+`attrs`: [`attr.asdict`](https://www.attrs.org/en/stable/api.html) will be used to obtain a serializable representation.
+
+`pydantic`: the model's [`dict()`](https://pydantic-docs.helpmanual.io/usage/exporting_models/#modeldict) method will be used.
+
+By default the filename will be a UUID, but if you wish to provide your own filename you can add a `get_filename` method to yourmodel.
+
+!!! warning
+    When providing `get_filename` be sure that your filenames are still unique (you may wish to still incorporate a UUID if you don't have a key you're sure is unique.  *spatula* does not check for this, so you may overwrite data if your `get_filename` function does not guarantee uniqueness.
