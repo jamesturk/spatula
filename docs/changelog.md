@@ -9,6 +9,7 @@
 - allow using `Page` instances (as opposed to just the type) for scout & scrape
 - add check for `get_filename` on output classes to override default filename
 - improved automatic `pydantic` support
+- add --timeout, --no-verify, --retries, --retry-wait options
 - fix all commands to obey various scraper options like --rpm, --header, etc.
 
 ## 0.7.1 - 2021-06-14

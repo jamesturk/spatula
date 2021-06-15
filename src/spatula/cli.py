@@ -30,6 +30,22 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
     )
     @click.option("--rpm", default=60, help="set requests per minute (default: 60)")
     @click.option(
+        "--timeout", default=5, help="set HTTP request timeout in seconds (default: 5)"
+    )
+    @click.option(
+        "--verify/--no-verify", default=True, help="control verification of SSL certs"
+    )
+    @click.option(
+        "--retries",
+        default=0,
+        help="configure how many retries to perform on HTTP request error (default: 0)",
+    )
+    @click.option(
+        "--retry-wait",
+        default=10,
+        help="configure how many seconds to wait on HTTP request error (default: 10)",
+    )
+    @click.option(
         "-H",
         "--header",
         help="add a header to all requests. example format: 'Accept: application/json'",
@@ -43,13 +59,23 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         default=-1,
     )
     def newfunc(
-        user_agent: str,
-        rpm: int,
         header: typing.List[str],
+        retries: int,
+        retry_wait: int,
+        rpm: int,
+        timeout: int,
+        user_agent: str,
         verbosity: int,
+        verify: bool,
         **kwargs: str,
     ) -> None:
-        scraper = Scraper(requests_per_minute=rpm)
+        scraper = Scraper(
+            requests_per_minute=rpm,
+            retry_attempts=retries,
+            retry_wait_seconds=retry_wait,
+            verify=verify,
+        )
+        scraper.timeout = timeout
         scraper.user_agent = user_agent
         # double ignore, weird issue on 3.7?
         scraper.headers = {  # type: ignore
