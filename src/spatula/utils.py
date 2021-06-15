@@ -23,15 +23,14 @@ def _display_element(obj: _Element) -> str:
 
 
 def _display(obj: typing.Any) -> str:
-    if isinstance(obj, dict):
-        return pprint.pformat(obj)
-    elif hasattr(obj, "to_dict"):
-        # TODO: replace with _obj_to_dict call
-        return pprint.pformat(obj.to_dict())
-    elif isinstance(obj, _Element):
+    if isinstance(obj, _Element):
         return _display_element(obj)
     else:
-        return str(obj)
+        # if there's a dict representation, use that, otherwise str
+        try:
+            return pprint.pformat(_obj_to_dict(obj))
+        except ValueError:
+            return str(obj)
 
 
 def _obj_to_dict(obj: typing.Any) -> typing.Optional[typing.Dict]:
