@@ -6,7 +6,7 @@
 ## 0.8.1
 
 - remove undocumented `page_to_items` function
-- added `Page.do_scrape` to programatically get all items from a scrape
+- added `Page.do_scrape` to programmatically get all items from a scrape
 
 ## 0.8.0 - 2021-06-15
 

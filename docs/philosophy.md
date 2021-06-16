@@ -91,7 +91,7 @@ legislator.
 (TODO: revisit this section later) There are two other roles that a page
 can play, we'll get into these in more detail in advanced topics.
 
-One is what we'll call an 'auxillary detail' page, essentially a
+One is what we'll call an 'auxiliary detail' page, essentially a
 subpage of a detail page that contains additional information we need to
 collect. (An example would be if each detail page had a subpage listing
 a legislator's committee assignments that we wanted to collect.) The

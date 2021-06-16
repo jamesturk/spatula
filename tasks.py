@@ -1,4 +1,5 @@
 from invoke import task
+from pathlib import Path
 
 
 @task
@@ -20,6 +21,14 @@ def mypy(c):
 def lint(c):
     c.run("poetry run flake8 src/ tests/ --ignore=E203,E501,W503", pty=True)
     c.run("poetry run black --check src/ tests/", pty=True)
+
+
+@task
+def spellcheck(c):
+    files = Path("docs").glob("*.md")
+    for file in files:
+        print(file)
+        c.run(f"aspell check {file}", pty=True)
 
 
 @task(lint, mypy, test)
