@@ -250,6 +250,21 @@ individual:
 }
 ```
 
+## Using spatula Within Other Scripts
+
+Perhaps you don't want to write your output to disk.
+If you want to post-process your data further or use it as part of a larger pipeline a page's `do_scrape` method lets you do just that.  It returns a generator that you can use to process items as you see fit. 
+
+For example:
+
+```python
+page = EmployeeList()
+for e in page.do_scrape():
+    print(e)
+```
+
+You an do whatever you wish with these results, output them in a custom format, save them to your database, etc.
+
 ## Pagination
 
 While writing the list page we ignored pagination, let's go ahead and
