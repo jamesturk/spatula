@@ -1,4 +1,4 @@
-# Command Line Usage
+# Command Line Interface
 
 *spatula* provides a command line interface that is useful for iterative development of scrapers.
 

@@ -408,4 +408,4 @@ Raw `dict`:    Output will match exactly.
 By default the filename will be a UUID, but if you wish to provide your own filename you can add a `get_filename` method to your model.
 
 !!! warning
-    When providing `get_filename` be sure that your filenames are still unique (you may wish to still incorporate a UUID if you don't have a key you're sure is unique.  *spatula* does not check for this, so you may overwrite data if your `get_filename` function does not guarantee uniqueness.
+    When providing `get_filename` be sure that your filenames are still unique (you may wish to still incorporate a UUID if you don't have a key you're sure is unique).  *spatula* does not check for this, so you may overwrite data if your `get_filename` function does not guarantee uniqueness.

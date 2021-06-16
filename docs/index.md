@@ -30,3 +30,56 @@ management tool:
 or:
 
     pip install spatula
+
+## Example
+
+An example of a fairly simple two-page scrape, read [A First Scraper](scraper-basics.md) for a walkthrough of how it was built.
+
+``` python
+from spatula import HtmlPage, HtmlListPage, CSS, XPath, SelectorError
+
+
+class EmployeeList(HtmlListPage):
+    # by providing this here, it can be omitted on the command line
+    # useful in cases where the scraper is only meant for one page
+    source = "https://yoyodyne-propulsion.herokuapp.com/staff"
+
+    # each row represents an employee
+    selector = CSS("#employees tbody tr")
+
+    def process_item(self, item):
+        # this function is called for each <tr> we get from the selector
+        # we know there are 4 <tds>
+        first, last, position, details = item.getchildren()
+        return EmployeeDetail(
+            dict(
+                first=first.text,
+                last=last.text,
+                position=position.text,
+            ),
+            source=XPath("./a/@href").match_one(details),
+        )
+
+    def get_next_source(self):
+        try:
+            return XPath("//a[contains(text(), 'Next')]/@href").match_one(self.root)
+        except SelectorError:
+            pass
+
+
+class EmployeeDetail(HtmlPage):
+    def process_page(self):
+        marital_status = CSS("#status").match_one(self.root)
+        children = CSS("#children").match_one(self.root)
+        hired = CSS("#hired").match_one(self.root)
+        return dict(
+            marital_status=marital_status.text,
+            children=children.text,
+            hired=hired.text,
+            # self.input is the data passed in from the prior scrape
+            **self.input,
+        )
+
+    def process_error_response(self, exc):
+        self.logger.warning(exc)
+```
