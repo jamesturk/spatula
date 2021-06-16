@@ -11,7 +11,7 @@ from pathlib import Path
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper, SQLiteCache
-from .utils import _display, _obj_to_dict, page_to_items, attr_has, attr_fields
+from .utils import _display, _obj_to_dict, attr_has, attr_fields
 from .sources import URL, Source
 from .pages import Page
 
@@ -335,7 +335,7 @@ def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
                 click.secho(f"{output_dir} exists and is not empty", fg="red")
                 sys.exit(1)
     count = 0
-    for item in page_to_items(scraper, initial_page):
+    for item in initial_page._to_items(scraper):
         save_object(item, output_path)
         count += 1
     click.secho(f"success: wrote {count} objects to {output_path}", fg="green")
@@ -364,7 +364,7 @@ def scout(initial_page_name: str, output_file: str, scraper: Scraper) -> None:
     last_updated date) to know whether any of the other pages have been scraped.
     """
     initial_page = get_page(initial_page_name)
-    items = list(page_to_items(scraper, initial_page, scout=True))
+    items = list(initial_page._to_items(scraper, scout=True))
     with open(output_file, "w") as f:
         json.dump(items, f, indent=2)
     click.secho(f"success: wrote {len(items)} records to {output_file}", fg="green")

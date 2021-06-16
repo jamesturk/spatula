@@ -15,4 +15,3 @@ from .pages import (  # noqa
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .sources import Source, URL, NullSource  # noqa
-from .utils import page_to_items  # noqa

@@ -1,7 +1,7 @@
 import logging
 import pytest
-from spatula import Page, MissingSourceError, HandledError
-from scrapelib import HTTPError
+from spatula import Page, MissingSourceError, HandledError, NullSource
+from scrapelib import HTTPError, Scraper
 
 SOURCE = "https://example.com"
 
@@ -13,7 +13,7 @@ class Error:
 
 
 class DummyScraper:
-    """ a functional mock to be used in _fetch_data tests """
+    """a functional mock to be used in _fetch_data tests"""
 
     def request(self, url, **kwargs):
         if url != "error":
@@ -111,3 +111,48 @@ def test_default_processing():
         p.process_error_response(ArithmeticError())
     with pytest.raises(NotImplementedError):
         p.process_page()
+
+
+class SecondPage(Page):
+    source = NullSource()
+
+    def process_page(self):
+        return {**self.input, "second": "appended"}
+
+
+class FirstPage(Page):
+    source = NullSource()
+
+    def process_page(self):
+        yield SecondPage({"first": 1})
+        yield SecondPage({"first": 2})
+        yield SecondPage({"first": 3})
+
+
+def test_to_items_simple():
+    scraper = Scraper()
+    page = FirstPage()
+    items = list(page._to_items(scraper))
+    assert len(items) == 3
+    assert items[0] == {"first": 1, "second": "appended"}
+    assert items[1] == {"first": 2, "second": "appended"}
+    assert items[2] == {"first": 3, "second": "appended"}
+
+
+def test_to_items_scout():
+    scraper = Scraper()
+    page = FirstPage()
+    items = list(page._to_items(scraper, scout=True))
+    assert len(items) == 3
+    assert items[0] == {
+        "data": {"first": 1},
+        "__next__": "SecondPage source=NullSource",
+    }
+    assert items[1] == {
+        "data": {"first": 2},
+        "__next__": "SecondPage source=NullSource",
+    }
+    assert items[2] == {
+        "data": {"first": 3},
+        "__next__": "SecondPage source=NullSource",
+    }
