@@ -3,6 +3,11 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.1
+
+- remove undocumented `page_to_items` function
+- added `Page.do_scrape` to programatically get all items from a scrape
+
 ## 0.8.0 - 2021-06-15
 
 - remove undocumented `Workflow`

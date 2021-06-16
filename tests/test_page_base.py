@@ -129,10 +129,9 @@ class FirstPage(Page):
         yield SecondPage({"first": 3})
 
 
-def test_to_items_simple():
-    scraper = Scraper()
+def test_do_scrape_simple():
     page = FirstPage()
-    items = list(page._to_items(scraper))
+    items = list(page.do_scrape())
     assert len(items) == 3
     assert items[0] == {"first": 1, "second": "appended"}
     assert items[1] == {"first": 2, "second": "appended"}

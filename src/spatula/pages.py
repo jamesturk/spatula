@@ -122,16 +122,12 @@ class Page:
         if isinstance(result, typing.Generator):
             # each item yielded might be a Page or an end-result
             for item in result:
-                if isinstance(item, Page):
-                    if scout:
-                        yield _to_scout_result(item)
-                    else:
-                        yield from item._to_items(scraper)
+                if scout:
+                    yield _to_scout_result(item)
+                elif isinstance(item, Page):
+                    yield from item._to_items(scraper)
                 else:
-                    if scout:
-                        yield _to_scout_result(item)
-                    else:
-                        yield item
+                    yield item
 
             # after handling a list, check for pagination
             next_source = self.get_next_source()
@@ -170,6 +166,19 @@ class Page:
             s += f"source={self.source}"
         s += ")"
         return s
+
+    def do_scrape(
+        self, scraper: typing.Optional[scrapelib.Scraper] = None
+    ) -> typing.Iterable[typing.Any]:
+        """
+        yield results from this page and any subpages
+
+        :param scraper: Optional `scrapelib.Scraper` instance to use for running scrape.
+        :returns: Generator yielding results from the scrape.
+        """
+        if scraper is None:
+            scraper = scrapelib.Scraper()
+        yield from self._to_items(scraper)
 
     def get_source_from_input(self) -> typing.Union[None, str, Source]:
         """
