@@ -1,5 +1,6 @@
 import datetime
 import json
+from pathlib import Path
 from click.testing import CliRunner
 from spatula.cli import cli
 
@@ -44,6 +45,24 @@ def test_scrape_command_output_dir_flag():
         )
         assert result.exit_code == 1
         assert "mydir exists and is not empty" in result.output
+
+
+def test_scrape_command_source_flag():
+    runner = CliRunner()
+    today = datetime.date.today().strftime("%Y-%m-%d")
+
+    with runner.isolated_filesystem():
+        # tests source override
+        result = runner.invoke(
+            cli,
+            ["scrape", "tests.examples.ExamplePage", "--source", "https://example.com"],
+        )
+        assert result.exit_code == 0
+
+        assert f"success: wrote 1 objects to _scrapes/{today}/001" in result.output
+        files = list(Path(f"_scrapes/{today}/001").glob("*"))
+        with open(files[0]) as f:
+            assert "https://example.com" in f.read()
 
 
 def test_scout_command_basic():
