@@ -34,7 +34,7 @@ def spellcheck(c):
 @task(lint, mypy, test)
 def release(c, old, new):
     c.run(
-        "poetry run bump2version src/spatula/cli.py pyproject.toml docs/cli.md "
+        "poetry run bump2version x src/spatula/cli.py pyproject.toml docs/cli.md "
         f"--current-version {old} --new-version {new} --commit --tag --allow-dirty",
         pty=True,
     )
