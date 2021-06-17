@@ -20,7 +20,7 @@
     
     
       
-        <title>Command Line Usage - spatula</title>
+        <title>Command Line Interface - spatula</title>
       
     
     
@@ -73,7 +73,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#command-line-usage" class="md-skip">
+        <a href="#command-line-interface" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Command Line Usage
+              Command Line Interface
             
           </span>
         </div>
@@ -335,12 +335,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Command Line Usage
+          Command Line Interface
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Command Line Usage
+        Command Line Interface
       </a>
       
         
@@ -575,15 +575,15 @@
                   </a>
                 
                 
-                <h1 id="command-line-usage">Command Line Usage<a class="headerlink" href="#command-line-usage" title="Permanent link">&para;</a></h1>
+                <h1 id="command-line-interface">Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permanent link">&para;</a></h1>
 <p><em>spatula</em> provides a command line interface that is useful for iterative development of scrapers.</p>
 <p>Once installed within your Python environment, spatula can be invoked on the command line.  E.g.:</p>
 <div class="highlight"><pre><span></span><code><span class="go">  (scrape-venv) ~/scrape-proj $ spatula --version</span>
-<span class="go">  spatula, version 0.8.0</span>
+<span class="go">  spatula, version 0.8.1</span>
 </code></pre></div>
 <p>Or with poetry:</p>
 <div class="highlight"><pre><span></span><code><span class="go">  ~/scrape-proj $ poetry run spatula --version</span>
-<span class="go">  spatula, version 0.8.0</span>
+<span class="go">  spatula, version 0.8.1</span>
 </code></pre></div>
 <p>The CLI provides four useful subcommands for different stages of development:</p>
 <h2 id="spatula">spatula<a class="headerlink" href="#spatula" title="Permanent link">&para;</a></h2>
@@ -638,6 +638,12 @@ last_updated date) to know whether any of the other pages have been scraped.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>-s</code>, <code>--source</code></td>
+<td>text</td>
+<td>Provide (or override) source URL</td>
+<td><em>required</em></td>
+</tr>
 <tr>
 <td><code>-o</code>, <code>--output-file</code></td>
 <td>text</td>
@@ -726,6 +732,12 @@ last_updated date) to know whether any of the other pages have been scraped.</p>
 <td><code>-o</code>, <code>--output-dir</code></td>
 <td>text</td>
 <td>override default output directory.</td>
+<td><em>required</em></td>
+</tr>
+<tr>
+<td><code>-s</code>, <code>--source</code></td>
+<td>text</td>
+<td>Provide (or override) source URL</td>
 <td><em>required</em></td>
 </tr>
 <tr>

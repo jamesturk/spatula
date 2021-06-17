@@ -275,6 +275,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -371,7 +378,7 @@
   
     <li class="md-nav__item">
       <a href="cli/" class="md-nav__link">
-        Command Line Usage
+        Command Line Interface
       </a>
     </li>
   
@@ -502,6 +509,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    Example
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -542,6 +556,55 @@ management tool:</p>
 </code></pre></div>
 <p>or:</p>
 <div class="highlight"><pre><span></span><code>pip install spatula
+</code></pre></div>
+<h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
+<p>An example of a fairly simple two-page scrape, read <a href="scraper-basics/">A First Scraper</a> for a walkthrough of how it was built.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">spatula</span> <span class="kn">import</span> <span class="n">HtmlPage</span><span class="p">,</span> <span class="n">HtmlListPage</span><span class="p">,</span> <span class="n">CSS</span><span class="p">,</span> <span class="n">XPath</span><span class="p">,</span> <span class="n">SelectorError</span>
+
+
+<span class="k">class</span> <span class="nc">EmployeeList</span><span class="p">(</span><span class="n">HtmlListPage</span><span class="p">):</span>
+    <span class="c1"># by providing this here, it can be omitted on the command line</span>
+    <span class="c1"># useful in cases where the scraper is only meant for one page</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff&quot;</span>
+
+    <span class="c1"># each row represents an employee</span>
+    <span class="n">selector</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#employees tbody tr&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>
+        <span class="c1"># we know there are 4 &lt;tds&gt;</span>
+        <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">details</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">getchildren</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">EmployeeDetail</span><span class="p">(</span>
+            <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">first</span><span class="o">=</span><span class="n">first</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">last</span><span class="o">=</span><span class="n">last</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+                <span class="n">position</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">source</span><span class="o">=</span><span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;./a/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">details</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_next_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">XPath</span><span class="p">(</span><span class="s2">&quot;//a[contains(text(), &#39;Next&#39;)]/@href&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">SelectorError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="c1"># self.input is the data passed in from the prior scrape</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">process_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">exc</span><span class="p">)</span>
 </code></pre></div>
                 
               

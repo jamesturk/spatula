@@ -330,6 +330,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#using-spatula-within-other-scripts" class="md-nav__link">
+    Using spatula Within Other Scripts
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#pagination" class="md-nav__link">
     Pagination
   </a>
@@ -401,7 +408,7 @@
   
     <li class="md-nav__item">
       <a href="../cli/" class="md-nav__link">
-        Command Line Usage
+        Command Line Interface
       </a>
     </li>
   
@@ -542,6 +549,13 @@
         <li class="md-nav__item">
   <a href="#running-a-scrape" class="md-nav__link">
     Running a Scrape
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-spatula-within-other-scripts" class="md-nav__link">
+    Using spatula Within Other Scripts
   </a>
   
 </li>
@@ -775,6 +789,15 @@ individual:</p>
   <span class="nt">&quot;position&quot;</span><span class="p">:</span> <span class="s2">&quot;Imports &amp; Exports&quot;</span>
 <span class="p">}</span>
 </code></pre></div>
+<h2 id="using-spatula-within-other-scripts">Using spatula Within Other Scripts<a class="headerlink" href="#using-spatula-within-other-scripts" title="Permanent link">&para;</a></h2>
+<p>Perhaps you don't want to write your output to disk.
+If you want to post-process your data further or use it as part of a larger pipeline a page's <code>do_scrape</code> method lets you do just that.  It returns a generator that you can use to process items as you see fit. </p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="n">page</span> <span class="o">=</span> <span class="n">EmployeeList</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">do_scrape</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</code></pre></div>
+<p>You an do whatever you wish with these results, output them in a custom format, save them to your database, etc.</p>
 <h2 id="pagination">Pagination<a class="headerlink" href="#pagination" title="Permanent link">&para;</a></h2>
 <p>While writing the list page we ignored pagination, let's go ahead and
 add it now.</p>
