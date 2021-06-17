@@ -121,12 +121,14 @@ def get_page_class(dotted_name: str) -> type:
     return Cls
 
 
-def get_page(dotted_name: str) -> Page:
+def get_page(dotted_name: str, source: typing.Optional[str]) -> Page:
     Cls = get_page_class(dotted_name)
     if isinstance(Cls, Page):
+        if source:
+            Cls.source = URL(source)
         return Cls
     else:
-        return Cls()
+        return Cls(source=source)
 
 
 def get_new_filename(obj: typing.Any) -> str:
@@ -234,7 +236,7 @@ def test(
     class_name: str,
     interactive: bool,
     data: typing.List[str],
-    source: str,
+    source: typing.Optional[str],
     pagination: bool,
     scraper: Scraper,
 ) -> None:
@@ -310,12 +312,18 @@ def test(
 @click.option(
     "-o", "--output-dir", default=None, help="override default output directory."
 )
+@click.option("-s", "--source", help="Provide (or override) source URL")
 @scraper_params
-def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
+def scrape(
+    initial_page_name: str,
+    output_dir: str,
+    source: typing.Optional[str],
+    scraper: Scraper,
+) -> None:
     """
     Run full scrape, and output data to disk.
     """
-    initial_page = get_page(initial_page_name)
+    initial_page = get_page(initial_page_name, source)
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -343,6 +351,7 @@ def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
 
 @cli.command()
 @click.argument("initial_page_name")
+@click.option("-s", "--source", help="Provide (or override) source URL")
 @click.option(
     "-o",
     "--output-file",
@@ -350,7 +359,12 @@ def scrape(initial_page_name: str, output_dir: str, scraper: Scraper) -> None:
     help="override default output file [default: scout.json].",
 )
 @scraper_params
-def scout(initial_page_name: str, output_file: str, scraper: Scraper) -> None:
+def scout(
+    initial_page_name: str,
+    output_file: str,
+    source: typing.Optional[str],
+    scraper: Scraper,
+) -> None:
     """
     Run first step of scrape & output data to a JSON file.
 
@@ -363,7 +377,7 @@ def scout(initial_page_name: str, output_file: str, scraper: Scraper) -> None:
     (typically a ListPage derivative) surfacing enough information (perhaps a
     last_updated date) to know whether any of the other pages have been scraped.
     """
-    initial_page = get_page(initial_page_name)
+    initial_page = get_page(initial_page_name, source)
     items = list(initial_page._to_items(scraper, scout=True))
     with open(output_file, "w") as f:
         json.dump(items, f, indent=2)
