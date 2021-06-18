@@ -67,7 +67,20 @@ class Page:
     :   Source to fetch when invokking `spatula test`.
 
     `dependencies`
-    :   TODO: document
+    :   Dictionary mapping of names to `Page` objects that will be available before `process_page`.
+
+        For example:
+        ``` python
+
+        class EmployeeDetail(HtmlPage):
+            dependencies = {"awards": AwardsPage()}
+        ```
+
+        Means that before `EmployeeDetail.process_page` is called, it is guaranteed to have the
+        output from `AwardsPage` available as `self.awards`.
+
+        See [Specifying Dependencies](advanced-techniques.md#specifying-dependencies) for
+        a more detailed explanation.
 
     **Methods**
     """
