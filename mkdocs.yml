@@ -61,6 +61,7 @@ nav:
   - Usage:
     - 'scraper-basics.md'
     - 'data-models.md'
+    - 'advanced-techniques.md'
   - Reference:
     - 'cli.md'
     - 'reference.md'
