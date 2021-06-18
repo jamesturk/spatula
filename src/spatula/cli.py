@@ -187,11 +187,16 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
         k, v = item.split("=", 1)
         fake_input[k] = v
 
-    input_type = getattr(Cls, "input_type", None)
-
     if hasattr(Cls, "example_input"):
-        return getattr(Cls, "example_input")
+        example = getattr(Cls, "example_input")
+        for k, v in fake_input.items():
+            if isinstance(example, dict):
+                example[k] = v
+            else:
+                setattr(example, k, v)
+        return example
 
+    input_type = getattr(Cls, "input_type", None)
     if input_type:
         click.secho(f"{Cls.__name__} expects input ({input_type.__name__}): ")
         if dataclasses.is_dataclass(input_type):
