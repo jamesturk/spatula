@@ -74,6 +74,7 @@ class Page:
 
     source: typing.Union[None, str, Source] = None
     dependencies: typing.Dict[str, "Page"] = {}
+    _cached_dependencies: typing.Dict[str, typing.Any] = {}
 
     def _fetch_data(self, scraper: scrapelib.Scraper) -> None:
         """
@@ -81,11 +82,21 @@ class Page:
         exactly once before process_page is invoked
         """
         # process dependencies first
-        for val, dep in self.dependencies.items():
+        for key, dep in self.dependencies.items():
+            use_cache = False
             if isinstance(dep, type):
                 dep = dep(self.input)
-            dep._fetch_data(scraper)
-            setattr(self, val, dep.process_page())
+            else:
+                use_cache = True
+
+            if key in self._cached_dependencies:
+                setattr(self, key, self._cached_dependencies[key])
+            else:
+                dep._fetch_data(scraper)
+                page_result = dep.process_page()
+                setattr(self, key, page_result)
+                if use_cache:
+                    self._cached_dependencies[key] = page_result
 
         if not self.source:
             try:
