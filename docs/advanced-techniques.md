@@ -23,6 +23,7 @@ class Award:
     award: str
     year: str
 
+
 class AwardsPage(HtmlPage):
     source = "https://yoyodyne-propulsion.herokuapp.com/awards"
 
@@ -64,12 +65,12 @@ Now that this page is working, we can connect it to our previously written `Empl
 
 ``` python hl_lines="2"
 class EmployeeDetail(HtmlPage):
-    dependencies = {"awards": AwardsPage()}
+    dependencies = {"award_mapping": AwardsPage()}
 
     ...
 ```
 
-This line ensures that each instance of `EmployeeDetail` will be have a `self.awards` attribute, pre-populated with the result of `AwardPage`.
+This line ensures that each instance of `EmployeeDetail` will be have a `self.award_mapping` attribute, pre-populated with the result of `AwardsPage`.
 
 If you pass an instance of a page then each `EmployeeDetail` will share a cached copy of `AwardsPage`, ensuring it is only scraped once.
 
@@ -87,7 +88,7 @@ class Employee(PartialEmployee):
 
 And then within `EmployeeDetail`:
 
-``` python hl_lines="13-14"
+``` python hl_lines="13"
     def process_page(self):
         marital_status = CSS("#status").match_one(self.root)
         children = CSS("#children").match_one(self.root)
@@ -100,16 +101,15 @@ And then within `EmployeeDetail`:
             marital_status=marital_status.text,
             children=children.text,
             hired=hired.text,
-            # `self.awards` is the mapping of name -> Award
-            awards=self.awards[f"{self.input.first} {self.input.last}"],
+            awards=self.award_mapping[f"{self.input.first} {self.input.last}"],
         )
 ```
 
 We can test by passing fake data with a person that has an award:
 ``` console hl_lines="1 2 4"
 $ spatula test quickstart.EmployeeDetail --data first=John --data last=Fish
-INFO:ex04_dependencies.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards
-INFO:ex04_dependencies.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/1
+INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/1
 {'awards': [Award(award='Cousteau Society Award', year='1989')],
  'children': '0',
  'first': 'John',
@@ -119,3 +119,5 @@ INFO:ex04_dependencies.EmployeeDetail:fetching https://yoyodyne-propulsion.herok
  'position': 'Engineer',
  'url': 'https://yoyodyne-propulsion.herokuapp.com/staff/1'}
 ```
+
+Note that before fetching the `EmployeeDetail` page, `AwardsPage` is fetched, and the `awards` data is then correctly attached to John Fish.
