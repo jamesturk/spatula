@@ -61,7 +61,7 @@ class EmployeeList(HtmlListPage):
     source = "https://yoyodyne-propulsion.herokuapp.com/staff"
 
     # each row represents an employee
-    selector = CSS("#employees tr")
+    selector = CSS("#employees tbody tr")
 
     def process_item(self, item):
         # this function is called for each <tr> we get from the selector
