@@ -121,3 +121,82 @@ INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.co
 ```
 
 Note that before fetching the `EmployeeDetail` page, `AwardsPage` is fetched, and the `awards` data is then correctly attached to John Fish.
+
+## Advanced Sources
+
+### `NullSource`
+
+Every `Page` has a `source` which is fetched when it is executed.  There are cases where you may wish to avoid that behavior.  If you set `NullSource` for a page, no HTTP request will be performed prior to the `process_item` method being called.
+
+A common use for this is dispatching multiple detail pages without a corresponding list page.
+
+``` python
+
+class NebraskaPageGenerator(ListPage):
+    """
+    When scraping the Nebraska legislature, the pages are named
+    http://news.legislature.ne.gov/dist01/
+    through
+    http://news.legislature.ne.gov/dist49/
+    but with out an easy-to-scrape source.
+
+    So we use this method to mimic the results that a ListPage would yield,
+    without a wasted request.
+    """
+    source = NullSource()
+
+    def process_page(self):
+        for n in range(1, 50):
+            yield NebraskaLegPage(source=f"http://news.legislature.ne.gov/dist{n:02d}/")
+```
+
+### Custom Sources
+
+Sometimes you need a page to do something that isn't easy to do with a single `URL` object.
+
+To derive a custom `Source`, simply override the `get_response` method in your own custom source class.
+
+For example:
+
+``` python
+import scrapelib
+import requests
+from spatula import Source
+
+class FauxFormSource(Source):
+    """
+    emulate a case where we need to get a hidden input value to successfully
+    retrieve a form
+    """
+    def get_response(self, scraper: scrapelib.Scraper) -> requests.models.Response:
+        url = "https://example.com/"
+        resp = scraper.get(url)
+        root = lxml.html.fromstring(resp.content)
+        token = form.xpath(".//input[@name='csrftoken']")[0].value
+        # do second request with data
+        resp = scraper.post(self.url, {"csrftoken": token})
+        return resp
+```
+
+You can do whatever you want within `get_response` as long as something resembling a [`requests.Response`](https://2.python-requests.org/en/master/user/advanced/#request-and-response-objects) is returned.
+
+## Custom Page Types
+
+Another powerful technique is to define your own `Page` or `ListPage` subclasses.
+
+Most of the existing [page types](reference.md#pages) are fairly simple, typically only overriding `postprocess_response`, which is called after any `source` is turned into `self.response`, but before `process_item` is called.
+
+If you wanted to use `BeautifulSoup` instead of spatula's default `lxml.html` you could define a custom `SoupPage`:
+
+``` python
+from bs4 import BeautifulSoup
+from spatula import Page
+
+
+class SoupPage(Page):
+    def postprocess_response(self) -> None:
+        # self.response is guaranteed to have been set by now
+        self.soup = BeautifulSoup(self.response.content)
+```
+
+This would let any pages that derive from `SoupPage` use `self.soup` the same way that `self.root` is available on `HtmlPage`.
