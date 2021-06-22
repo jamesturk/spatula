@@ -1,0 +1,907 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A modern Python library for writing maintainable web scrapers.">
+      
+      
+      
+        <meta name="author" content="James Turk">
+      
+      
+        <link rel="canonical" href="https://jamesturk.github.io/spatula/advanced-techniques/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.7">
+    
+    
+      
+        <title>Advanced Techniques - spatula</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../assets/extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#advanced-techniques" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="spatula" class="md-header__button md-logo" aria-label="spatula" data-md-component="logo">
+      
+  <img src="../assets/white-spatula.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            spatula
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced Techniques
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10a2 2 0 0 1 2 2 2 2 0 0 1-2 2 2 2 0 0 1-2-2 2 2 0 0 1 2-2m10-3a5 5 0 0 1 5 5 5 5 0 0 1-5 5H7a5 5 0 0 1-5-5 5 5 0 0 1 5-5h10M7 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3h10a3 3 0 0 0 3-3 3 3 0 0 0-3-3H7z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/jamesturk/spatula/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/spatula
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="spatula" class="md-nav__button md-logo" aria-label="spatula" data-md-component="logo">
+      
+  <img src="../assets/white-spatula.svg" alt="logo">
+
+    </a>
+    spatula
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/jamesturk/spatula/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    jamesturk/spatula
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Usage
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Usage" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Usage
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scraper-basics/" class="md-nav__link">
+        A First Scraper
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-models/" class="md-nav__link">
+        Data Models
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Advanced Techniques
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Advanced Techniques
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-dependencies" class="md-nav__link">
+    Specifying Dependencies
+  </a>
+  
+    <nav class="md-nav" aria-label="Specifying Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scraping-the-new-page" class="md-nav__link">
+    Scraping the New Page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-dependency" class="md-nav__link">
+    Add the Dependency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-dependency-data" class="md-nav__link">
+    Use the Dependency Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-sources" class="md-nav__link">
+    Advanced Sources
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nullsource" class="md-nav__link">
+    NullSource
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-sources" class="md-nav__link">
+    Custom Sources
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-page-types" class="md-nav__link">
+    Custom Page Types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Reference
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Reference" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Reference
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        Command Line Interface
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        API Reference
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        About Spatula
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="About Spatula" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          About Spatula
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../philosophy/" class="md-nav__link">
+        Design Philosophy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../anatomy-of-a-scrape/" class="md-nav__link">
+        Anatomy of a Scrape
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        Code of Conduct
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        Changelog
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#specifying-dependencies" class="md-nav__link">
+    Specifying Dependencies
+  </a>
+  
+    <nav class="md-nav" aria-label="Specifying Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scraping-the-new-page" class="md-nav__link">
+    Scraping the New Page
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-the-dependency" class="md-nav__link">
+    Add the Dependency
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-the-dependency-data" class="md-nav__link">
+    Use the Dependency Data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-sources" class="md-nav__link">
+    Advanced Sources
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nullsource" class="md-nav__link">
+    NullSource
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#custom-sources" class="md-nav__link">
+    Custom Sources
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#custom-page-types" class="md-nav__link">
+    Custom Page Types
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jamesturk/spatula/edit/main/docs/advanced-techniques.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="advanced-techniques">Advanced Techniques<a class="headerlink" href="#advanced-techniques" title="Permanent link">&para;</a></h1>
+<h2 id="specifying-dependencies">Specifying Dependencies<a class="headerlink" href="#specifying-dependencies" title="Permanent link">&para;</a></h2>
+<p>While the pattern laid out in <a href="../scraper-basics/">Scraper Basics</a> is fairly common,
+sometimes data is laid out in other ways that doesn't fit as neatly with the list &amp; detail page workflow.</p>
+<p>For example, take a look at the page <a href="https://yoyodyne-propulsion.herokuapp.com/awards">https://yoyodyne-propulsion.herokuapp.com/awards</a>, which lists some awards that some Yoyodyne employees have won.</p>
+<p>In some cases you may decide to scrape this data separately using the typical <code>HtmlListPage</code> approach, but let's say you want each employee to have a list of their awards as part of the <code>EmployeeList</code>/<code>EmployeeDetail</code> scrape.</p>
+<h3 id="scraping-the-new-page">Scraping the New Page<a class="headerlink" href="#scraping-the-new-page" title="Permanent link">&para;</a></h3>
+<p>First let's write a quick page scraper to grab the award name &amp; year and associate them with a person's name:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># add to imports</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Award</span><span class="p">:</span>
+    <span class="n">award</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">year</span><span class="p">:</span> <span class="nb">str</span>
+
+
+<span class="k">class</span> <span class="nc">AwardsPage</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/awards&quot;</span>
+
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># augmentation pages will almost always return some kind of dictionary</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="n">award_cards</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;.card .large&quot;</span><span class="p">,</span> <span class="n">num_items</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">award_cards</span><span class="p">:</span>
+            <span class="n">award</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;h2&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">year</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+            <span class="c1"># make sure we got exactly 2 &lt;dd&gt; tags, and we take the second</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;dd&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">num_items</span><span class="o">=</span><span class="mi">2</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+            <span class="c1"># map the data based on a key we know we have elsewhere in the scrape</span>
+            <span class="n">mapping</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Award</span><span class="p">(</span><span class="n">award</span><span class="o">=</span><span class="n">award</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="n">year</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mapping</span>
+</code></pre></div>
+<p>Running this scrape yields a single dictionary:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.AwardsPage
+<span class="go">INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards</span>
+<span class="go">defaultdict(&lt;class &#39;list&#39;&gt;,</span>
+<span class="go">    {&#39;John Coyote&#39;: [Award(award=&#39;Album of the Year&#39;, year=&#39;1997&#39;)],</span>
+<span class="go">     &#39;John Fish&#39;: [Award(award=&#39;Cousteau Society Award&#39;, year=&#39;1989&#39;)],</span>
+<span class="go">     &#39;John Lee&#39;: [Award(award=&#39;Most Creative Loophole&#39;, year=&#39;1985&#39;)],</span>
+<span class="go">     &#39;John Many Jars&#39;: [Award(award=&#39;2nd Place, Most Jars Category&#39;, year=&#39;1987&#39;)],</span>
+<span class="go">     &quot;John O&#39;Connor&quot;: [Award(award=&#39;Nobel Prize in Physics&#39;, year=&#39;2986&#39;)],</span>
+<span class="go">     &#39;John Two Horns&#39;: [Award(award=&#39;Paralegal of the Year&#39;, year=&#39;1999&#39;)],</span>
+<span class="go">     &#39;John Whorfin&#39;: [Award(award=&#39;Nobel Prize in Physics&#39;, year=&#39;1934&#39;),</span>
+<span class="go">                      Award(award=&#39;Best Supporting Actor&#39;, year=&#39;1985&#39;)],</span>
+<span class="go">     &#39;John Ya Ya&#39;: [Award(award=&#39;ACM Award&#39;, year=&#39;1986&#39;)]})</span>
+</code></pre></div>
+<h3 id="add-the-dependency">Add the Dependency<a class="headerlink" href="#add-the-dependency" title="Permanent link">&para;</a></h3>
+<p>Now that this page is working, we can connect it to our previously written <code>EmployeeList</code> scrape.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+<span class="hll">    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;award_mapping&quot;</span><span class="p">:</span> <span class="n">AwardsPage</span><span class="p">()}</span>
+</span>
+    <span class="o">...</span>
+</code></pre></div>
+<p>This line ensures that each instance of <code>EmployeeDetail</code> will be have a <code>self.award_mapping</code> attribute, pre-populated with the result of <code>AwardsPage</code>.</p>
+<p>If you pass an instance of a page then each <code>EmployeeDetail</code> will share a cached copy of <code>AwardsPage</code>, ensuring it is only scraped once.</p>
+<h3 id="use-the-dependency-data">Use the Dependency Data<a class="headerlink" href="#use-the-dependency-data" title="Permanent link">&para;</a></h3>
+<p>The final step now is to actually use the mapping to attach the awards to the employees:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
+    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
+<span class="hll">    <span class="n">awards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Award</span><span class="p">]</span>
+</span></code></pre></div>
+<p>And then within <code>EmployeeDetail</code>:</p>
+<div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
+            <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
+            <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+<span class="hll">            <span class="n">awards</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">award_mapping</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span>
+</span>        <span class="p">)</span>
+</code></pre></div>
+<p>We can test by passing fake data with a person that has an award:
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --data <span class="nv">first</span><span class="o">=</span>John --data <span class="nv">last</span><span class="o">=</span>Fish
+</span><span class="hll"><span class="go">INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards</span>
+</span><span class="go">INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/1</span>
+<span class="hll"><span class="go">{&#39;awards&#39;: [Award(award=&#39;Cousteau Society Award&#39;, year=&#39;1989&#39;)],</span>
+</span><span class="go"> &#39;children&#39;: &#39;0&#39;,</span>
+<span class="go"> &#39;first&#39;: &#39;John&#39;,</span>
+<span class="go"> &#39;hired&#39;: &#39;10/31/1938&#39;,</span>
+<span class="go"> &#39;last&#39;: &#39;Fish&#39;,</span>
+<span class="go"> &#39;marital_status&#39;: &#39;Single&#39;,</span>
+<span class="go"> &#39;position&#39;: &#39;Engineer&#39;,</span>
+<span class="go"> &#39;url&#39;: &#39;https://yoyodyne-propulsion.herokuapp.com/staff/1&#39;}</span>
+</code></pre></div></p>
+<p>Note that before fetching the <code>EmployeeDetail</code> page, <code>AwardsPage</code> is fetched, and the <code>awards</code> data is then correctly attached to John Fish.</p>
+<h2 id="advanced-sources">Advanced Sources<a class="headerlink" href="#advanced-sources" title="Permanent link">&para;</a></h2>
+<h3 id="nullsource"><code>NullSource</code><a class="headerlink" href="#nullsource" title="Permanent link">&para;</a></h3>
+<p>Every <code>Page</code> has a <code>source</code> which is fetched when it is executed.  There are cases where you may wish to avoid that behavior.  If you set <code>NullSource</code> for a page, no HTTP request will be performed prior to the <code>process_item</code> method being called.</p>
+<p>A common use for this is dispatching multiple detail pages without a corresponding list page.</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">NebraskaPageGenerator</span><span class="p">(</span><span class="n">ListPage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    When scraping the Nebraska legislature, the pages are named</span>
+<span class="sd">    http://news.legislature.ne.gov/dist01/</span>
+<span class="sd">    through</span>
+<span class="sd">    http://news.legislature.ne.gov/dist49/</span>
+<span class="sd">    but with out an easy-to-scrape source.</span>
+
+<span class="sd">    So we use this method to mimic the results that a ListPage would yield,</span>
+<span class="sd">    without a wasted request.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">source</span> <span class="o">=</span> <span class="n">NullSource</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">NebraskaLegPage</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;http://news.legislature.ne.gov/dist</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">/&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="custom-sources">Custom Sources<a class="headerlink" href="#custom-sources" title="Permanent link">&para;</a></h3>
+<p>Sometimes you need a page to do something that isn't easy to do with a single <code>URL</code> object.</p>
+<p>To derive a custom <code>Source</code>, simply override the <code>get_response</code> method in your own custom source class.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">scrapelib</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">spatula</span> <span class="kn">import</span> <span class="n">Source</span>
+
+<span class="k">class</span> <span class="nc">FauxFormSource</span><span class="p">(</span><span class="n">Source</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    emulate a case where we need to get a hidden input value to successfully</span>
+<span class="sd">    retrieve a form</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scraper</span><span class="p">:</span> <span class="n">scrapelib</span><span class="o">.</span><span class="n">Scraper</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com/&quot;</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">&quot;.//input[@name=&#39;csrftoken&#39;]&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="c1"># do second request with data</span>
+        <span class="n">resp</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;csrftoken&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">resp</span>
+</code></pre></div>
+<p>You can do whatever you want within <code>get_response</code> as long as something resembling a <a href="https://2.python-requests.org/en/master/user/advanced/#request-and-response-objects"><code>requests.Response</code></a> is returned.</p>
+<h2 id="custom-page-types">Custom Page Types<a class="headerlink" href="#custom-page-types" title="Permanent link">&para;</a></h2>
+<p>Another powerful technique is to define your own <code>Page</code> or <code>ListPage</code> subclasses.</p>
+<p>Most of the existing <a href="../reference/#pages">page types</a> are fairly simple, typically only overriding <code>postprocess_response</code>, which is called after any <code>source</code> is turned into <code>self.response</code>, but before <code>process_item</code> is called.</p>
+<p>If you wanted to use <code>BeautifulSoup</code> instead of spatula's default <code>lxml.html</code> you could define a custom <code>SoupPage</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">spatula</span> <span class="kn">import</span> <span class="n">Page</span>
+
+
+<span class="k">class</span> <span class="nc">SoupPage</span><span class="p">(</span><span class="n">Page</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">postprocess_response</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># self.response is guaranteed to have been set by now</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+<p>This would let any pages that derive from <code>SoupPage</code> use <code>self.soup</code> the same way that <code>self.root</code> is available on <code>HtmlPage</code>.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" title="Back to top" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../data-models/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Data Models" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Data Models
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Command Line Interface" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Command Line Interface
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2021 James Turk
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "navigation.top", "content.tabs.link"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.b0710199.min.js", "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.76f349be.min.js"></script>
+      
+    
+  </body>
+</html>

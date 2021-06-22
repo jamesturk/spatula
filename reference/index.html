@@ -286,6 +286,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-techniques/" class="md-nav__link">
+        Advanced Techniques
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -685,8 +697,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../anatomy-of-a-scrape/" class="md-nav__link">
+        Anatomy of a Scrape
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
         Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        Code of Conduct
       </a>
     </li>
   
@@ -1022,6 +1058,8 @@
     <div class="doc doc-contents first">
 
       <p>Base class for all <em>Page</em> scrapers, used for scraping information from a single type of page.</p>
+<p>For details on how these methods are called, it may be helpful to read
+<a href="../anatomy-of-a-scrape/">Anatomy of a Scrape</a>.</p>
 <p><strong>Attributes</strong></p>
 <dl>
 <dt><code>source</code></dt>
@@ -1045,7 +1083,17 @@ If set will be used to prompt for and/or validate <code>self.input</code></dd>
 <dt><code>example_source</code></dt>
 <dd>Source to fetch when invokking <code>spatula test</code>.</dd>
 <dt><code>dependencies</code></dt>
-<dd>TODO: document</dd>
+<dd>
+<p>Dictionary mapping of names to <code>Page</code> objects that will be available before <code>process_page</code>.</p>
+<p>For example:
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;awards&quot;</span><span class="p">:</span> <span class="n">AwardsPage</span><span class="p">()}</span>
+</code></pre></div></p>
+<p>Means that before <code>EmployeeDetail.process_page</code> is called, it is guaranteed to have the
+output from <code>AwardsPage</code> available as <code>self.awards</code>.</p>
+<p>See <a href="../advanced-techniques/#specifying-dependencies">Specifying Dependencies</a> for
+a more detailed explanation.</p>
+</dd>
 </dl>
 <p><strong>Methods</strong></p>
 

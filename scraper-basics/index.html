@@ -370,6 +370,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-techniques/" class="md-nav__link">
+        Advanced Techniques
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -475,8 +487,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../anatomy-of-a-scrape/" class="md-nav__link">
+        Anatomy of a Scrape
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
         Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        Code of Conduct
       </a>
     </li>
   
@@ -642,7 +678,7 @@ and providing a <code>selector</code> as well as a <code>process_item</code>  me
     <span class="n">source</span> <span class="o">=</span> <span class="s2">&quot;https://yoyodyne-propulsion.herokuapp.com/staff&quot;</span>
 
     <span class="c1"># each row represents an employee</span>
-    <span class="n">selector</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#employees tr&quot;</span><span class="p">)</span>
+    <span class="n">selector</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#employees tbody tr&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="c1"># this function is called for each &lt;tr&gt; we get from the selector</span>

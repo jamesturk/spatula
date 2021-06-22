@@ -286,6 +286,18 @@
   
 
           
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-techniques/" class="md-nav__link">
+        Advanced Techniques
+      </a>
+    </li>
+  
+
+          
         </ul>
       </nav>
     </li>
@@ -434,13 +446,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#why-dont-page-objects-fetch-themselves" class="md-nav__link">
-    Why don't page objects fetch themselves?
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -454,8 +459,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../anatomy-of-a-scrape/" class="md-nav__link">
+        Anatomy of a Scrape
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../contributing/" class="md-nav__link">
         Contributing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../code_of_conduct/" class="md-nav__link">
+        Code of Conduct
       </a>
     </li>
   
@@ -521,13 +550,6 @@
         <li class="md-nav__item">
   <a href="#pages-page-roles" class="md-nav__link">
     Pages &amp; Page Roles
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#why-dont-page-objects-fetch-themselves" class="md-nav__link">
-    Why don't page objects fetch themselves?
   </a>
   
 </li>
@@ -608,44 +630,30 @@ and <a href="https://pydantic-docs.helpmanual.io/"><code>pydantic</code></a>.</p
 </li>
 </ol>
 <h2 id="pages-page-roles">Pages &amp; Page Roles<a class="headerlink" href="#pages-page-roles" title="Permanent link">&para;</a></h2>
-<p>A key component of using <strong>spatula</strong> is thinking of the scraper in terms
-of types of "pages".</p>
-<p>For each type of page you encounter, you'll write a subclass of
-<code>Page</code> to extract the data from it.</p>
+<p>A key component of using <em>spatula</em> is thinking of the scraper in terms of types of pages.</p>
+<p>For each type of page you encounter, you'll write a subclass of <code>Page</code> to extract the data from it.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>If you're familiar with MVC frameworks, a good way to think of this
-concept is the inverse of a view: a <code>Page</code>
-takes some kind of presentation (e.g. an HTML page or CSV
-file) and converts it back to the underlying data that it is comprised of.</p>
+concept is the inverse of a view: a <code>Page</code> takes some kind of presentation
+(e.g. an HTML page or CSV file)
+and converts it back to the underlying data that it is comprised of.</p>
 </div>
-<p>There are a few types of pages we generally encounter when scraping
-sites. How we write and use our <code>Page</code> subclasses will depend upon which of these four roles the
-page fulfills.</p>
-<p>The two most common are what we'll call "listing" and "detail" pages.</p>
-<p>Listing pages contain some kind of list of information, perhaps all of
+<p>There are a few types of pages we generally encounter when scraping sites.
+How we write and use our <code>Page</code> subclasses will depend upon which of these roles the page fulfills.</p>
+<p>The two most common are what we can call <strong>list</strong> and <strong>detail</strong> pages.</p>
+<p><strong>List pages</strong> contain some kind of list of information, perhaps all of
 the members of a given legislature. They'll often provide links to our
-second type of page, which we'll call a "detail" page. A "detail"
-page in our example would contain additional information on a single
-legislator.</p>
-<p>(TODO: revisit this section later) There are two other roles that a page
-can play, we'll get into these in more detail in advanced topics.</p>
-<p>One is what we'll call an 'auxiliary detail' page, essentially a
-subpage of a detail page that contains additional information we need to
-collect. (An example would be if each detail page had a subpage listing
-a legislator's committee assignments that we wanted to collect.) The
-final role is what we call 'augmentation' pages, which provide data
+second type of page, which we'll call a detail page.</p>
+<p><strong>Detail pages</strong> in our example would contain additional information on a single legislator.</p>
+<p>A detail page may also need to get information from additional pages (for instance, if the legislator's biographical &amp; contact information are split across two pages).
+These pages are handled nearly identically, and still regarded as <strong>detail pages</strong>.</p>
+<p>The final role is what we call an <strong>augmentation page</strong>. These provide data
 with which we want to augment the entire data set. (An example would be
 a separate page that is a photo directory of all legislators. We'll
 need to scrape this and match the photos to the legislators we scraped
-from the listing/detail pages.)</p>
-<h2 id="why-dont-page-objects-fetch-themselves">Why don't page objects fetch themselves?<a class="headerlink" href="#why-dont-page-objects-fetch-themselves" title="Permanent link">&para;</a></h2>
-<p>A big part of this is that we want to share some state among them for
-rate limiting and other configuration yet to come. In theory this could
-mean that each one is instantiated with a session parameter or similar,
-but that'd be a bit more cumbersome. This also can make testing even
-easier, as there's no need to mock HTTP requests/etc. as just passing a
-mock object into the <code>Page</code> will suffice.</p>
+from the list/detail pages.)</p>
+<p>Augmentation pages are typically handled via <a href="../advanced-techniques/#specifying-dependencies">dependencies</a>.</p>
                 
               
               
@@ -685,13 +693,13 @@ mock object into the <code>Page</code> will suffice.</p>
       
       
         
-        <a href="../contributing/" class="md-footer__link md-footer__link--next" aria-label="Next: Contributing" rel="next">
+        <a href="../anatomy-of-a-scrape/" class="md-footer__link md-footer__link--next" aria-label="Next: Anatomy of a Scrape" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Contributing
+              Anatomy of a Scrape
             </div>
           </div>
           <div class="md-footer__button md-icon">
