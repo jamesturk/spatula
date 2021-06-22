@@ -14,18 +14,18 @@ Bug reports, questions, or feature requests can be submitted as [GitHub issues](
   $ git clone git@github.com:<your username>/spatula.git
   ```
 
-0. Install *spatula* and its development dependencies locally:
-  ```
-  $ cd spatula
-  $ poetry install
-  ```
-  From here, you can use `poetry run inv` to run several useful maintenance commands:
-
 0. Install pre-commit hooks
   ```
   $ pre-commit install
   ```
   This will make sure that the linters run before each commit, saving you time.
+
+0. Install *spatula* and its development dependencies locally:
+  ```
+  $ cd spatula
+  $ poetry install
+  ```
+  From here, you can use `poetry run inv` to run several useful maintenance commands.
 
 ### Running Tests
 

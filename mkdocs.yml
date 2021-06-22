@@ -67,6 +67,7 @@ nav:
     - 'reference.md'
   - About Spatula:
     - 'philosophy.md'
+    - 'anatomy-of-a-scrape.md'
     - 'contributing.md'
     - 'code_of_conduct.md'
     - 'changelog.md'

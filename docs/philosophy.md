@@ -64,48 +64,34 @@ few common issues:
 
 ## Pages & Page Roles
 
-A key component of using **spatula** is thinking of the scraper in terms
-of types of "pages".
+A key component of using *spatula* is thinking of the scraper in terms of types of pages.
 
-For each type of page you encounter, you'll write a subclass of
-`Page` to extract the data from it.
+For each type of page you encounter, you'll write a subclass of `Page` to extract the data from it.
 
 !!! tip
     If you're familiar with MVC frameworks, a good way to think of this
-    concept is the inverse of a view: a `Page`
-    takes some kind of presentation (e.g. an HTML page or CSV
-    file) and converts it back to the underlying data that it is comprised of.
+    concept is the inverse of a view: a `Page` takes some kind of presentation
+    (e.g. an HTML page or CSV file)
+    and converts it back to the underlying data that it is comprised of.
 
-There are a few types of pages we generally encounter when scraping
-sites. How we write and use our `Page` subclasses will depend upon which of these four roles the
-page fulfills.
+There are a few types of pages we generally encounter when scraping sites.
+How we write and use our `Page` subclasses will depend upon which of these roles the page fulfills.
 
-The two most common are what we'll call "listing" and "detail" pages.
+The two most common are what we can call **list** and **detail** pages.
 
-Listing pages contain some kind of list of information, perhaps all of
+**List pages** contain some kind of list of information, perhaps all of
 the members of a given legislature. They'll often provide links to our
-second type of page, which we'll call a "detail" page. A "detail"
-page in our example would contain additional information on a single
-legislator.
+second type of page, which we'll call a detail page.
 
-(TODO: revisit this section later) There are two other roles that a page
-can play, we'll get into these in more detail in advanced topics.
+**Detail pages** in our example would contain additional information on a single legislator.
 
-One is what we'll call an 'auxiliary detail' page, essentially a
-subpage of a detail page that contains additional information we need to
-collect. (An example would be if each detail page had a subpage listing
-a legislator's committee assignments that we wanted to collect.) The
-final role is what we call 'augmentation' pages, which provide data
+A detail page may also need to get information from additional pages (for instance, if the legislator's biographical & contact information are split across two pages).
+These pages are handled nearly identically, and still regarded as **detail pages**.
+
+The final role is what we call an **augmentation page**. These provide data
 with which we want to augment the entire data set. (An example would be
 a separate page that is a photo directory of all legislators. We'll
 need to scrape this and match the photos to the legislators we scraped
-from the listing/detail pages.)
+from the list/detail pages.)
 
-## Why don't page objects fetch themselves?
-
-A big part of this is that we want to share some state among them for
-rate limiting and other configuration yet to come. In theory this could
-mean that each one is instantiated with a session parameter or similar,
-but that'd be a bit more cumbersome. This also can make testing even
-easier, as there's no need to mock HTTP requests/etc. as just passing a
-mock object into the `Page` will suffice.
+Augmentation pages are typically handled via [dependencies](advanced-techniques.md#specifying-dependencies).

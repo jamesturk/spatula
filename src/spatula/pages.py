@@ -39,6 +39,9 @@ class Page:
     """
     Base class for all *Page* scrapers, used for scraping information from a single type of page.
 
+    For details on how these methods are called, it may be helpful to read
+    [Anatomy of a Scrape](anatomy-of-a-scrape.md).
+
     **Attributes**
 
     `source`
