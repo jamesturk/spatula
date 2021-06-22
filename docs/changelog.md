@@ -3,12 +3,13 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
-## WIP
+## 0.8.2 - 2021-06-22
 
 - fix `spatula --version` to report correct version
-- `--data` command line flags override `example_input` values
+- allow `--data` command line flags to override `example_input` values
 - add caching of `dependencies`
-
+- fix pagination on non-list pages
+- add advanced documentation & anatomy of a scrape
 
 ## 0.8.1 - 2021-06-17
 
