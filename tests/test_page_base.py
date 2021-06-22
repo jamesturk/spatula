@@ -2,6 +2,7 @@ import logging
 import pytest
 from spatula import Page, MissingSourceError, HandledError, NullSource
 from scrapelib import HTTPError, Scraper
+from .examples import ExamplePaginatedPage
 
 SOURCE = "https://example.com"
 
@@ -155,3 +156,33 @@ def test_to_items_scout():
         "data": {"first": 3},
         "__next__": "SecondPage source=NullSource",
     }
+
+
+def test_paginated_page():
+    page = ExamplePaginatedPage()
+    items = list(page.do_scrape())
+    assert len(items) == 6
+
+
+def test_paginated_list_page():
+    page = ExamplePaginatedPage()
+    items = list(page.do_scrape())
+    assert len(items) == 6
+
+
+def test_paginated_single_value_page():
+    class SingleReturnPaginatedPage(Page):
+        source = NullSource()
+        another_page = True
+
+        def process_page(self):
+            return {"dummy": "value"}
+
+        def get_next_source(self):
+            # a hack to fake a second identical page
+            if isinstance(self.source, NullSource):
+                return "https://example.com"
+
+    page = SingleReturnPaginatedPage()
+    items = list(page.do_scrape())
+    assert len(items) == 2

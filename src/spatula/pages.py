@@ -155,13 +155,6 @@ class Page:
                     yield from item._to_items(scraper)
                 else:
                     yield item
-
-            # after handling a list, check for pagination
-            next_source = self.get_next_source()
-            if next_source:
-                # instantiate the same class with same input, but increment the source
-                next_page = type(self)(self.input, source=next_source)
-                yield from next_page._to_items(scraper, scout=scout)
         elif scout:
             yield _to_scout_result(result)
         elif isinstance(result, Page):
@@ -170,6 +163,13 @@ class Page:
         else:
             # end-result, just return as-is
             yield result
+
+        # after handling page, check for pagination
+        next_source = self.get_next_source()
+        if next_source:
+            # instantiate the same class with same input, but increment the source
+            next_page = type(self)(self.input, source=next_source)
+            yield from next_page._to_items(scraper, scout=scout)
 
     def __init__(
         self,
