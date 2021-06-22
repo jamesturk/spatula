@@ -173,7 +173,6 @@ def test_paginated_list_page():
 def test_paginated_single_value_page():
     class SingleReturnPaginatedPage(Page):
         source = NullSource()
-        another_page = True
 
         def process_page(self):
             return {"dummy": "value"}
@@ -186,3 +185,27 @@ def test_paginated_single_value_page():
     page = SingleReturnPaginatedPage()
     items = list(page.do_scrape())
     assert len(items) == 2
+
+
+def test_paginated_page_with_error():
+    BAD_URL = "https://httpbin.org/status/500"
+
+    class ErrorThenPaginatedPage(Page):
+        source = BAD_URL
+        error_handled = False
+
+        def process_page(self):
+            return {"dummy": "value"}
+
+        def process_error_response(self, exception):
+            self.error_handled = True
+
+        def get_next_source(self):
+            # a hack to fake a second identical page
+            if self.source.url == BAD_URL:
+                return "http://example.com"
+
+    page = ErrorThenPaginatedPage()
+    items = list(page.do_scrape())
+    assert len(items) == 1
+    assert page.error_handled

@@ -135,6 +135,13 @@ class Page:
         else:
             self.postprocess_response()
 
+    def _paginate(self, scraper: scrapelib.Scraper, scout: bool):
+        next_source = self.get_next_source()
+        if next_source:
+            # instantiate the same class with same input, but increment the source
+            next_page = type(self)(self.input, source=next_source)
+            yield from next_page._to_items(scraper, scout=scout)
+
     def _to_items(
         self, scraper: scrapelib.Scraper, *, scout: bool = False
     ) -> typing.Iterable[typing.Any]:
@@ -142,6 +149,8 @@ class Page:
         try:
             self._fetch_data(scraper)
         except HandledError:
+            # ok to proceed, but nothing left to do with this page
+            yield from self._paginate(scraper, scout)
             return
         result = self.process_page()
 
@@ -164,12 +173,8 @@ class Page:
             # end-result, just return as-is
             yield result
 
-        # after handling page, check for pagination
-        next_source = self.get_next_source()
-        if next_source:
-            # instantiate the same class with same input, but increment the source
-            next_page = type(self)(self.input, source=next_source)
-            yield from next_page._to_items(scraper, scout=scout)
+        # check for next page
+        yield from self._paginate(scraper, scout)
 
     def __init__(
         self,
