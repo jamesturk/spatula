@@ -77,5 +77,3 @@
 ## 0.3.0 - 2021-01-18
 
 -   first documented major release
--   major refactor, inspired by not directly using code from prior
-    versions

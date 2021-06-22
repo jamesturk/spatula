@@ -22,8 +22,7 @@ Issues: [https://github.com/jamesturk/spatula/issues](https://github.com/jamestu
 
 ## Installation
 
-*spatula* is on PyPI, and can be installed via any standard package
-management tool:
+*spatula* is on [PyPI](https://pypi.org/project/spatula/), and can be installed via any standard package management tool:
 
     poetry add spatula
 

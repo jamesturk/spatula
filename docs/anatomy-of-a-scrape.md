@@ -19,7 +19,7 @@ Once any dependencies are resolved, the page attempts to resolve a `source` attr
 
 There are a number of places that a `source` might come from, in order of precedence:
 
-0. overriden using the `--source` parameter if using a CLI scrape
+0. overridden using the `--source` parameter if using a CLI scrape
 0. passed in via class constructor (e.g. if this is a subpage)
 0. set as a class attribute ([`Page.source`](reference.md#page))
 0. retrieved via [`get_source_from_input`](reference.md#spatula.pages.Page.get_source_from_input)
