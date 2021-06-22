@@ -135,7 +135,9 @@ class Page:
         else:
             self.postprocess_response()
 
-    def _paginate(self, scraper: scrapelib.Scraper, scout: bool):
+    def _paginate(
+        self, scraper: scrapelib.Scraper, scout: bool
+    ) -> typing.Iterable[typing.Any]:
         next_source = self.get_next_source()
         if next_source:
             # instantiate the same class with same input, but increment the source
