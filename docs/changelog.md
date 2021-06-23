@@ -3,9 +3,10 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
-## 0.8.3
+## 0.8.3 - 2021-06-23
 
 - fix bug where default headers were cleared by default
+- update to scrapelib 2.0.6 which contains a bugfix for a redirect follow bug
 
 ## 0.8.2 - 2021-06-22
 
