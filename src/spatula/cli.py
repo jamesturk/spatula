@@ -81,7 +81,7 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         )
         scraper.timeout = timeout
         scraper.user_agent = user_agent
-        # double ignore, weird issue on 3.7?
+        # only update headers, don't overwrite defaults
         scraper.headers.update(
             {k.strip(): v.strip() for k, v in [h.split(":") for h in header]}
         )
