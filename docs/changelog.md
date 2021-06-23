@@ -3,6 +3,10 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.3
+
+- fix bug where default headers were cleared by default
+
 ## 0.8.2 - 2021-06-22
 
 - fix `spatula --version` to report correct version

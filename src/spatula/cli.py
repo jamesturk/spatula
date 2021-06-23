@@ -82,9 +82,9 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
         scraper.timeout = timeout
         scraper.user_agent = user_agent
         # double ignore, weird issue on 3.7?
-        scraper.headers = {  # type: ignore
-            k.strip(): v.strip() for k, v in [h.split(":") for h in header]
-        }  # type: ignore
+        scraper.headers.update(
+            {k.strip(): v.strip() for k, v in [h.split(":") for h in header]}
+        )
         if fastmode:
             scraper.cache_storage = SQLiteCache("spatula-cache.db")
             scraper.cache_write_only = False
