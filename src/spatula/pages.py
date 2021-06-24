@@ -25,6 +25,11 @@ def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
     }
 
 
+class SkipItem(Exception):
+    def __init__(self, msg: str):
+        super().__init__(msg)
+
+
 class MissingSourceError(Exception):
     def __init__(self, msg: str):
         super().__init__(msg)
@@ -357,17 +362,13 @@ class ListPage(Page):
     **Methods**
     """
 
-    class SkipItem(Exception):
-        def __init__(self, msg: str):
-            super().__init__(msg)
-
     def skip(self, msg: str = "") -> None:
         """
         Can be called from within `process_item` to skip a given item.
 
         Typically used if there is some known bad data.
         """
-        raise self.SkipItem(msg)
+        raise SkipItem(msg)
 
     def _process_or_skip_loop(
         self, iterable: typing.Iterable
@@ -375,8 +376,8 @@ class ListPage(Page):
         for item in iterable:
             try:
                 item = self.process_item(item)
-            except self.SkipItem as e:
-                self.logger.debug(f"SkipItem: {e}")
+            except SkipItem as e:
+                self.logger.info(f"SkipItem: {e}")
                 continue
             yield item
 

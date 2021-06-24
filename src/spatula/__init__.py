@@ -12,6 +12,7 @@ from .pages import (  # noqa
     XmlListPage,
     MissingSourceError,
     HandledError,
+    SkipItem,
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .sources import Source, URL, NullSource  # noqa

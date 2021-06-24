@@ -1,6 +1,13 @@
 import logging
 import pytest
-from spatula import Page, MissingSourceError, HandledError, NullSource
+from spatula import (
+    Page,
+    ListPage,
+    MissingSourceError,
+    HandledError,
+    NullSource,
+    SkipItem,
+)
 from scrapelib import HTTPError, Scraper
 from .examples import ExamplePaginatedPage
 
@@ -209,3 +216,24 @@ def test_paginated_page_with_error():
     items = list(page.do_scrape())
     assert len(items) == 1
     assert page.error_handled
+
+
+def test_skip_item(caplog):
+    class SkipOddPage(ListPage):
+        source = NullSource()
+
+        def process_page(self):
+            yield from self._process_or_skip_loop([1, 2, 3, 4, 5])
+
+        def process_item(self, item):
+            if item % 2:
+                raise SkipItem(f"{item} is odd!")
+            else:
+                return item
+
+    page = SkipOddPage()
+    with caplog.at_level(logging.INFO):
+        items = list(page.do_scrape())
+    assert items == [2, 4]
+    # one for the fetch and 3 for the skips
+    assert len(caplog.records) == 4
