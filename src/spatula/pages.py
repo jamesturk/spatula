@@ -3,6 +3,7 @@ import csv
 import tempfile
 import subprocess
 import logging
+import warnings
 import typing
 import scrapelib
 import lxml.html  # type: ignore
@@ -362,12 +363,16 @@ class ListPage(Page):
     **Methods**
     """
 
-    def skip(self, msg: str = "") -> None:
+    def skip(self, msg: str = "") -> None:  # pragma: no cover
         """
         Can be called from within `process_item` to skip a given item.
 
         Typically used if there is some known bad data.
         """
+        warnings.warn(
+            "self.skip is deprecated and will be removed in 0.9, raise SkipItem instead",
+            DeprecationWarning,
+        )
         raise SkipItem(msg)
 
     def _process_or_skip_loop(
