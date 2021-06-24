@@ -91,11 +91,11 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
 
         if verbosity == -1:
             level = logging.INFO if func.__name__ != "test" else logging.DEBUG
-        elif verbosity == 0:
+        elif verbosity == 0:  # pragma: no cover
             level = logging.ERROR
-        elif verbosity == 1:
+        elif verbosity == 1:  # pragma: no cover
             level = logging.INFO
-        elif verbosity >= 2:
+        elif verbosity >= 2:  # pragma: no cover
             level = logging.DEBUG
 
         if verbosity < 3:
@@ -201,7 +201,7 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
         click.secho(f"{Cls.__name__} expects input ({input_type.__name__}): ")
         if dataclasses.is_dataclass(input_type):
             fields = dataclasses.fields(input_type)
-        elif attr_has(input_type):
+        elif attr_has(input_type):  # pragma: no cover
             # ignore type rules here since dataclasses/attr do not share a base
             # but fields will have a name no matter what
             fields = attr_fields(input_type)  # type: ignore
