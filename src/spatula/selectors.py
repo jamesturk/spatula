@@ -5,6 +5,10 @@ from .utils import _display
 
 
 class SelectorError(ValueError):
+    """
+    Error raised when a selector's constraint (min_items/max_items, etc.) is not met.
+    """
+
     pass
 
 

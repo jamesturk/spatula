@@ -27,6 +27,20 @@ def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
 
 
 class SkipItem(Exception):
+    """
+    To be raised within `ListPage` subclass to skip processing of the current item
+    & continue with the next item.
+
+    Example:
+    ``` python
+    class SomeListPage(HtmlListPage):
+        def process_item(self, item):
+            if item.name == "Vacant":
+                raise SkipItem("vacant")
+            # do normal processing here
+    ```
+    """
+
     def __init__(self, msg: str):
         super().__init__(msg)
 
@@ -364,11 +378,6 @@ class ListPage(Page):
     """
 
     def skip(self, msg: str = "") -> None:  # pragma: no cover
-        """
-        Can be called from within `process_item` to skip a given item.
-
-        Typically used if there is some known bad data.
-        """
         warnings.warn(
             "self.skip is deprecated and will be removed in 0.9, raise SkipItem instead",
             DeprecationWarning,
@@ -391,6 +400,11 @@ class ListPage(Page):
         To be overridden.
 
         Called once per subitem on page, as defined by the particular subclass being used.
+
+        Should return data extracted from the `item`.
+
+        If [`SkipItem`](#SkipItem) is raised, `process_item` will continue to be called with
+        the next item in the stream.
         """
         return item
 

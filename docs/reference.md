@@ -129,3 +129,13 @@
 ::: spatula.NullSource
     rendering:
       heading_level: 4
+
+## Exceptions
+
+### SelectorError
+
+::: spatula.SelectorError
+
+### SkipItem
+
+::: spatula.SkipItem
