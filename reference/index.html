@@ -502,13 +502,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#spatula.pages.ListPage.skip" class="md-nav__link">
-    skip()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -633,6 +626,33 @@
           <li class="md-nav__item">
   <a href="#nullsource" class="md-nav__link">
     NullSource
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exceptions" class="md-nav__link">
+    Exceptions
+  </a>
+  
+    <nav class="md-nav" aria-label="Exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selectorerror" class="md-nav__link">
+    SelectorError
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipitem" class="md-nav__link">
+    SkipItem
   </a>
   
 </li>
@@ -892,13 +912,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#spatula.pages.ListPage.skip" class="md-nav__link">
-    skip()
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1023,6 +1036,33 @@
           <li class="md-nav__item">
   <a href="#nullsource" class="md-nav__link">
     NullSource
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exceptions" class="md-nav__link">
+    Exceptions
+  </a>
+  
+    <nav class="md-nav" aria-label="Exceptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selectorerror" class="md-nav__link">
+    SelectorError
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skipitem" class="md-nav__link">
+    SkipItem
   </a>
   
 </li>
@@ -1403,7 +1443,6 @@ object representing the root XML element on the page.</dd>
 
 
 
-
   <div class="doc doc-object doc-method">
 
 
@@ -1418,31 +1457,14 @@ object representing the root XML element on the page.</dd>
 
       <p>To be overridden.</p>
 <p>Called once per subitem on page, as defined by the particular subclass being used.</p>
+<p>Should return data extracted from the <code>item</code>.</p>
+<p>If <a href="#spatula.pages.ListPage.process_item--SkipItem"><code>SkipItem</code></a> is raised, <code>process_item</code> will continue to be called with
+the next item in the stream.</p>
 
     </div>
 
   </div>
 
-
-
-  <div class="doc doc-object doc-method">
-
-
-
-<h4 id="spatula.pages.ListPage.skip" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">skip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span></code>
-
-
-<a href="#spatula.pages.ListPage.skip" class="headerlink" title="Permanent link">&para;</a></h4>
-
-    <div class="doc doc-contents ">
-
-      <p>Can be called from within <code>process_item</code> to skip a given item.</p>
-<p>Typically used if there is some known bad data.</p>
-
-    </div>
-
-  </div>
 
 
 
@@ -1899,6 +1921,63 @@ to be performed.</p>
 
   <div class="doc doc-children">
 
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+  </div>
+
+<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">&para;</a></h2>
+<h3 id="selectorerror">SelectorError<a class="headerlink" href="#selectorerror" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-object doc-class">
+
+
+    <div class="doc doc-contents first">
+
+      <p>Error raised when a selector's constraint (min_items/max_items, etc.) is not met.</p>
+
+
+
+    </div>
+
+  </div>
+
+<h3 id="skipitem">SkipItem<a class="headerlink" href="#skipitem" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-object doc-class">
+
+
+    <div class="doc doc-contents first">
+
+      <p>To be raised within <code>ListPage</code> subclass to skip processing of the current item
+&amp; continue with the next item.</p>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SomeListPage</span><span class="p">(</span><span class="n">HtmlListPage</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Vacant&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">SkipItem</span><span class="p">(</span><span class="s2">&quot;vacant&quot;</span><span class="p">)</span>
+        <span class="c1"># do normal processing here</span>
+</code></pre></div></p>
+
+
+
+
+  <div class="doc doc-children">
 
 
 
