@@ -1,8 +1,8 @@
 from dataclasses import dataclass
-from spatula import Page, NullSource
+from spatula import Page, NullSource, ListPage
 
 
-class ExampleListPage(Page):
+class ExampleListPage(ListPage):
     # need this here to test that default source is used
     source = NullSource()
 
@@ -17,8 +17,11 @@ class ExampleListPage(Page):
 class Subpage(Page):
     source = NullSource()
 
+    def process_page(self):
+        return self.input
 
-class ExampleListPageSubpages(Page):
+
+class ExampleListPageSubpages(ListPage):
     # need this here to test that default source is used
     source = NullSource()
 

@@ -30,6 +30,18 @@ def test_scrape_command_basic():
         assert f"success: wrote 5 objects to _scrapes/{today}/002" in result.output
 
 
+def test_scrape_command_module():
+    runner = CliRunner()
+
+    today = datetime.date.today().strftime("%Y-%m-%d")
+
+    # scrapes 10 items because it runs both test ListPages
+    with runner.isolated_filesystem():
+        result = runner.invoke(cli, ["scrape", "tests.examples"])
+        assert result.exit_code == 0
+        assert f"success: wrote 10 objects to _scrapes/{today}/001" in result.output
+
+
 def test_scrape_command_output_dir_flag():
     runner = CliRunner()
 
