@@ -130,7 +130,7 @@ def get_page_class(dotted_name: str) -> type:
     return Cls
 
 
-def get_pages_from_module(dotted_name: str) -> typing.List[Page]:
+def get_pages_from_module(dotted_name: str) -> typing.List[type]:
     mod = import_mod(dotted_name)
     pages = set()
     base_pages = set()
