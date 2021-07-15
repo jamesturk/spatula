@@ -2,18 +2,20 @@ import dataclasses
 import datetime
 import functools
 import importlib
+import inspect
 import json
 import logging
 import sys
 import typing
 import uuid
 from pathlib import Path
+from types import ModuleType
 import lxml.html  # type: ignore
 import click
 from scrapelib import Scraper, SQLiteCache
 from .utils import _display, _obj_to_dict, attr_has, attr_fields
 from .sources import URL, Source
-from .pages import Page
+from .pages import Page, ListPage
 
 
 VERSION = "0.8.3"
@@ -109,26 +111,59 @@ def scraper_params(func: typing.Callable) -> typing.Callable:
     return newfunc
 
 
-def get_page_class(dotted_name: str) -> type:
-    mod_name, cls_name = dotted_name.rsplit(".", 1)
+def import_mod(name: str) -> typing.Union[ModuleType, type]:
     try:
-        mod = importlib.import_module(mod_name)
+        return importlib.import_module(name)
     except ImportError:
+        # no need to try again
+        if "." in sys.path:
+            raise
         logging.getLogger("spatula").debug("appending current directory to PYTHONPATH")
         sys.path.append(".")
-        mod = importlib.import_module(mod_name)
+        return importlib.import_module(name)
+
+
+def get_page_class(dotted_name: str) -> type:
+    mod_name, cls_name = dotted_name.rsplit(".", 1)
+    mod = import_mod(mod_name)
     Cls = getattr(mod, cls_name)
     return Cls
 
 
-def get_page(dotted_name: str, source: typing.Optional[str]) -> Page:
-    Cls = get_page_class(dotted_name)
-    if isinstance(Cls, Page):
-        if source:
-            Cls.source = URL(source)
-        return Cls
-    else:
-        return Cls(source=source)
+def get_pages_from_module(dotted_name: str) -> typing.List[Page]:
+    mod = import_mod(dotted_name)
+    pages = set()
+    base_pages = set()
+    for name, member in inspect.getmembers(mod):
+        try:
+            if issubclass(member, ListPage):
+                pages.add(member)
+                base_pages.update(member.__mro__[1:])
+        except TypeError:
+            pass
+    return list(pages - base_pages)
+
+
+def get_pages(dotted_name: str, source: typing.Optional[str]) -> typing.List[Page]:
+    try:
+        pages = [Cls() for Cls in get_pages_from_module(dotted_name)]
+        if pages:
+            logging.getLogger("spatula").debug(f"found pages: {pages}")
+            return pages
+        else:
+            logging.getLogger("spatula").error(
+                f"found no list pages in module {dotted_name}"
+            )
+            sys.exit(1)
+    except ImportError:
+        # single page
+        Cls = get_page_class(dotted_name)
+        if isinstance(Cls, Page):
+            if source:
+                Cls.source = URL(source)
+            return [Cls]
+        else:
+            return [Cls(source=source)]
 
 
 def get_new_filename(obj: typing.Any) -> str:
@@ -328,7 +363,7 @@ def scrape(
     """
     Run full scrape, and output data to disk.
     """
-    initial_page = get_page(initial_page_name, source)
+    # ensure output directory is ready
     if not output_dir:
         dirn = 1
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -347,10 +382,14 @@ def scrape(
             if len(list(output_path.iterdir())):
                 click.secho(f"{output_dir} exists and is not empty", fg="red")
                 sys.exit(1)
+
+    # actually do the scrape
     count = 0
-    for item in initial_page._to_items(scraper):
-        save_object(item, output_path)
-        count += 1
+    pages = get_pages(initial_page_name, source)
+    for initial_page in pages:
+        for item in initial_page._to_items(scraper):
+            save_object(item, output_path)
+            count += 1
     click.secho(f"success: wrote {count} objects to {output_path}", fg="green")
 
 
@@ -382,8 +421,10 @@ def scout(
     (typically a ListPage derivative) surfacing enough information (perhaps a
     last_updated date) to know whether any of the other pages have been scraped.
     """
-    initial_page = get_page(initial_page_name, source)
-    items = list(initial_page._to_items(scraper, scout=True))
+    initial_pages = get_pages(initial_page_name, source)
+    items: typing.List[typing.Any] = []
+    for initial_page in initial_pages:
+        items.extend(initial_page._to_items(scraper, scout=True))
     with open(output_file, "w") as f:
         json.dump(items, f, indent=2)
     click.secho(f"success: wrote {len(items)} records to {output_file}", fg="green")
