@@ -87,7 +87,7 @@ class Page:
     :   Instance of `input_type` to be used when invoking `spatula test`.
 
     `example_source`
-    :   Source to fetch when invokking `spatula test`.
+    :   Source to fetch when invoking `spatula test`.
 
     `dependencies`
     :   Dictionary mapping of names to `Page` objects that will be available before `process_page`.
