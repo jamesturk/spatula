@@ -9,7 +9,7 @@ class Source:
 
 class URL(Source):
     def __init__(
-        self, url: str, method: str = "GET", data: dict = None, headers: dict = None
+        self, url: str, method: str = "GET", data: dict = None, headers: dict = None, verify: bool = True
     ):
         """
         Defines a resource to fetch via URL, particularly useful for handling non-GET
@@ -19,18 +19,20 @@ class URL(Source):
         :param method: HTTP method to use, defaults to "GET"
         :param data: POST data to include in request body.
         :param headers: dictionary of HTTP headers to set for the request.
+        :param verify: bool indicating whether or not to verify SSL certificates for request, defaults to True
         """
 
         self.url = url
         self.method = method
         self.data = data
         self.headers = headers
+        self.verify = verify
 
     def get_response(
         self, scraper: scrapelib.Scraper
     ) -> Optional[requests.models.Response]:
         return scraper.request(
-            method=self.method, url=self.url, data=self.data, headers=self.headers
+            method=self.method, url=self.url, data=self.data, headers=self.headers, verify=self.verify
         )
 
     def __str__(self) -> str:
