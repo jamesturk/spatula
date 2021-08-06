@@ -130,6 +130,15 @@ def get_page_class(dotted_name: str) -> type:
     return Cls
 
 
+def get_dump_function(
+    dotted_name: str,
+) -> typing.Callable[[typing.Optional[dict], typing.IO], None]:
+    mod_name, func_name = dotted_name.rsplit(".", 1)
+    mod = import_mod(mod_name)
+    func = getattr(mod, func_name)
+    return func
+
+
 def get_pages_from_module(dotted_name: str) -> typing.List[type]:
     mod = import_mod(dotted_name)
     pages = set()
@@ -171,13 +180,6 @@ def get_new_filename(obj: typing.Any) -> str:
         return obj.get_filename()
     else:
         return str(uuid.uuid4())
-
-
-def save_object(obj: typing.Any, output_path: Path) -> None:
-    filename = output_path / (get_new_filename(obj) + ".json")
-    data = _obj_to_dict(obj)
-    with open(filename, "w") as f:
-        json.dump(data, f)
 
 
 @click.group()
@@ -361,12 +363,14 @@ def test(
     "-o", "--output-dir", default=None, help="override default output directory."
 )
 @click.option("-s", "--source", help="Provide (or override) source URL")
+@click.option("--dump", help="Specify dump function", default="json.dump")
 @scraper_params
 def scrape(
     initial_page_name: str,
     output_dir: str,
     source: typing.Optional[str],
     scraper: Scraper,
+    dump: str,
 ) -> None:
     """
     Run full scrape, and output data to disk.
@@ -391,12 +395,16 @@ def scrape(
                 click.secho(f"{output_dir} exists and is not empty", fg="red")
                 sys.exit(1)
 
+    dump_func = get_dump_function(dump)
     # actually do the scrape
     count = 0
     pages = get_pages(initial_page_name, source)
     for initial_page in pages:
         for item in initial_page._to_items(scraper):
-            save_object(item, output_path)
+            filename = output_path / (get_new_filename(item) + ".json")
+            data = _obj_to_dict(item)
+            with open(filename, "w") as f:
+                dump_func(data, f)
             count += 1
     click.secho(f"success: wrote {count} objects to {output_path}", fg="green")
 
