@@ -328,7 +328,7 @@ def test(
                 num_items += 1
                 if isinstance(item, Page):
                     click.echo(
-                        click.style(f"{num_items}: would continue with ", fg="green")
+                        click.style(f"{num_items}: would continue with ", fg="blue")
                         + _display(item)
                     )
                 else:

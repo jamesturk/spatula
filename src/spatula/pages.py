@@ -406,6 +406,7 @@ class ListPage(Page):
         If [`SkipItem`](#SkipItem) is raised, `process_item` will continue to be called with
         the next item in the stream.
         """
+        warnings.warn(f"process_item not overridden on {self.__class__.__name__}")
         return item
 
 
