@@ -326,7 +326,15 @@ def test(
             for item in result:
                 # use this count instead of enumerate to handle pagination
                 num_items += 1
-                click.echo(click.style(f"{num_items}: ", fg="green") + _display(item))
+                if isinstance(item, Page):
+                    click.echo(
+                        click.style(f"{num_items}: would continue with ", fg="green")
+                        + _display(item)
+                    )
+                else:
+                    click.echo(
+                        click.style(f"{num_items}: ", fg="green") + _display(item)
+                    )
         else:
             click.secho(_display(result))
 

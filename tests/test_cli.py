@@ -167,6 +167,17 @@ def test_test_command_no_pagination():
     assert "6: " not in result.output
 
 
+def test_test_command_subpages():
+    runner = CliRunner()
+
+    result = runner.invoke(cli, ["test", "tests.examples.ExampleListPageSubpages"])
+    assert result.exit_code == 0
+    assert (
+        "would continue with Subpage(input={'val': '5'} source=NullSource)"
+        in result.output
+    )
+
+
 def test_test_command_input():
     runner = CliRunner()
 
