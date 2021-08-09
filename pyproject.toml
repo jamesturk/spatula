@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "spatula"
-version = "0.8.4"
+version = "0.8.5"
 description = "A modern Python library for writing maintainable web scrapers."
 authors = ["James Turk <dev@jamesturk.net>"]
 license = "MIT"
