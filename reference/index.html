@@ -1123,7 +1123,7 @@ If set will be used to prompt for and/or validate <code>self.input</code></dd>
 <dt><code>example_input</code></dt>
 <dd>Instance of <code>input_type</code> to be used when invoking <code>spatula test</code>.</dd>
 <dt><code>example_source</code></dt>
-<dd>Source to fetch when invokking <code>spatula test</code>.</dd>
+<dd>Source to fetch when invoking <code>spatula test</code>.</dd>
 <dt><code>dependencies</code></dt>
 <dd>
 <p>Dictionary mapping of names to <code>Page</code> objects that will be available before <code>process_page</code>.</p>
@@ -1898,6 +1898,12 @@ requests.</p>
         <td><code>dict</code></td>
         <td><p>dictionary of HTTP headers to set for the request.</p></td>
         <td><code>None</code></td>
+      </tr>
+      <tr>
+        <td><code>verify</code></td>
+        <td><code>bool</code></td>
+        <td><p>bool indicating whether or not to verify SSL certificates for request, defaults to True</p></td>
+        <td><code>True</code></td>
       </tr>
   </tbody>
 </table>
