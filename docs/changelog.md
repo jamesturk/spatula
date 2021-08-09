@@ -3,10 +3,11 @@
 !!! note
     spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
 
-## 0.8.5 - 
+## 0.8.5 - 2021-08-09
 
 - add `verify` argument to URL source
 - improve messaging when using `spatula test`
+- add `--dump` flag to `spatula scrape` to control output format
 
 ## 0.8.4 - 2021-07-15
 
