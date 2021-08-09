@@ -9,7 +9,12 @@ class Source:
 
 class URL(Source):
     def __init__(
-        self, url: str, method: str = "GET", data: dict = None, headers: dict = None, verify: bool = True
+        self,
+        url: str,
+        method: str = "GET",
+        data: dict = None,
+        headers: dict = None,
+        verify: bool = True,
     ):
         """
         Defines a resource to fetch via URL, particularly useful for handling non-GET
@@ -32,7 +37,11 @@ class URL(Source):
         self, scraper: scrapelib.Scraper
     ) -> Optional[requests.models.Response]:
         return scraper.request(
-            method=self.method, url=self.url, data=self.data, headers=self.headers, verify=self.verify
+            method=self.method,
+            url=self.url,
+            data=self.data,
+            headers=self.headers,
+            verify=self.verify,
         )
 
     def __str__(self) -> str:
