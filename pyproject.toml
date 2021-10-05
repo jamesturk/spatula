@@ -7,6 +7,17 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jamesturk/spatula/"
 documentation = "https://jamesturk.github.io/spatula/"
+classifiers=[
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
 
 [tool.poetry.scripts]
 spatula = 'spatula.cli:cli'
