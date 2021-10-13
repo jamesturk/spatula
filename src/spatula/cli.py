@@ -261,7 +261,7 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
 @click.option(
     "--interactive/--no-interactive",
     default=False,
-    help="Interactively prompt for missing data.",
+    help="Interactively prompt for missing data. (Default: false)",
 )
 @click.option(
     "-d", "--data", multiple=True, help="Provide input data in name=value pairs."
@@ -271,7 +271,12 @@ def _get_fake_input(Cls: type, data: typing.List[str], interactive: bool) -> typ
     "--pagination/--no-pagination",
     default=True,
     help="Determine whether or not pagination should be followed or one page is "
-    "enough for testing",
+    "enough for testing. (Default: true)",
+)
+@click.option(
+    "--subpages/--no-subpages",
+    default=False,
+    help="Determine whether subpages should be scraped. (Default: false)",
 )
 @scraper_params
 def test(
@@ -280,6 +285,7 @@ def test(
     data: typing.List[str],
     source: typing.Optional[str],
     pagination: bool,
+    subpages: bool,
     scraper: Scraper,
 ) -> None:
     """
@@ -312,49 +318,55 @@ def test(
     if not source_obj and hasattr(Cls, "example_source"):
         source_obj = Cls.example_source  # type: ignore
 
-    # we need to do the request-response-next-page loop at least once
-    once = True
-    num_items = 0
-    while source_obj or once:
-        once = False
-        page = Cls(fake_input, source=source_obj)
+    if subpages:
+        initial_page = Cls(fake_input, source=source_obj)
+        for n, item in enumerate(initial_page._to_items(scraper)):
+            click.echo(click.style(f"{n+1}: ", fg="green") + _display(item))
+    else:
+        # a custom loop instead of _to_items so we can avoid subpages
+        # we need to do the request-response-next-page loop at least once
+        once = True
+        num_items = 0
+        while source_obj or once:
+            once = False
+            page = Cls(fake_input, source=source_obj)
 
-        # fetch data after input is handled, since we might need to build the source
-        page._fetch_data(scraper)
+            # fetch data after input is handled, since we might need to build the source
+            page._fetch_data(scraper)
 
-        result = page.process_page()
+            result = page.process_page()
 
-        if isinstance(result, typing.Generator):
-            for item in result:
-                # use this count instead of enumerate to handle pagination
-                num_items += 1
-                if isinstance(item, Page):
-                    click.echo(
-                        click.style(f"{num_items}: would continue with ", fg="blue")
-                        + _display(item)
+            if isinstance(result, typing.Generator):
+                for item in result:
+                    # use this count instead of enumerate to handle pagination
+                    num_items += 1
+                    if isinstance(item, Page):
+                        click.echo(
+                            click.style(f"{num_items}: would continue with ", fg="blue")
+                            + _display(item)
+                        )
+                    else:
+                        click.echo(
+                            click.style(f"{num_items}: ", fg="green") + _display(item)
+                        )
+            else:
+                click.secho(_display(result))
+
+            # will be None in most cases, existing the loop, otherwise we restart
+            source_obj = page.get_next_source()
+            if source_obj:
+                if pagination:
+                    click.secho(
+                        f"paginating for {page.__class__.__name__} source={source_obj}",
+                        fg="blue",
                     )
                 else:
-                    click.echo(
-                        click.style(f"{num_items}: ", fg="green") + _display(item)
+                    click.secho(
+                        "pagination disabled: would paginate for "
+                        f"{page.__class__.__name__} source={source_obj}",
+                        fg="yellow",
                     )
-        else:
-            click.secho(_display(result))
-
-        # will be None in most cases, existing the loop, otherwise we restart
-        source_obj = page.get_next_source()
-        if source_obj:
-            if pagination:
-                click.secho(
-                    f"paginating for {page.__class__.__name__} source={source_obj}",
-                    fg="blue",
-                )
-            else:
-                click.secho(
-                    "pagination disabled: would paginate for "
-                    f"{page.__class__.__name__} source={source_obj}",
-                    fg="yellow",
-                )
-                break
+                    break
 
 
 @cli.command()
