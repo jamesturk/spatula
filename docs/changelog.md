@@ -1,7 +1,11 @@
 # Changelog
 
 !!! note
-    spatula 1.0 should be ready by Fall of 2021, providing a more stable interface to build upon, until then interfaces may change between releases.
+    spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
+
+## 0.8.6
+
+- add `timeout` argument to URL source
 
 ## 0.8.5 - 2021-08-09
 
