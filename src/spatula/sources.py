@@ -15,6 +15,7 @@ class URL(Source):
         data: dict = None,
         headers: dict = None,
         verify: bool = True,
+        timeout: Optional[float] = None,
     ):
         """
         Defines a resource to fetch via URL, particularly useful for handling non-GET
@@ -25,6 +26,7 @@ class URL(Source):
         :param data: POST data to include in request body.
         :param headers: dictionary of HTTP headers to set for the request.
         :param verify: bool indicating whether or not to verify SSL certificates for request, defaults to True
+        :param timeout: HTTP(S) timeout in seconds
         """
 
         self.url = url
@@ -32,6 +34,7 @@ class URL(Source):
         self.data = data
         self.headers = headers
         self.verify = verify
+        self.timeout = timeout
 
     def get_response(
         self, scraper: scrapelib.Scraper
@@ -42,6 +45,7 @@ class URL(Source):
             data=self.data,
             headers=self.headers,
             verify=self.verify,
+            timeout=self.timeout,
         )
 
     def __str__(self) -> str:
