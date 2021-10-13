@@ -3,9 +3,11 @@
 !!! note
     spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
 
-## 0.8.6
+## 0.8.6 - 2021-10-13
 
 - add `timeout` argument to URL source
+- add `--subpages` argument to `spatula test` which runs
+  similarly to `spatula scrape` but writes output to the terminal
 
 ## 0.8.5 - 2021-08-09
 
