@@ -3,6 +3,11 @@
 !!! note
     spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.7
+
+* add support for raising `SkipItem` from a detail page to resume processing
+  without yielding data from the page
+
 ## 0.8.6 - 2021-10-13
 
 - add `timeout` argument to URL source

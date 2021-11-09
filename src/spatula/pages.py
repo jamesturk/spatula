@@ -28,14 +28,22 @@ def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
 
 class SkipItem(Exception):
     """
-    To be raised within `ListPage` subclass to skip processing of the current item
-    & continue with the next item.
+    To be raised to skip processing of the current item & continue with the next item.
 
     Example:
     ``` python
     class SomeListPage(HtmlListPage):
         def process_item(self, item):
             if item.name == "Vacant":
+                raise SkipItem("vacant")
+            # do normal processing here
+    ```
+
+    Or, if the skip logic needs to live within a detail Page:
+    ``` python
+    class SomeDetailPage(HtmlPage):
+        def process_page(self):
+            if self.input.name == "Vacant":
                 raise SkipItem("vacant")
             # do normal processing here
     ```
