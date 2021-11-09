@@ -174,7 +174,13 @@ class Page:
             # ok to proceed, but nothing left to do with this page
             yield from self._paginate(scraper, scout)
             return
-        result = self.process_page()
+        try:
+            result = self.process_page()
+        except SkipItem as e:
+            # a detail page can raise SkipItem, which means no further processing of
+            # that detail page (as there is no result)
+            self.logger.info(f"SkipItem: {e}")
+            return
 
         # if we got back a generator, we need to process each result
         if isinstance(result, typing.Generator):

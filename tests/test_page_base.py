@@ -237,3 +237,27 @@ def test_skip_item(caplog):
     assert items == [2, 4]
     # one for the fetch and 3 for the skips
     assert len(caplog.records) == 4
+
+
+def test_skip_item_on_detail_page(caplog):
+    class SkipOddDetail(Page):
+        def process_page(self):
+            if self.input % 2:
+                raise SkipItem(f"{self.input} is odd!")
+            else:
+                return self.input
+
+    class SkipOddList(ListPage):
+        source = NullSource()
+
+        def process_page(self):
+            yield from self._process_or_skip_loop([1, 2, 3, 4, 5])
+
+        def process_item(self, item):
+            return SkipOddDetail(item, source=NullSource())
+
+    page = SkipOddList()
+    with caplog.at_level(logging.INFO):
+        items = list(page.do_scrape())
+    assert items == [2, 4]
+    assert len(caplog.records) == 9  # 6 null fetches, 3 skips
