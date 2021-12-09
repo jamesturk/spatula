@@ -412,6 +412,7 @@ def scrape(
                 if rmdir:
                     click.secho(f"{output_dir} exists and was cleared", fg="red")
                     shutil.rmtree(output_dir)
+                    output_path.mkdir(parents=True)
                 else:
                     click.secho(f"{output_dir} exists and is not empty", fg="red")
                     sys.exit(1)
