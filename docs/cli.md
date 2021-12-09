@@ -6,14 +6,14 @@ Once installed within your Python environment, spatula can be invoked on the com
 
 ``` console
   (scrape-venv) ~/scrape-proj $ spatula --version
-  spatula, version 0.8.7
+  spatula, version 0.8.8
 ```
 
 Or with poetry:
 
 ``` console
   ~/scrape-proj $ poetry run spatula --version
-  spatula, version 0.8.7
+  spatula, version 0.8.8
 ```
 
 The CLI provides four useful subcommands for different stages of development:

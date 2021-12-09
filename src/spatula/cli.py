@@ -19,7 +19,7 @@ from .sources import URL, Source
 from .pages import Page, ListPage
 
 
-VERSION = "0.8.7"
+VERSION = "0.8.8"
 
 
 def scraper_params(func: typing.Callable) -> typing.Callable:
