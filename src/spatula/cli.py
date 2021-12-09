@@ -8,6 +8,7 @@ import logging
 import sys
 import typing
 import uuid
+import shutil
 from pathlib import Path
 from types import ModuleType
 import lxml.html  # type: ignore
@@ -374,12 +375,16 @@ def test(
 @click.option(
     "-o", "--output-dir", default=None, help="override default output directory."
 )
+@click.option(
+    "--rmdir/--no-rmdir", default=False, help="remove output directory before scrape."
+)
 @click.option("-s", "--source", help="Provide (or override) source URL")
 @click.option("--dump", help="Specify dump function", default="json.dump")
 @scraper_params
 def scrape(
     initial_page_name: str,
     output_dir: str,
+    rmdir: bool,
     source: typing.Optional[str],
     scraper: Scraper,
     dump: str,
@@ -404,8 +409,12 @@ def scrape(
             output_path.mkdir(parents=True)
         except FileExistsError:
             if len(list(output_path.iterdir())):
-                click.secho(f"{output_dir} exists and is not empty", fg="red")
-                sys.exit(1)
+                if rmdir:
+                    click.secho(f"{output_dir} exists and was cleared", fg="red")
+                    shutil.rmtree(output_dir)
+                else:
+                    click.secho(f"{output_dir} exists and is not empty", fg="red")
+                    sys.exit(1)
 
     dump_func = get_dump_function(dump)
     # actually do the scrape

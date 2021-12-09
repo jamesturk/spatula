@@ -3,6 +3,10 @@
 !!! note
     spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.8 - 2021-12-09
+
+* add `--rmdir` flag to `spatula scrape`
+
 ## 0.8.7 - 2021-11-09
 
 * add support for raising `SkipItem` from a detail page to resume processing
