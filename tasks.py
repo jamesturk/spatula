@@ -42,3 +42,4 @@ def release(c, old, new):
     c.run("git push --tags", pty=True)
     c.run("poetry publish --build", pty=True)
     c.run("poetry run mkdocs gh-deploy", pty=True)
+    c.run(f"gh release create v{new} -F docs/changelog.md")
