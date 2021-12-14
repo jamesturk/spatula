@@ -3,6 +3,10 @@
 !!! note
     spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.8.9 - 2021-12-14
+
+* fix for `--rmdir` not recreating directory
+
 ## 0.8.8 - 2021-12-09
 
 * add `--rmdir` flag to `spatula scrape`
