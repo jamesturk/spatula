@@ -13,7 +13,7 @@ dummy_html = """<html>
 
 
 class DummySelector(Selector):
-    """ make a selector where we can control how many results it has """
+    """make a selector where we can control how many results it has"""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
