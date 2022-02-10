@@ -1,5 +1,6 @@
 import io
 import csv
+import time
 import tempfile
 import subprocess
 import logging
@@ -9,11 +10,9 @@ import requests
 import scrapelib
 import lxml.html  # type: ignore
 from openpyxl import load_workbook  # type: ignore
+from . import config
 from .sources import Source, URL
 from .utils import _obj_to_dict
-
-
-DEFAULT_RETRIES = 3
 
 
 def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -165,7 +164,7 @@ class Page:
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
-        total_attempts = attempts_remaining = (self.source.retries or DEFAULT_RETRIES) + 1  # type: ignore
+        total_attempts = attempts_remaining = (self.source.retries or config.DEFAULT_REJECTED_RESPONSE_RETRIES) + 1  # type: ignore
         while attempts_remaining:
             attempts_remaining -= 1
             try:
@@ -175,8 +174,15 @@ class Page:
                 if self.accept_response(response):
                     self.response = response
                 elif attempts_remaining:
+                    self.logger.debug(
+                        f"response rejected, {attempts_remaining}/{total_attempts} attempts remaining, sleeping {config.DEFAULT_RETRY_WAIT_SECONDS}s..."
+                    )
+                    time.sleep(config.DEFAULT_RETRY_WAIT_SECONDS)
                     continue
                 else:
+                    self.logger.debug(
+                        f"response rejected, 0/{total_attempts} attempts remaining"
+                    )
                     raise RejectedResponse(total_attempts, response)
             except scrapelib.HTTPError as e:
                 self.process_error_response(e)

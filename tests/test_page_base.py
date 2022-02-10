@@ -8,6 +8,7 @@ from spatula import (
     NullSource,
     SkipItem,
     RejectedResponse,
+    config,
 )
 from scrapelib import HTTPError, Scraper
 from .examples import ExamplePaginatedPage
@@ -121,17 +122,21 @@ class RetrySource:
 class RetryPage(Page):
     """retry as long as 'failure' is in response"""
 
+    config.DEFAULT_RETRY_WAIT_SECONDS = 0.1
+
     def accept_response(self, response):
         return "failure" not in response
 
 
 def test_retry_success():
+    config.DEFAULT_RETRY_WAIT_SECONDS = 0.1
     p = RetryPage(source=RetrySource(retries=2))
     p._fetch_data(DummyScraper())
     assert p.response == "dummy response for http://retried"
 
 
 def test_retry_still_fails():
+    config.DEFAULT_RETRY_WAIT_SECONDS = 0.1
     p = RetryPage(source=RetrySource(retries=1))
     with pytest.raises(RejectedResponse) as e:
         p._fetch_data(DummyScraper())
