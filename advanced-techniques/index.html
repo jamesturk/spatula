@@ -413,6 +413,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#retries" class="md-nav__link">
+    Retries
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -691,6 +698,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#retries" class="md-nav__link">
+    Retries
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -862,6 +876,23 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
         <span class="bp">self</span><span class="o">.</span><span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </code></pre></div>
 <p>This would let any pages that derive from <code>SoupPage</code> use <code>self.soup</code> the same way that <code>self.root</code> is available on <code>HtmlPage</code>.</p>
+<h2 id="retries">Retries<a class="headerlink" href="#retries" title="Permanent link">&para;</a></h2>
+<p>Sometimes a server returns incomplete or otherwise erroneous data intermittently.  It can be useful to check if the page contains the expected data and retry after some wait period if not.</p>
+<p>This can be done by adding a <code>accept_response</code> method to your <code>Page</code> subclass.  If <code>accept_response</code> is <code>False</code>, spatula will sleep for <code>spatula.config.RETRY_WAIT_SECONDS</code> and then retry.</p>
+<p>By default this retry will only happen once, controlled by <code>spatula.config.REJECTED_RESPONSE_RETRIES</code>.
+If you need to set a per-Source number of retries, you can also pass <code>retries</code> to <code>URL</code> like so:</p>
+<div class="highlight"><pre><span></span><code><span class="n">RejectPartialPage</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">URL</span><span class="p">(</span><span class="s2">&quot;https://openstates.org&quot;</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>spatula.config is experimental, any use of these variables may change before 1.0 is released.</p>
+</div>
+<p>An example:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RejectPartialPage</span><span class="p">(</span><span class="n">Page</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">accept_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="c1"># sometimes the page is returned missing the footer, retry if so</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;footer&gt;&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span>
+</code></pre></div>
                 
               
               
