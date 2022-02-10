@@ -165,7 +165,7 @@ class Page:
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
-        attempts_remaining = (self.source.retries or DEFAULT_RETRIES) + 1
+        total_attempts = attempts_remaining = (self.source.retries or DEFAULT_RETRIES) + 1  # type: ignore
         while attempts_remaining:
             attempts_remaining -= 1
             try:
@@ -177,9 +177,7 @@ class Page:
                 elif attempts_remaining:
                     continue
                 else:
-                    raise RejectedResponse(
-                        (self.source.retries or DEFAULT_RETRIES) + 1, response
-                    )
+                    raise RejectedResponse(total_attempts, response)
             except scrapelib.HTTPError as e:
                 self.process_error_response(e)
                 raise HandledError(e)
@@ -296,7 +294,7 @@ class Page:
         """
         raise exception
 
-    def accept_response(self, response: requests.Response):
+    def accept_response(self, response: requests.Response) -> bool:
         return True
 
     def process_page(self) -> typing.Any:
