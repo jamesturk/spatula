@@ -5,11 +5,15 @@ import subprocess
 import logging
 import warnings
 import typing
+import requests
 import scrapelib
 import lxml.html  # type: ignore
 from openpyxl import load_workbook  # type: ignore
 from .sources import Source, URL
 from .utils import _obj_to_dict
+
+
+DEFAULT_RETRIES = 3
 
 
 def _to_scout_result(result: typing.Any) -> typing.Dict[str, typing.Any]:
@@ -153,15 +157,23 @@ class Page:
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
-        try:
-            self.response = self.source.get_response(scraper)  # type: ignore
-            if getattr(self.response, "fromcache", None):
-                self.logger.debug(f"retrieved {self.source} from cache")
-        except scrapelib.HTTPError as e:
-            self.process_error_response(e)
-            raise HandledError(e)
-        else:
-            self.postprocess_response()
+        attempts_remaining = (self.source.retries or DEFAULT_RETRIES) + 1
+        while attempts_remaining:
+            attempts_remaining -= 1
+            try:
+                response = self.source.get_response(scraper)  # type: ignore
+                if getattr(response, "fromcache", None):
+                    self.logger.debug(f"retrieved {self.source} from cache")
+                if self.should_retry(response):
+                    continue
+                else:
+                    self.response = response
+            except scrapelib.HTTPError as e:
+                self.process_error_response(e)
+                raise HandledError(e)
+            else:
+                self.postprocess_response()
+                break
 
     def _paginate(
         self, scraper: scrapelib.Scraper, scout: bool
@@ -271,6 +283,9 @@ class Page:
         This is called after source.get_response if an exception is raised.
         """
         raise exception
+
+    def should_retry(self, response: requests.Response):
+        return False
 
     def process_page(self) -> typing.Any:
         """

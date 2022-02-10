@@ -16,6 +16,7 @@ class URL(Source):
         headers: dict = None,
         verify: bool = True,
         timeout: Optional[float] = None,
+        retries: Optional[int] = None,
     ):
         """
         Defines a resource to fetch via URL, particularly useful for handling non-GET
@@ -27,6 +28,7 @@ class URL(Source):
         :param headers: dictionary of HTTP headers to set for the request.
         :param verify: bool indicating whether or not to verify SSL certificates for request, defaults to True
         :param timeout: HTTP(S) timeout in seconds
+        :param retries: number of retries to make
         """
 
         self.url = url
@@ -35,6 +37,7 @@ class URL(Source):
         self.headers = headers
         self.verify = verify
         self.timeout = timeout
+        self.retries = retries
 
     def get_response(
         self, scraper: scrapelib.Scraper
@@ -57,6 +60,8 @@ class NullSource(Source):
     Special class to set as a page's `source` to indicate no HTTP request needs
     to be performed.
     """
+
+    retries = 0
 
     def get_response(
         self, scraper: scrapelib.Scraper
