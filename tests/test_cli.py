@@ -7,9 +7,9 @@ from spatula.cli import cli
 
 def test_shell_command():
     runner = CliRunner()
-    result = runner.invoke(cli, ["shell", "https://example.com"])
+    result = runner.invoke(cli, ["shell", "https://httpbin.org/get"])
     assert result.exit_code == 0
-    assert "url: https://example.com" in result.output
+    assert "url: https://httpbin.org/get" in result.output
     assert "resp: " in result.output
     assert "root: " in result.output
 
@@ -67,14 +67,19 @@ def test_scrape_command_source_flag():
         # tests source override
         result = runner.invoke(
             cli,
-            ["scrape", "tests.examples.ExamplePage", "--source", "https://example.com"],
+            [
+                "scrape",
+                "tests.examples.ExamplePage",
+                "--source",
+                "https://httpbin.org/get",
+            ],
         )
         assert result.exit_code == 0
 
         assert f"success: wrote 1 objects to _scrapes/{today}/001" in result.output
         files = list(Path(f"_scrapes/{today}/001").glob("*"))
         with open(files[0]) as f:
-            assert "https://example.com" in f.read()
+            assert "https://httpbin.org" in f.read()
 
 
 def test_scout_command_basic():
@@ -144,7 +149,7 @@ def test_test_command_paginated():
     result = runner.invoke(cli, ["test", "tests.examples.ExamplePaginatedPage"])
     assert result.exit_code == 0
     assert (
-        "paginating for ExamplePaginatedPage source=https://example.com"
+        "paginating for ExamplePaginatedPage source=https://httpbin.org"
         in result.output
     )
     # make sure the 6th item is present and numbered correctly
@@ -159,7 +164,7 @@ def test_test_command_no_pagination():
     )
     assert result.exit_code == 0
     assert (
-        "pagination disabled: would paginate for ExamplePaginatedPage source=https://example.com"
+        "pagination disabled: would paginate for ExamplePaginatedPage source=https://httpbin.org/get"
         in result.output
     )
     # make sure the 6th item is present and numbered correctly
