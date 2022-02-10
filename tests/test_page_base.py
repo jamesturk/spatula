@@ -7,6 +7,7 @@ from spatula import (
     HandledError,
     NullSource,
     SkipItem,
+    RejectedResponse,
 )
 from scrapelib import HTTPError, Scraper
 from .examples import ExamplePaginatedPage
@@ -99,6 +100,42 @@ def test_fetch_data_handle_error_response():
     with pytest.raises(HandledError):
         p._fetch_data(DummyScraper())
     assert p._error_was_called
+
+
+class RetrySource:
+    """fake source that returns a response after being called 3 times"""
+
+    called = 0
+
+    def __init__(self, retries):
+        self.retries = retries
+
+    def get_response(self, scraper):
+        self.called += 1
+        if self.called < 3:
+            return scraper.request("http://failure")
+        else:
+            return scraper.request("http://retried")
+
+
+class RetryPage(Page):
+    """retry as long as 'failure' is in response"""
+
+    def should_retry(self, response):
+        return "failure" in response
+
+
+def test_retry_success():
+    p = RetryPage(source=RetrySource(retries=2))
+    p._fetch_data(DummyScraper())
+    assert p.response == "dummy response for http://retried"
+
+
+def test_retry_still_fails():
+    p = RetryPage(source=RetrySource(retries=1))
+    with pytest.raises(RejectedResponse) as e:
+        p._fetch_data(DummyScraper())
+        assert "2x" in str(e)
 
 
 def test_fetch_data_postprocess():
