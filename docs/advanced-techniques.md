@@ -200,3 +200,29 @@ class SoupPage(Page):
 ```
 
 This would let any pages that derive from `SoupPage` use `self.soup` the same way that `self.root` is available on `HtmlPage`.
+
+## Retries
+
+Sometimes a server returns incomplete or otherwise erroneous data intermittently.  It can be useful to check if the page contains the expected data and retry after some wait period if not.
+
+This can be done by adding a `accept_response` method to your `Page` subclass.  If `accept_response` is `False`, spatula will sleep for `spatula.config.RETRY_WAIT_SECONDS` and then retry.
+
+By default this retry will only happen once, controlled by `spatula.config.REJECTED_RESPONSE_RETRIES`.
+If you need to set a per-Source number of retries, you can also pass `retries` to `URL` like so:
+
+``` python
+RejectPartialPage(source=URL("https://openstates.org", retries=3))
+```
+
+!!! warning
+    spatula.config is experimental, any use of these variables may change before 1.0 is released.
+
+An example:
+
+``` python
+
+class RejectPartialPage(Page):
+    def accept_response(self, response: requests.Response) -> bool:
+        # sometimes the page is returned missing the footer, retry if so
+        return "<footer>" in response.text
+```
