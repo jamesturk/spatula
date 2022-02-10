@@ -164,7 +164,7 @@ class Page:
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
-        total_attempts = attempts_remaining = (self.source.retries or config.DEFAULT_REJECTED_RESPONSE_RETRIES) + 1  # type: ignore
+        total_attempts = attempts_remaining = (self.source.retries or config.REJECTED_RESPONSE_RETRIES) + 1  # type: ignore
         while attempts_remaining:
             attempts_remaining -= 1
             try:
@@ -175,9 +175,9 @@ class Page:
                     self.response = response
                 elif attempts_remaining:
                     self.logger.debug(
-                        f"response rejected, {attempts_remaining}/{total_attempts} attempts remaining, sleeping {config.DEFAULT_RETRY_WAIT_SECONDS}s..."
+                        f"response rejected, {attempts_remaining}/{total_attempts} attempts remaining, sleeping {config.RETRY_WAIT_SECONDS}s..."
                     )
-                    time.sleep(config.DEFAULT_RETRY_WAIT_SECONDS)
+                    time.sleep(config.RETRY_WAIT_SECONDS)
                     continue
                 else:
                     self.logger.debug(
