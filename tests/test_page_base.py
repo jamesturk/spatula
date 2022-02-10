@@ -229,7 +229,7 @@ def test_paginated_single_value_page():
         def get_next_source(self):
             # a hack to fake a second identical page
             if isinstance(self.source, NullSource):
-                return "https://example.com"
+                return "https://httpbin.org/get"
 
     page = SingleReturnPaginatedPage()
     items = list(page.do_scrape())
