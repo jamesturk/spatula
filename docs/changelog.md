@@ -3,6 +3,12 @@
 !!! note
     spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
 
+## 0.9.0 - 2022-02-10
+
+* add `Page.accept_response` method that can be overriden to trigger custom retry logic
+* add preliminary spatula.config for setting/overriding global defaults
+  (this feature is not yet considered stable, it likely will be modified before 1.0)
+
 ## 0.8.10 - 2022-01-31
 
 * update click dependency
