@@ -121,8 +121,8 @@ class RetrySource:
 class RetryPage(Page):
     """retry as long as 'failure' is in response"""
 
-    def should_retry(self, response):
-        return "failure" in response
+    def accept_response(self, response):
+        return "failure" not in response
 
 
 def test_retry_success():

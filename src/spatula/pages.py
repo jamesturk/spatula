@@ -71,7 +71,7 @@ class RejectedResponse(Exception):
     def __init__(self, retries: int, response: requests.Response):
         self.response = response
         super().__init__(
-            f"Response was rejected ({retries}x) by should_retry: {response}"
+            f"Response was rejected ({retries}x) by accept_response: {response}"
         )
 
 
@@ -172,15 +172,14 @@ class Page:
                 response = self.source.get_response(scraper)  # type: ignore
                 if getattr(response, "fromcache", None):
                     self.logger.debug(f"retrieved {self.source} from cache")
-                if self.should_retry(response):
-                    if attempts_remaining:
-                        continue
-                    else:
-                        raise RejectedResponse(
-                            (self.source.retries or DEFAULT_RETRIES) + 1, response
-                        )
-                else:
+                if self.accept_response(response):
                     self.response = response
+                elif attempts_remaining:
+                    continue
+                else:
+                    raise RejectedResponse(
+                        (self.source.retries or DEFAULT_RETRIES) + 1, response
+                    )
             except scrapelib.HTTPError as e:
                 self.process_error_response(e)
                 raise HandledError(e)
@@ -297,8 +296,8 @@ class Page:
         """
         raise exception
 
-    def should_retry(self, response: requests.Response):
-        return False
+    def accept_response(self, response: requests.Response):
+        return True
 
     def process_page(self) -> typing.Any:
         """
