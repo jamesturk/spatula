@@ -13,6 +13,7 @@ from .pages import (  # noqa
     MissingSourceError,
     HandledError,
     SkipItem,
+    RejectedResponse,
 )
 from .selectors import SelectorError, Selector, XPath, SimilarLink, CSS  # noqa
 from .sources import Source, URL, NullSource  # noqa
