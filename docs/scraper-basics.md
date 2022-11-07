@@ -2,7 +2,7 @@
 
 This guide contains quick examples of how you could scrape a small list
 of employees of the fictional [Yoyodyne Propulsion
-Systems](https://yoyodyne-propulsion.herokuapp.com/), a site developed
+Systems](https://yoyodyne-propulsion.fly.dev/), a site developed
 for demonstrating web scraping. This will give you an idea of what it
 looks like to write a scraper using *spatula*.
 
@@ -13,7 +13,7 @@ It is fairly common for a scrape to begin on some sort of directory or
 listing page.
 
 We'll start by scraping the staff list on
-<https://yoyodyne-propulsion.herokuapp.com/staff>
+<https://yoyodyne-propulsion.fly.dev/staff>
 
 This page has a fairly simple HTML table with four columns:
 
@@ -58,7 +58,7 @@ from spatula import (
 
 
 class EmployeeList(HtmlListPage):
-    source = "https://yoyodyne-propulsion.herokuapp.com/staff"
+    source = "https://yoyodyne-propulsion.fly.dev/staff"
 
     # each row represents an employee
     selector = CSS("#employees tbody tr")
@@ -83,7 +83,7 @@ It can be tested from the command line like:
 
 ``` console
 $ spatula test quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
 1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
 2: {'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'}
 3: {'first': 'John', 'last': 'Camp', 'position': 'Human Resources'}
@@ -100,7 +100,7 @@ come back in a bit to handle pagination.
 ## Scraping a Single Page
 
 Employees have a few more details not included in the table on pages
-like <https://yoyodyne-propulsion.herokuapp.com/staff/52>.
+like <https://yoyodyne-propulsion.fly.dev/staff/52>.
 
 We're going to pull some data elements from the page that look like:
 
@@ -144,8 +144,8 @@ This will extract the elements from the page and return them in a dictionary.
 It can be tested from the command line like:
 
 ``` console
-$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52"
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
+$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.fly.dev/staff/52"
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/52
 {'children': '1', 'hired': '3/6/1963', 'marital_status': 'Married'}
 ```
 
@@ -164,7 +164,7 @@ to tell *spatula* that more work is needed:
 class EmployeeList(HtmlListPage):
      # by providing this here, it can be omitted on the command line
      # useful in cases where the scraper is only meant for one page
-     source = "https://yoyodyne-propulsion.herokuapp.com/staff"
+     source = "https://yoyodyne-propulsion.fly.dev/staff"
 
      # each row represents an employee
      selector = CSS("#employees tbody tr")
@@ -205,11 +205,11 @@ Now a run looks like:
 
 ``` console
 $ spatula test quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
-1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://yoyodyne-propulsion.herokuapp.com/staff)
-2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/2)
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
+1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://yoyodyne-propulsion.fly.dev/staff)
+2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=https:/yoyodyne-propulsion.fly.dev/staff/2)
 ...
-10: EmployeeDetail(input={'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'} source=https:/yoyodyne-propulsion.herokuapp.com/staff/20)
+10: EmployeeDetail(input={'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'} source=https:/yoyodyne-propulsion.fly.dev/staff/20)
 ```
 
 By default, `spatula test` just shows the result of the page you're
@@ -225,12 +225,12 @@ For this we use the `spatula scrape` command:
 
 ``` console
 $ spatula scrape quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/2
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/52
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/2
 ...
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/100
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/100
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/101
 success: wrote 10 objects to _scrapes/2021-06-03/001
 ```
 
@@ -288,13 +288,13 @@ You'll notice the output of `spatula test quickstart.EmployeeList` has now chang
 
 ``` console
 $ spatula test quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
 1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
 ...
-paginating for EmployeeList source=https://yoyodyne-propulsion.herokuapp.com/staff?page=2
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff?page=2
+paginating for EmployeeList source=https://yoyodyne-propulsion.fly.dev/staff?page=2
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff?page=2
 ...
-45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://yoyodyne-propulsion.herokuapp.com/staff/101)
+45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://yoyodyne-propulsion.fly.dev/staff/101)
 ```
 
 ## Error Handling
@@ -303,12 +303,12 @@ Now that we're grabbing all 45 employees, kick off another full scrape:
 
 ``` console
 $ spatula scrape quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
 ...
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/404
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/404
 Traceback (most recent call last):
 ...
-scrapelib.HTTPError: 404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404
+scrapelib.HTTPError: 404 while retrieving https://yoyodyne-propulsion.fly.dev/staff/404
 ```
 
 An error! It turns out that one of the employee pages isn't loading correctly.
@@ -332,10 +332,10 @@ Run the scrape again to see this in action:
 
 ``` console
 $ spatula scrape quickstart.EmployeeList
-INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.herokuapp.com/staff
+INFO:quickstart.EmployeeList:fetching https://yoyodyne-propulsion.fly.dev/staff
 ...
-WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsion.herokuapp.com/staff/404
+WARNING:quickstart.EmployeeDetail:404 while retrieving https://yoyodyne-propulsion.fly.dev/staff/404
 ...
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/101
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/101
 success: wrote 44 objects to _scrapes/2021-06-03/002
 ```

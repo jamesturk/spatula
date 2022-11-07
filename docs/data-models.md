@@ -95,8 +95,8 @@ And then we'll update `EmployeeDetail.process_page` to return our new `Employee`
 Let's give this a run:
 
 ``` console
-$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52"
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
+$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.fly.dev/staff/52"
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/52
 Traceback (most recent call last):
 ...
 TypeError: __init__() missing 3 required positional arguments: 'first', 'last', and 'position'
@@ -165,12 +165,12 @@ class EmployeeDetail(HtmlPage):
 And now when we re-run the test command:
 
 ``` console
-$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52"
+$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.fly.dev/staff/52"
 EmployeeDetail expects input (PartialEmployee):
   first: ~first
   last: ~last
   position: ~position
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/52
 Employee(first='~first', last='~last', position='~position', marital_status='Married', children='1', hired='3/6/1963')
 ```
 
@@ -266,12 +266,12 @@ Sometimes you may want to override default values (especially useful if the beha
 The `--data` flag to `spatula test` allows overriding input values with key=value pairs.
 
 ``` console
-$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.herokuapp.com/staff/52" --data first=John --data last=Neptune
+$ spatula test quickstart.EmployeeDetail --source "https://yoyodyne-propulsion.fly.dev/staff/52" --data first=John --data last=Neptune
 EmployeeDetail expects input (PartialEmployee):
   first: John
   last: Neptune
   position: ~position
-INFO:ex03_data.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/52
+INFO:ex03_data.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/52
 Employee(first='John', last='Neptune', position='~position', marital_status='Married', children='1', hired='3/6/1963')
 ```
 Alternately, `--interactive` will prompt for input data.
@@ -296,7 +296,7 @@ Like the above `example_input` you can define `example_source` to set a default 
 class EmployeeDetail(HtmlPage):
     input_type = PartialEmployee
     example_input = PartialEmployee("John", "Neptune", "Engineer")
-    example_source = "https://yoyodyne-propulsion.herokuapp.com/staff/52"
+    example_source = "https://yoyodyne-propulsion.fly.dev/staff/52"
 ```
 
 !!! warning
@@ -369,7 +369,7 @@ class EmployeeDetail(HtmlPage):
         "John",
         "Neptune",
         "Engineer",
-        "https://yoyodyne-propulsion.herokuapp.com/staff/1",
+        "https://yoyodyne-propulsion.fly.dev/staff/1",
     )
 
     def get_source_from_input(self):

@@ -5,7 +5,7 @@
 While the pattern laid out in [Scraper Basics](scraper-basics.md) is fairly common,
 sometimes data is laid out in other ways that doesn't fit as neatly with the list & detail page workflow.
 
-For example, take a look at the page <https://yoyodyne-propulsion.herokuapp.com/awards>, which lists some awards that some Yoyodyne employees have won.
+For example, take a look at the page <https://yoyodyne-propulsion.fly.dev/awards>, which lists some awards that some Yoyodyne employees have won.
 
 In some cases you may decide to scrape this data separately using the typical `HtmlListPage` approach, but let's say you want each employee to have a list of their awards as part of the `EmployeeList`/`EmployeeDetail` scrape.
 
@@ -25,7 +25,7 @@ class Award:
 
 
 class AwardsPage(HtmlPage):
-    source = "https://yoyodyne-propulsion.herokuapp.com/awards"
+    source = "https://yoyodyne-propulsion.fly.dev/awards"
 
     def process_page(self):
         # augmentation pages will almost always return some kind of dictionary
@@ -46,7 +46,7 @@ Running this scrape yields a single dictionary:
 
 ``` console
 $ spatula test quickstart.AwardsPage
-INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards
+INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.fly.dev/awards
 defaultdict(<class 'list'>,
     {'John Coyote': [Award(award='Album of the Year', year='1997')],
      'John Fish': [Award(award='Cousteau Society Award', year='1989')],
@@ -108,8 +108,8 @@ And then within `EmployeeDetail`:
 We can test by passing fake data with a person that has an award:
 ``` console hl_lines="1 2 4"
 $ spatula test quickstart.EmployeeDetail --data first=John --data last=Fish
-INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.herokuapp.com/awards
-INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.com/staff/1
+INFO:quickstart.AwardsPage:fetching https://yoyodyne-propulsion.fly.dev/awards
+INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.fly.dev/staff/1
 {'awards': [Award(award='Cousteau Society Award', year='1989')],
  'children': '0',
  'first': 'John',
@@ -117,7 +117,7 @@ INFO:quickstart.EmployeeDetail:fetching https://yoyodyne-propulsion.herokuapp.co
  'last': 'Fish',
  'marital_status': 'Single',
  'position': 'Engineer',
- 'url': 'https://yoyodyne-propulsion.herokuapp.com/staff/1'}
+ 'url': 'https://yoyodyne-propulsion.fly.dev/staff/1'}
 ```
 
 Note that before fetching the `EmployeeDetail` page, `AwardsPage` is fetched, and the `awards` data is then correctly attached to John Fish.
