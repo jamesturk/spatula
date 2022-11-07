@@ -16,6 +16,7 @@ classifiers=[
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
@@ -35,13 +36,13 @@ ipython = {version = "^7.19.0", extras = ["shell"]}
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
 pytest-cov = "^2.11.1"
-flake8 = "^3.8.4"
+flake8 = "^3"
 black = "^22"
 bump2version = "^1.0.1"
 mypy = "^0.900"
 invoke = "^1.5.0"
 mkdocs-material = "^8.5.8"
-mkdocs-click = "^0.4.0"
+mkdocs-click = "^0.8.0"
 mkdocstrings = "^0.19.0"
 types-requests = "^0.1.11"
 types-click = "^7.1.1"
