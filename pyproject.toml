@@ -32,7 +32,6 @@ cssselect = "^1.1.0"
 openpyxl = "^3.0.6"
 attrs = {version = "^20.3.0", extras = ["attrs"]}
 ipython = {version = "^7.19.0", extras = ["shell"]}
-mkdocstrings-python-legacy = "^0.2.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
@@ -45,6 +44,7 @@ invoke = "^1.5.0"
 mkdocs-material = "^8.5.8"
 mkdocs-click = "^0.8.0"
 mkdocstrings = "^0.19.0"
+mkdocstrings-python-legacy = "^0.2.3"
 importlib-metadata = "<5.0"
 types-requests = "^0.1.11"
 types-click = "^7.1.1"
