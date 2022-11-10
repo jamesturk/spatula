@@ -9,6 +9,7 @@ import typing
 import requests
 import scrapelib
 import lxml.html  # type: ignore
+from abc import ABC, abstractmethod
 from openpyxl import load_workbook  # type: ignore
 from . import config
 from .sources import Source, URL
@@ -74,7 +75,7 @@ class RejectedResponse(Exception):
         )
 
 
-class Page:
+class Page(ABC):
     """
     Base class for all *Page* scrapers, used for scraping information from a single type of page.
 
@@ -303,13 +304,14 @@ class Page:
     def accept_response(self, response: requests.Response) -> bool:
         return True
 
+    @abstractmethod
     def process_page(self) -> typing.Any:
         """
         To be overridden.
 
         Return data extracted from this page and this page alone.
         """
-        raise NotImplementedError()
+        pass
 
     def get_next_source(self) -> typing.Union[None, str, Source]:
         """

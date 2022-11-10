@@ -1,4 +1,5 @@
 import re
+from abc import ABC, abstractmethod
 from typing import Optional, List, Iterator
 from lxml.etree import _Element  # type: ignore
 from .utils import _display
@@ -12,7 +13,7 @@ class SelectorError(ValueError):
     pass
 
 
-class Selector:
+class Selector(ABC):
     """
     Base class implementing **Selector** interface.
     """
@@ -79,8 +80,9 @@ class Selector:
         """
         return self.match(element, num_items=1)[0]
 
+    @abstractmethod
     def get_items(self, element: _Element) -> Iterator[_Element]:  # pragma: no cover
-        raise NotImplementedError()
+        pass
 
 
 class XPath(Selector):
