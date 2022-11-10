@@ -33,7 +33,10 @@ class DummyScraper:
 
 
 class DummyPage(Page):
-    pass
+    """a mock Page that can be instantiated without a process_page defined"""
+
+    def process_page(self):
+        raise NotImplementedError
 
 
 def test_page_init_and_str():
@@ -55,7 +58,7 @@ def test_fetch_data_dependencies():
         def process_page(self):
             return "dependency fulfilled"
 
-    class DependencyTestPage(Page):
+    class DependencyTestPage(DummyPage):
         source = SOURCE
         dependencies = {"a_dependency": DependencyPage}
 
@@ -65,7 +68,7 @@ def test_fetch_data_dependencies():
 
 
 def test_get_source_from_input_called():
-    class SimpleInputPage(Page):
+    class SimpleInputPage(DummyPage):
         def get_source_from_input(self):
             return self.input["use_this_as_source"]
 
@@ -87,7 +90,7 @@ def test_fetch_data_sets_response():
 
 
 def test_fetch_data_handle_error_response():
-    class ErrorPage(Page):
+    class ErrorPage(DummyPage):
         _error_was_called = False
 
         def process_error_response(self, exception):
@@ -119,7 +122,7 @@ class RetrySource:
             return scraper.request("http://retried")
 
 
-class RetryPage(Page):
+class RetryPage(DummyPage):
     """retry as long as 'failure' is in response"""
 
     config.RETRY_WAIT_SECONDS = 0.1
@@ -144,7 +147,7 @@ def test_retry_still_fails():
 
 
 def test_fetch_data_postprocess():
-    class Postprocess(Page):
+    class Postprocess(DummyPage):
         _postprocessed = False
 
         def postprocess_response(self):

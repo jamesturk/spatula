@@ -28,7 +28,11 @@ class Response:
 
 
 def test_html_page():
-    p = HtmlPage(source=URL(SOURCE))
+    class ConcreteHtmlPage(HtmlPage):
+        def process_page(self):
+            pass
+
+    p = ConcreteHtmlPage(source=URL(SOURCE))
     p.response = Response(b"<html><a href='/test'>link</a></html>")
     p.postprocess_response()
     # test existence of page.root
@@ -38,7 +42,11 @@ def test_html_page():
 
 
 def test_xml_page():
-    p = XmlPage(source=SOURCE)
+    class ConcreteXmlPage(XmlPage):
+        def process_page(self):
+            pass
+
+    p = ConcreteXmlPage(source=SOURCE)
     p.response = Response(b"<data><is><nested /></is></data>")
     p.postprocess_response()
     assert p.root.tag == "data"
@@ -46,7 +54,12 @@ def test_xml_page():
 
 def test_json_page():
     nested = {"data": {"is": "nested"}}
-    p = JsonPage(source=SOURCE)
+
+    class ConcreteJsonPage(JsonPage):
+        def process_page(self):
+            pass
+
+    p = ConcreteJsonPage(source=SOURCE)
     p.response = Response(json.dumps(nested))
     p.postprocess_response()
     assert p.data == nested

@@ -2,16 +2,16 @@ default_language_version:
     python: python3.9
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.5.0
+  rev: v4.3.0
   hooks:
     - id: check-merge-conflict
     - id: debug-statements
 - repo: https://gitlab.com/pycqa/flake8
-  rev: 3.8.4
+  rev: 3.9.2
   hooks:
     - id: flake8
       args: ["--ignore=E203,E501,W503", "src"]
 - repo: https://github.com/ambv/black
-  rev: 21.6b0
+  rev: 22.10.0
   hooks:
     - id: black
