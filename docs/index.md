@@ -41,7 +41,7 @@ from spatula import HtmlPage, HtmlListPage, CSS, XPath, SelectorError
 class EmployeeList(HtmlListPage):
     # by providing this here, it can be omitted on the command line
     # useful in cases where the scraper is only meant for one page
-    source = "https://yoyodyne-propulsion.fly.dev/staff"
+    source = "https://scrapple.fly.dev/staff"
 
     # each row represents an employee
     selector = CSS("#employees tbody tr")
