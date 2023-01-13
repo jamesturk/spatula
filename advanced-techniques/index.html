@@ -764,7 +764,7 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
         <span class="k">return</span> <span class="n">mapping</span>
 </code></pre></div>
 <p>Running this scrape yields a single dictionary:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.AwardsPage
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.AwardsPage
 <span class="go">INFO:quickstart.AwardsPage:fetching https://scrapple.fly.dev/awards</span>
 <span class="go">defaultdict(&lt;class &#39;list&#39;&gt;,</span>
 <span class="go">    {&#39;John Coyote&#39;: [Award(award=&#39;Album of the Year&#39;, year=&#39;1997&#39;)],</span>
@@ -811,7 +811,7 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
 </span>        <span class="p">)</span>
 </code></pre></div>
 <p>We can test by passing fake data with a person that has an award:
-<div class="highlight"><pre><span></span><code><span class="hll"><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --data <span class="nv">first</span><span class="o">=</span>John --data <span class="nv">last</span><span class="o">=</span>Fish
+<div class="highlight"><pre><span></span><code><span class="hll"><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--data<span class="w"> </span><span class="nv">first</span><span class="o">=</span>John<span class="w"> </span>--data<span class="w"> </span><span class="nv">last</span><span class="o">=</span>Fish
 </span><span class="hll"><span class="go">INFO:quickstart.AwardsPage:fetching https://scrapple.fly.dev/awards</span>
 </span><span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/1</span>
 <span class="hll"><span class="go">{&#39;awards&#39;: [Award(award=&#39;Cousteau Society Award&#39;, year=&#39;1989&#39;)],</span>
@@ -829,7 +829,7 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
 <p>Every <code>Page</code> has a <code>source</code> which is fetched when it is executed.  There are cases where you may wish to avoid that behavior.  If you set <code>NullSource</code> for a page, no HTTP request will be performed prior to the <code>process_item</code> method being called.</p>
 <p>A common use for this is dispatching multiple detail pages without a corresponding list page.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">NebraskaPageGenerator</span><span class="p">(</span><span class="n">ListPage</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    When scraping the Nebraska legislature, the pages are named</span>
 <span class="sd">    http://news.legislature.ne.gov/dist01/</span>
 <span class="sd">    through</span>
@@ -854,7 +854,7 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
 <span class="kn">from</span> <span class="nn">spatula</span> <span class="kn">import</span> <span class="n">Source</span>
 
 <span class="k">class</span> <span class="nc">FauxFormSource</span><span class="p">(</span><span class="n">Source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    emulate a case where we need to get a hidden input value to successfully</span>
 <span class="sd">    retrieve a form</span>
 <span class="sd">    &quot;&quot;&quot;</span>

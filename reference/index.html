@@ -1141,11 +1141,15 @@
 <h3 id="page">Page<a class="headerlink" href="#page" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="abc.ABC">ABC</span></code></p>
+
+  
       <p>Base class for all <em>Page</em> scrapers, used for scraping information from a single type of page.</p>
 <p>For details on how these methods are called, it may be helpful to read
 <a href="../anatomy-of-a-scrape/">Anatomy of a Scrape</a>.</p>
@@ -1188,6 +1192,7 @@ a more detailed explanation.</p>
 
 
 
+  
 
   <div class="doc doc-children">
 
@@ -1199,154 +1204,183 @@ a more detailed explanation.</p>
 
 
 
-
-
-
-
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.do_scrape" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">do_scrape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scraper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">do_scrape</span><span class="p">(</span><span class="n">scraper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#spatula.pages.Page.do_scrape" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>yield results from this page and any subpages</p>
-<p>:param scraper: Optional <code>scrapelib.Scraper</code> instance to use for running scrape.
-:returns: Generator yielding results from the scrape.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>scraper</code></td>
+          <td>
+                <code>typing.<span title="typing.Optional">Optional</span>[scrapelib.<span title="scrapelib.Scraper">Scraper</span>]</code>
+          </td>
+          <td><p>Optional <code>scrapelib.Scraper</code> instance to use for running scrape.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>typing.<span title="typing.Iterable">Iterable</span>[typing.<span title="typing.Any">Any</span>]</code>
+          </td>
+          <td><p>Generator yielding results from the scrape.</p></td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.get_next_source" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_next_source</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">get_next_source</span><span class="p">()</span></code>
 
 <a href="#spatula.pages.Page.get_next_source" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overriden for paginated pages.</p>
 <p>Return a URL or valid source to fetch the next page, None if there isn't one.</p>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.get_source_from_input" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">get_source_from_input</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">get_source_from_input</span><span class="p">()</span></code>
 
 <a href="#spatula.pages.Page.get_source_from_input" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overridden.</p>
 <p>Convert <code>self.input</code> to a <code>Source</code> object such as a <code>URL</code>.</p>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.postprocess_response" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">postprocess_response</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">postprocess_response</span><span class="p">()</span></code>
 
 <a href="#spatula.pages.Page.postprocess_response" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overridden.</p>
 <p>This is called after source.get_response but before self.process_page.</p>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.process_error_response" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">process_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exception</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">process_error_response</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span></code>
 
 <a href="#spatula.pages.Page.process_error_response" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overridden.</p>
 <p>This is called after source.get_response if an exception is raised.</p>
 
-    </div>
-
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.Page.process_page" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">process_page</span><span class="p">()</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-abstractmethod"><code>abstractmethod</code></small>
+  </span>
 
 <a href="#spatula.pages.Page.process_page" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overridden.</p>
 <p>Return data extracted from this page and this page alone.</p>
 
-    </div>
+  </div>
+
+</div>
+
+
 
   </div>
 
-
-
-
-
   </div>
 
-    </div>
-
-  </div>
-
-<h3 id="htmlpage">HtmlPage<a class="headerlink" href="#htmlpage" title="Permanent link">&para;</a></h3>
+</div><h3 id="htmlpage">HtmlPage<a class="headerlink" href="#htmlpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.Page">Page</span></code></p>
+
+  
       <p>Page that automatically handles parsing and normalizing links in an HTML response.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1361,18 +1395,36 @@ use this element as the target of a <code>Selector</code> subclass.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="jsonpage">JsonPage<a class="headerlink" href="#jsonpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="jsonpage">JsonPage<a class="headerlink" href="#jsonpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.Page">Page</span></code></p>
+
+  
       <p>Page that automatically handles parsing a JSON response.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1382,18 +1434,36 @@ use this element as the target of a <code>Selector</code> subclass.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="pdfpage">PdfPage<a class="headerlink" href="#pdfpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="pdfpage">PdfPage<a class="headerlink" href="#pdfpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.Page">Page</span></code></p>
+
+  
       <p>Page that automatically handles converting a PDF response to text using <code>pdftotext</code>.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1407,18 +1477,36 @@ use this element as the target of a <code>Selector</code> subclass.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="xmlpage">XmlPage<a class="headerlink" href="#xmlpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="xmlpage">XmlPage<a class="headerlink" href="#xmlpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.Page">Page</span></code></p>
+
+  
       <p>Page that automatically handles parsing a XML response.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1429,25 +1517,7 @@ object representing the root XML element on the page.</dd>
 
 
 
-    </div>
-
-  </div>
-
-<h2 id="listpages">ListPages<a class="headerlink" href="#listpages" title="Permanent link">&para;</a></h2>
-<h3 id="listpage">ListPage<a class="headerlink" href="#listpage" title="Permanent link">&para;</a></h3>
-
-
-  <div class="doc doc-object doc-class">
-
-
-    <div class="doc doc-contents first">
-
-      <p>Base class for common pattern of extracting many homogenous items from one page.</p>
-<p>Instead of overriding <code>process_response</code>, subclasses should provide a <code>process_item</code>.</p>
-<p><strong>Methods</strong></p>
-
-
-
+  
 
   <div class="doc doc-children">
 
@@ -1459,80 +1529,152 @@ object representing the root XML element on the page.</dd>
 
 
 
-  <div class="doc doc-object doc-method">
+
+
+  </div>
+
+  </div>
+
+</div><h2 id="listpages">ListPages<a class="headerlink" href="#listpages" title="Permanent link">&para;</a></h2>
+<h3 id="listpage">ListPage<a class="headerlink" href="#listpage" title="Permanent link">&para;</a></h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.Page">Page</span></code></p>
+
+  
+      <p>Base class for common pattern of extracting many homogenous items from one page.</p>
+<p>Instead of overriding <code>process_response</code>, subclasses should provide a <code>process_item</code>.</p>
+<p><strong>Methods</strong></p>
+
+
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.pages.ListPage.process_item" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">process_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></code>
 
 <a href="#spatula.pages.ListPage.process_item" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>To be overridden.</p>
 <p>Called once per subitem on page, as defined by the particular subclass being used.</p>
 <p>Should return data extracted from the <code>item</code>.</p>
 <p>If <a href="#spatula.pages.ListPage.process_item--SkipItem"><code>SkipItem</code></a> is raised, <code>process_item</code> will continue to be called with
 the next item in the stream.</p>
 
-    </div>
-
   </div>
 
-
-
+</div>
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-<h3 id="csvlistpage">CsvListPage<a class="headerlink" href="#csvlistpage" title="Permanent link">&para;</a></h3>
+</div><h3 id="csvlistpage">CsvListPage<a class="headerlink" href="#csvlistpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.ListPage">ListPage</span></code></p>
+
+  
       <p>Processes each row in a CSV (after the first, assumed to be headers) as an item
 with <code>process_item</code>.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="excellistpage">ExcelListPage<a class="headerlink" href="#excellistpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="excellistpage">ExcelListPage<a class="headerlink" href="#excellistpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.ListPage">ListPage</span></code></p>
+
+  
       <p>Processes each row in an Excel file as an item with <code>process_item</code>.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="htmllistpage">HtmlListPage<a class="headerlink" href="#htmllistpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="htmllistpage">HtmlListPage<a class="headerlink" href="#htmllistpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.LxmlListPage">LxmlListPage</span></code>, <code><span title="spatula.pages.HtmlPage">HtmlPage</span></code></p>
+
+  
       <p>Selects homogenous items from HTML page using <code>selector</code> and passes them to <code>process_item</code>.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1542,34 +1684,54 @@ with <code>process_item</code>.</p>
 
 
 
-    </div>
-
   </div>
 
-<h3 id="jsonlistpage">JsonListPage<a class="headerlink" href="#jsonlistpage" title="Permanent link">&para;</a></h3>
+</div><h3 id="jsonlistpage">JsonListPage<a class="headerlink" href="#jsonlistpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.ListPage">ListPage</span></code>, <code><span title="spatula.pages.JsonPage">JsonPage</span></code></p>
+
+  
       <p>Processes each element in a JSON list as an item with <code>process_item</code>.</p>
 
 
 
-    </div>
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
 
   </div>
 
-<h3 id="xmllistpage">XmlListPage<a class="headerlink" href="#xmllistpage" title="Permanent link">&para;</a></h3>
+  </div>
+
+</div><h3 id="xmllistpage">XmlListPage<a class="headerlink" href="#xmllistpage" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.pages.LxmlListPage">LxmlListPage</span></code>, <code><span title="spatula.pages.XmlPage">XmlPage</span></code></p>
+
+  
       <p>Selects homogenous items from XML document using <code>selector</code> and passes them to <code>process_item</code>.</p>
 <p><strong>Attributes</strong></p>
 <dl>
@@ -1579,23 +1741,26 @@ with <code>process_item</code>.</p>
 
 
 
-    </div>
-
   </div>
 
-<h2 id="selectors">Selectors<a class="headerlink" href="#selectors" title="Permanent link">&para;</a></h2>
+</div><h2 id="selectors">Selectors<a class="headerlink" href="#selectors" title="Permanent link">&para;</a></h2>
 <h3 id="selector">Selector<a class="headerlink" href="#selector" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="abc.ABC">ABC</span></code></p>
+
+  
       <p>Base class implementing <strong>Selector</strong> interface.</p>
 
 
 
+  
 
   <div class="doc doc-children">
 
@@ -1607,154 +1772,446 @@ with <code>process_item</code>.</p>
 
 
 
-
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.selectors.Selector.match" class="doc doc-heading">
-<code class="highlight language-python"><span class="k">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">min_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_items</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="k">match</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">min_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_items</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
 <a href="#spatula.selectors.Selector.match" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>Return all matches of the given selector within <code>element</code>.</p>
 <p>If the number of elements matched is outside the prescribed boundaries, a
 <code>SelectorError</code> is raised.</p>
-<p>:param element: The element to match within. When used from within a <code>Page</code> will
-                usually be <code>self.root</code>.
-:param min_items: A minimum number of items to match.
-:param max_items: A maximum number of items to match.
-:param num_items: An exact number of items to match.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="lxml.etree._Element">_Element</span></code>
+          </td>
+          <td><p>The element to match within. When used from within a <code>Page</code> will usually be <code>self.root</code>.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A minimum number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A maximum number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>num_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>An exact number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
+</div>
 
-
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
 
 <h4 id="spatula.selectors.Selector.match_one" class="doc doc-heading">
-<code class="highlight language-python"><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span></code>
-
+<code class="highlight language-python"><span class="n">match_one</span><span class="p">(</span><span class="n">element</span><span class="p">)</span></code>
 
 <a href="#spatula.selectors.Selector.match_one" class="headerlink" title="Permanent link">&para;</a></h4>
 
-    <div class="doc doc-contents ">
 
+  <div class="doc doc-contents ">
+  
       <p>Return exactly one match.</p>
-<p>:param element: Element to search within.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="lxml.etree._Element">_Element</span></code>
+          </td>
+          <td><p>Element to search within.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
-
+</div>
 
 
 
   </div>
 
-    </div>
-
   </div>
 
-<h3 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">&para;</a></h3>
+</div><h3 id="css">CSS<a class="headerlink" href="#css" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+  
       <p>Utilize CSS-style selectors.</p>
-<p>:param css_selector: CSS selector expression to use.
-:param min_items: A minimum number of items to match.
-:param max_items: A maximum number of items to match.
-:param num_items: An exact number of items to match.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>css_selector</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>CSS selector expression to use.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A minimum number of items to match.</p></td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A maximum number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>num_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>An exact number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
-<h3 id="similarlink">SimilarLink<a class="headerlink" href="#similarlink" title="Permanent link">&para;</a></h3>
+</div><h3 id="similarlink">SimilarLink<a class="headerlink" href="#similarlink" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+  
       <p>Match links that fit a provided pattern.</p>
-<p>:param pattern: Regular expression for link hrefs.
-:param min_items: A minimum number of items to match.
-:param max_items: A maximum number of items to match.
-:param num_items: An exact number of items to match.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>pattern</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Regular expression for link hrefs.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A minimum number of items to match.</p></td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A maximum number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>num_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>An exact number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
-<h3 id="xpath">XPath<a class="headerlink" href="#xpath" title="Permanent link">&para;</a></h3>
+</div><h3 id="xpath">XPath<a class="headerlink" href="#xpath" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+  
       <p>Utilize <a href="https://en.wikipedia.org/wiki/XPath#Examples">XPath</a> selectors.</p>
-<p>:param xpath: XPath expression to use.
-:param min_items: A minimum number of items to match.
-:param max_items: A maximum number of items to match.
-:param num_items: An exact number of items to match.</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>xpath</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>XPath expression to use.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>min_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A minimum number of items to match.</p></td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>max_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>A maximum number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>num_items</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>An exact number of items to match.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
-<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+</div><h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
 <h3 id="url">URL<a class="headerlink" href="#url" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-method">
+<div class="doc doc-object doc-function">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+  
       <p>Defines a resource to fetch via URL, particularly useful for handling non-GET
 requests.</p>
-<p>:param url: URL to fetch
-:param method: HTTP method to use, defaults to "GET"
-:param data: POST data to include in request body.
-:param headers: dictionary of HTTP headers to set for the request.
-:param verify: bool indicating whether or not to verify SSL certificates for request, defaults to True
-:param timeout: HTTP(S) timeout in seconds
-:param retries: number of retries to make</p>
 
-    </div>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>url</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>URL to fetch</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>method</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>HTTP method to use, defaults to "GET"</p></td>
+          <td>
+                <code>&#39;GET&#39;</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>data</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>POST data to include in request body.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>headers</code></td>
+          <td>
+                <code>dict</code>
+          </td>
+          <td><p>dictionary of HTTP headers to set for the request.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verify</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td><p>bool indicating whether or not to verify SSL certificates for request, defaults to True</p></td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>timeout</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[float]</code>
+          </td>
+          <td><p>HTTP(S) timeout in seconds</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>retries</code></td>
+          <td>
+                <code><span title="typing.Optional">Optional</span>[int]</code>
+          </td>
+          <td><p>number of retries to make</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
-<h3 id="nullsource">NullSource<a class="headerlink" href="#nullsource" title="Permanent link">&para;</a></h3>
+</div><h3 id="nullsource">NullSource<a class="headerlink" href="#nullsource" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="spatula.sources.Source">Source</span></code></p>
+
+  
       <p>Special class to set as a page's <code>source</code> to indicate no HTTP request needs
 to be performed.</p>
 
 
 
+  
 
   <div class="doc doc-children">
 
@@ -1768,50 +2225,49 @@ to be performed.</p>
 
 
 
-
-
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
-
-<h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">&para;</a></h2>
+</div><h2 id="exceptions">Exceptions<a class="headerlink" href="#exceptions" title="Permanent link">&para;</a></h2>
 <h3 id="selectorerror">SelectorError<a class="headerlink" href="#selectorerror" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code>ValueError</code></p>
+
+  
       <p>Error raised when a selector's constraint (min_items/max_items, etc.) is not met.</p>
 
 
 
-    </div>
-
   </div>
 
-<h3 id="skipitem">SkipItem<a class="headerlink" href="#skipitem" title="Permanent link">&para;</a></h3>
+</div><h3 id="skipitem">SkipItem<a class="headerlink" href="#skipitem" title="Permanent link">&para;</a></h3>
 
 
-  <div class="doc doc-object doc-class">
+<div class="doc doc-object doc-class">
 
 
-    <div class="doc doc-contents first">
 
+  <div class="doc doc-contents first">
+      <p class="doc doc-class-bases">
+        Bases: <code>Exception</code></p>
+
+  
       <p>To be raised to skip processing of the current item &amp; continue with the next item.</p>
-
-<p><strong>Examples:</strong></p>
-    
-      <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SomeListPage</span><span class="p">(</span><span class="n">HtmlListPage</span><span class="p">):</span>
+<p>Example:
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SomeListPage</span><span class="p">(</span><span class="n">HtmlListPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Vacant&quot;</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">SkipItem</span><span class="p">(</span><span class="s2">&quot;vacant&quot;</span><span class="p">)</span>
         <span class="c1"># do normal processing here</span>
-</code></pre></div>
+</code></pre></div></p>
 <p>Or, if the skip logic needs to live within a detail Page:
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">SomeDetailPage</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1822,6 +2278,7 @@ to be performed.</p>
 
 
 
+  
 
   <div class="doc doc-children">
 
@@ -1835,12 +2292,11 @@ to be performed.</p>
 
 
 
+  </div>
 
   </div>
 
-    </div>
-
-  </div>
+</div>
 
 
 

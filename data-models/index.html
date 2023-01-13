@@ -821,7 +821,7 @@ You'll notice the examples barely differ, so it is easy to switch between them l
         <span class="p">)</span>
 </code></pre></div>
 <p>Let's give this a run:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
 <span class="go">Traceback (most recent call last):</span>
 <span class="go">...</span>
@@ -873,7 +873,7 @@ You'll notice the examples barely differ, so it is easy to switch between them l
         <span class="p">)</span>
 </code></pre></div>
 <p>And now when we re-run the test command:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
 <span class="go">EmployeeDetail expects input (PartialEmployee):</span>
 <span class="go">  first: ~first</span>
 <span class="go">  last: ~last</span>
@@ -956,7 +956,7 @@ Often part of the data comes from one page, and the rest from another (or perhap
 <p>Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).</p>
 <h3 id="via-command-line">via Command Line<a class="headerlink" href="#via-command-line" title="Permanent link">&para;</a></h3>
 <p>The <code>--data</code> flag to <code>spatula test</code> allows overriding input values with key=value pairs.</p>
-<p><div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span> --data <span class="nv">first</span><span class="o">=</span>John --data <span class="nv">last</span><span class="o">=</span>Neptune
+<p><div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span><span class="w"> </span>--data<span class="w"> </span><span class="nv">first</span><span class="o">=</span>John<span class="w"> </span>--data<span class="w"> </span><span class="nv">last</span><span class="o">=</span>Neptune
 <span class="go">EmployeeDetail expects input (PartialEmployee):</span>
 <span class="go">  first: John</span>
 <span class="go">  last: Neptune</span>

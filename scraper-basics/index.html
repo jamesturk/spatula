@@ -744,7 +744,7 @@ page we encounter. This class defines the logic to process the employee
 list page. This class will turn each row on the page into a dictionary
 with the 'first', 'last', and 'position' keys.</p>
 <p>It can be tested from the command line like:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">1: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;}</span>
 <span class="go">2: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Bigbooté&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;}</span>
@@ -791,7 +791,7 @@ we'll subclass <code>HtmlPage</code>, and override the <code>process_page</code>
 </code></pre></div>
 <p>This will extract the elements from the page and return them in a dictionary.</p>
 <p>It can be tested from the command line like:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeDetail --source <span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
 <span class="go">{&#39;children&#39;: &#39;1&#39;, &#39;hired&#39;: &#39;3/6/1963&#39;, &#39;marital_status&#39;: &#39;Married&#39;}</span>
 </code></pre></div>
@@ -839,7 +839,7 @@ to tell <em>spatula</em> that more work is needed:</p>
 </span>        <span class="p">)</span>
 </code></pre></div>
 <p>Now a run looks like:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">1: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;} source=https://scrapple.fly.dev/staff)</span>
 <span class="go">2: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Bigbooté&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;} source=https:/scrapple.fly.dev/staff/2)</span>
@@ -853,7 +853,7 @@ the data and a <code>source</code> set.</p>
 <p>Now that we're happy with our individual page scrapers, we can run the
 full scrape and write the data to disk.</p>
 <p>For this we use the <code>spatula scrape</code> command:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span>scrape<span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/2</span>
@@ -865,14 +865,14 @@ full scrape and write the data to disk.</p>
 <p>And now our scraped data is on disk, ready for you to use!</p>
 <p>If you look at a data file you'll see that it has the full data for an
 individual:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;marital_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Single&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;children&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;hired&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9/9/1963&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Omar&quot;</span><span class="p">,</span><span class="w"></span>
-<span class="w">  </span><span class="nt">&quot;position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Imports &amp; Exports&quot;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;marital_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Single&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;children&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hired&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9/9/1963&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Omar&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;position&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Imports &amp; Exports&quot;</span>
+<span class="p">}</span>
 </code></pre></div>
 <h2 id="using-spatula-within-other-scripts">Using spatula Within Other Scripts<a class="headerlink" href="#using-spatula-within-other-scripts" title="Permanent link">&para;</a></h2>
 <p>Perhaps you don't want to write your output to disk.
@@ -898,7 +898,7 @@ method on our <code>EmployeeLList</code> class,
         <span class="k">pass</span>
 </code></pre></div>
 <p>You'll notice the output of <code>spatula test quickstart.EmployeeList</code> has now changed:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula <span class="nb">test</span> quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">1: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;}</span>
 <span class="go">...</span>
@@ -909,7 +909,7 @@ method on our <code>EmployeeLList</code> class,
 </code></pre></div>
 <h2 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h2>
 <p>Now that we're grabbing all 45 employees, kick off another full scrape:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span>scrape<span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">...</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/404</span>
@@ -929,7 +929,7 @@ wish to do that, you can override
     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span>
 </code></pre></div>
 <p>Run the scrape again to see this in action:</p>
-<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula scrape quickstart.EmployeeList
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span>scrape<span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">...</span>
 <span class="go">WARNING:quickstart.EmployeeDetail:404 while retrieving https://scrapple.fly.dev/staff/404</span>
