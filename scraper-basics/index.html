@@ -706,7 +706,7 @@ listing page.</p>
   <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">tr</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>John<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Bigbooté<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Lloyd<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;</span>Executive Vice President<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/staff/2&quot;</span><span class="p">&gt;</span>Details<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">tr</span><span class="p">&gt;</span>
@@ -747,7 +747,7 @@ with the 'first', 'last', and 'position' keys.</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">1: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;}</span>
-<span class="go">2: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Bigbooté&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;}</span>
+<span class="go">2: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Lloyd&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;}</span>
 <span class="go">3: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Camp&#39;, &#39;position&#39;: &#39;Human Resources&#39;}</span>
 <span class="go">...</span>
 <span class="go">10: {&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Fish&#39;, &#39;position&#39;: &#39;Marine R&amp;D&#39;}</span>
@@ -800,7 +800,7 @@ This lets you quickly try your scraper against multiple variants of a page as ne
 <h2 id="chaining-pages-together">Chaining Pages Together<a class="headerlink" href="#chaining-pages-together" title="Permanent link">&para;</a></h2>
 <p>Most moderately complex sites will require chaining data together from
 multiple pages to get a complete object.</p>
-<p>Let's revisit <code>EmployeeList</code> and have it return instances of <code>EmployeeDetail</code> 
+<p>Let's revisit <code>EmployeeList</code> and have it return instances of <code>EmployeeDetail</code>
 to tell <em>spatula</em> that more work is needed:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeList</span><span class="p">(</span><span class="n">HtmlListPage</span><span class="p">):</span>
      <span class="c1"># by providing this here, it can be omitted on the command line</span>
@@ -842,7 +842,7 @@ to tell <em>spatula</em> that more work is needed:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeList
 <span class="go">INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff</span>
 <span class="go">1: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Barnett&#39;, &#39;position&#39;: &#39;Scheduling&#39;} source=https://scrapple.fly.dev/staff)</span>
-<span class="go">2: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Bigbooté&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;} source=https:/scrapple.fly.dev/staff/2)</span>
+<span class="go">2: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Lloyd&#39;, &#39;position&#39;: &#39;Executive Vice President&#39;} source=https:/scrapple.fly.dev/staff/2)</span>
 <span class="go">...</span>
 <span class="go">10: EmployeeDetail(input={&#39;first&#39;: &#39;John&#39;, &#39;last&#39;: &#39;Fish&#39;, &#39;position&#39;: &#39;Marine R&amp;D&#39;} source=https:/scrapple.fly.dev/staff/20)</span>
 </code></pre></div>
@@ -876,7 +876,7 @@ individual:</p>
 </code></pre></div>
 <h2 id="using-spatula-within-other-scripts">Using spatula Within Other Scripts<a class="headerlink" href="#using-spatula-within-other-scripts" title="Permanent link">&para;</a></h2>
 <p>Perhaps you don't want to write your output to disk.
-If you want to post-process your data further or use it as part of a larger pipeline a page's <code>do_scrape</code> method lets you do just that.  It returns a generator that you can use to process items as you see fit. </p>
+If you want to post-process your data further or use it as part of a larger pipeline a page's <code>do_scrape</code> method lets you do just that.  It returns a generator that you can use to process items as you see fit.</p>
 <p>For example:</p>
 <div class="highlight"><pre><span></span><code><span class="n">page</span> <span class="o">=</span> <span class="n">EmployeeList</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">do_scrape</span><span class="p">():</span>
