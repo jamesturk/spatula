@@ -4,15 +4,13 @@
 
 Back in [Chaining Pages Together](scraper-basics.md#chaining-pages-together) we saw that when chaining pages we can pass data through from the parent page.
 
-``` python hl_lines="10 11 12"
+``` python hl_lines="8 9 10"
 class EmployeeDetail(HtmlPage):
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return dict(
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
             # self.input is the data passed in from the prior scrape,
             # in this case a dict we can expand here
@@ -34,8 +32,7 @@ That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
         first: str
         last: str
         position: str
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -49,8 +46,7 @@ That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
         first: str
         last: str
         position: str
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -63,8 +59,7 @@ That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
         first: str
         last: str
         position: str
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -77,14 +72,12 @@ That's where we can introduce `dataclasses`, `attrs`, or `pydantic` models:
 
 And then we'll update `EmployeeDetail.process_page` to return our new `Employee` class:
 
-``` python hl_lines="5"
+``` python hl_lines="4"
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return Employee(
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
             # self.input is the data passed in from the prior scrape,
             # in this case a dict we can expand here
@@ -110,7 +103,6 @@ Of course!  We're expecting `self.input` to contain these values, but when we're
 
 Let's add a new data model that just includes the fields we're getting from the `EmployeeList` page:
 
-
 === "dataclasses"
 
     ``` python
@@ -140,27 +132,23 @@ Let's add a new data model that just includes the fields we're getting from the 
         position: str
     ```
 
-
 And then we'll update `PersonDetail` to set an `input_type` and stop assuming `self.input` is a `dict`:
 
-``` python hl_lines="2 9-11"
+``` python hl_lines="2 8-10"
 class EmployeeDetail(HtmlPage):
     input_type = PartialEmployee
 
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return Employee(
             first=self.input.first,
             last=self.input.last,
             position=self.input.position,
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
         )
 ```
-
 
 And now when we re-run the test command:
 
@@ -171,7 +159,7 @@ EmployeeDetail expects input (PartialEmployee):
   last: ~last
   position: ~position
 INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52
-Employee(first='~first', last='~last', position='~position', marital_status='Married', children='1', hired='3/6/1963')
+Employee(first='~first', last='~last', position='~position', status='Current', hired='3/6/1963')
 ```
 
 Test data has been used, so even though `EmployeeList` didn't pass data into `EmployeeDetail` we can still see roughly what the data would look like if it had.
@@ -196,8 +184,7 @@ A nice way to handle this without introducing a ton of redundancy is by setting 
 
     @dataclass
     class Employee(PartialEmployee):
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -214,8 +201,7 @@ A nice way to handle this without introducing a ton of redundancy is by setting 
 
     @attr.s(auto_attribs=True)
     class PartialEmployee(Employee):
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -230,8 +216,7 @@ A nice way to handle this without introducing a ton of redundancy is by setting 
         position: str
 
     class Employee(PartialEmployee):
-        marital_status: str
-        children: int
+        status: str
         hired: str
     ```
 
@@ -272,8 +257,9 @@ EmployeeDetail expects input (PartialEmployee):
   last: Neptune
   position: ~position
 INFO:ex03_data.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52
-Employee(first='John', last='Neptune', position='~position', marital_status='Married', children='1', hired='3/6/1963')
+Employee(first='John', last='Neptune', position='~position', status='Current', hired='3/6/1963')
 ```
+
 Alternately, `--interactive` will prompt for input data.
 
 ### via `example_input`
@@ -303,7 +289,6 @@ class EmployeeDetail(HtmlPage):
     Be sure not to confuse `source` with `example_source`.  The former is used whenever
     the class is invoked without a `source` parameter, while `example_source` is only used
     when running `spatula test`.
-
 
 ## `get_source_from_input`
 
@@ -362,7 +347,7 @@ And then we'll modify `EmployeeList.process_item` to capture this URL, and stop 
 
 And finally, add a `get_source_from_input` method to `EmployeeDetail` (as well as updating the other uses of `Employee` to have URL):
 
-``` python hl_lines="7 10-11 21"
+``` python hl_lines="7 10-11 20"
 class EmployeeDetail(HtmlPage):
     input_type = PartialEmployee
     example_input = PartialEmployee(
@@ -376,16 +361,14 @@ class EmployeeDetail(HtmlPage):
         return self.input.url
 
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return Employee(
             first=self.input.first,
             last=self.input.last,
             position=self.input.position,
             url=self.input.url,
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
         )
 ```

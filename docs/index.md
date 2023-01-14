@@ -68,12 +68,10 @@ class EmployeeList(HtmlListPage):
 
 class EmployeeDetail(HtmlPage):
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return dict(
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
             # self.input is the data passed in from the prior scrape
             **self.input,

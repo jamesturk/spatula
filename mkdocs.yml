@@ -35,7 +35,8 @@ markdown_extensions:
   - admonition
   - def_list
   - pymdownx.highlight
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true 
   - pymdownx.superfences
   - mkdocs-click
   - toc:

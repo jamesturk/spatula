@@ -109,10 +109,8 @@ We're going to pull some data elements from the page that look like:
   <dl>
     <dt>Position</dt>
     <dd id="position">Scheduling</dd>
-    <dt>Marital Status</dt>
-    <dd id="status">Married</dd>
-    <dt>Number of Children</dt>
-    <dd id="children">1</dd>
+    <dt>Status</dt>
+    <dd id="status">Current</dd>
     <dt>Hired</dt>
     <dd id="hired">3/6/1963</dd>
   </dl>
@@ -128,12 +126,10 @@ we'll subclass `HtmlPage`, and override the `process_page` function.
 ``` python
 class EmployeeDetail(HtmlPage):
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return dict(
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
         )
 ```
@@ -145,7 +141,7 @@ It can be tested from the command line like:
 ``` console
 $ spatula test quickstart.EmployeeDetail --source "https://scrapple.fly.dev/staff/52"
 INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52
-{'children': '1', 'hired': '3/6/1963', 'marital_status': 'Married'}
+{'hired': '3/6/1963', 'status': 'Current'}
 ```
 
 One thing to note is that since we didn't define a single source attribute like we did in `EmployeeList`, we need to pass one on the command line with `--source`.
@@ -184,15 +180,13 @@ class EmployeeList(HtmlListPage):
 
 And we can revisit `EmployeeDetail` to tell it to combine the data it collects with the data passed in from the parent page:
 
-``` python hl_lines="10 11 12"
+``` python hl_lines="8 9 10"
 class EmployeeDetail(HtmlPage):
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return dict(
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
             # self.input is the data passed in from the prior scrape,
             # in this case a dict we can expand here
@@ -240,8 +234,7 @@ individual:
 
 ``` json
 {
-  "marital_status": "Single",
-  "children": "0",
+  "status": "Single",
   "hired": "9/9/1963",
   "first": "John",
   "last": "Omar",

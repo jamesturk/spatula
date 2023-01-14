@@ -78,44 +78,41 @@ If you pass an instance of a page then each `EmployeeDetail` will share a cached
 
 The final step now is to actually use the mapping to attach the awards to the employees:
 
-``` python hl_lines="5"
+``` python hl_lines="4"
 class Employee(PartialEmployee):
-    marital_status: str
-    children: int
+    status: str
     hired: str
     awards: list[Award]
 ```
 
 And then within `EmployeeDetail`:
 
-``` python hl_lines="13"
+``` python hl_lines="11"
     def process_page(self):
-        marital_status = CSS("#status").match_one(self.root)
-        children = CSS("#children").match_one(self.root)
+        status = CSS("#status").match_one(self.root)
         hired = CSS("#hired").match_one(self.root)
         return Employee(
             first=self.input.first,
             last=self.input.last,
             position=self.input.position,
             url=self.input.url,
-            marital_status=marital_status.text,
-            children=children.text,
+            status=status.text,
             hired=hired.text,
             awards=self.award_mapping[f"{self.input.first} {self.input.last}"],
         )
 ```
 
 We can test by passing fake data with a person that has an award:
+
 ``` console hl_lines="1 2 4"
 $ spatula test quickstart.EmployeeDetail --data first=John --data last=Fish
 INFO:quickstart.AwardsPage:fetching https://scrapple.fly.dev/awards
 INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/1
 {'awards': [Award(award='Cousteau Society Award', year='1989')],
- 'children': '0',
  'first': 'John',
  'hired': '10/31/1938',
  'last': 'Fish',
- 'marital_status': 'Single',
+ 'status': 'Single',
  'position': 'Engineer',
  'url': 'https://scrapple.fly.dev/staff/1'}
 ```
