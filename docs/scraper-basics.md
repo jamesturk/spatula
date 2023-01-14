@@ -6,7 +6,6 @@ Systems](https://scrapple.fly.dev/staff), a site developed
 for demonstrating web scraping. This will give you an idea of what it
 looks like to write a scraper using *spatula*.
 
-
 ## Scraping a List Page
 
 It is fairly common for a scrape to begin on some sort of directory or
@@ -36,7 +35,7 @@ This page has a fairly simple HTML table with four columns:
   </tr>
   <tr>
     <td>John</td>
-    <td>Bigbooté</td>
+    <td>Lloyd</td>
     <td>Executive Vice President</td>
     <td><a href="/staff/2">Details</a></td>
   </tr>
@@ -85,7 +84,7 @@ It can be tested from the command line like:
 $ spatula test quickstart.EmployeeList
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff
 1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
-2: {'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'}
+2: {'first': 'John', 'last': 'Lloyd', 'position': 'Executive Vice President'}
 3: {'first': 'John', 'last': 'Camp', 'position': 'Human Resources'}
 ...
 10: {'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'}
@@ -157,7 +156,7 @@ This lets you quickly try your scraper against multiple variants of a page as ne
 Most moderately complex sites will require chaining data together from
 multiple pages to get a complete object.
 
-Let's revisit `EmployeeList` and have it return instances of `EmployeeDetail` 
+Let's revisit `EmployeeList` and have it return instances of `EmployeeDetail`
 to tell *spatula* that more work is needed:
 
 ``` python hl_lines="13 19 20"
@@ -207,7 +206,7 @@ Now a run looks like:
 $ spatula test quickstart.EmployeeList
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff
 1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://scrapple.fly.dev/staff)
-2: EmployeeDetail(input={'first': 'John', 'last': 'Bigbooté', 'position': 'Executive Vice President'} source=https:/scrapple.fly.dev/staff/2)
+2: EmployeeDetail(input={'first': 'John', 'last': 'Lloyd', 'position': 'Executive Vice President'} source=https:/scrapple.fly.dev/staff/2)
 ...
 10: EmployeeDetail(input={'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'} source=https:/scrapple.fly.dev/staff/20)
 ```
@@ -253,7 +252,7 @@ individual:
 ## Using spatula Within Other Scripts
 
 Perhaps you don't want to write your output to disk.
-If you want to post-process your data further or use it as part of a larger pipeline a page's `do_scrape` method lets you do just that.  It returns a generator that you can use to process items as you see fit. 
+If you want to post-process your data further or use it as part of a larger pipeline a page's `do_scrape` method lets you do just that.  It returns a generator that you can use to process items as you see fit.
 
 For example:
 
