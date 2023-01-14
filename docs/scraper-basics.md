@@ -28,15 +28,15 @@ This page has a fairly simple HTML table with four columns:
   </thead>
   <tbody>
   <tr>
-    <td>John</td>
-    <td>Barnett</td>
-    <td>Scheduling</td>
+    <td>Eric</td>
+    <td>Sound</td>
+    <td>Manager</td>
     <td><a href="/staff/52">Details</a></td>
   </tr>
   <tr>
-    <td>John</td>
-    <td>Lloyd</td>
-    <td>Executive Vice President</td>
+    <td>Jane</td>
+    <td>Daikon</td>
+    <td>Developer</td>
     <td><a href="/staff/2">Details</a></td>
   </tr>
 
@@ -83,11 +83,10 @@ It can be tested from the command line like:
 ``` console
 $ spatula test quickstart.EmployeeList
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff
-1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
-2: {'first': 'John', 'last': 'Lloyd', 'position': 'Executive Vice President'}
-3: {'first': 'John', 'last': 'Camp', 'position': 'Human Resources'}
+1: {'first': 'Eric', 'last': 'Sound', 'position': 'Manager'}
+2: {'first': 'Jane', 'last': 'Daikon', 'position': 'Developer'}
 ...
-10: {'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'}
+10: {'first': 'Ashley', 'last': 'Wilson', 'position': 'Engineer'}
 ```
 
 The `spatula test` command lets us quickly see the output of the part of
@@ -104,7 +103,7 @@ like <https://scrapple.fly.dev/staff/52>.
 We're going to pull some data elements from the page that look like:
 
 ``` html
-<h2 class="section">Employee Details for John Barnett</h2>
+<h2 class="section">Employee Details for Eric Sound</h2>
 <div class="section">
   <dl>
     <dt>Position</dt>
@@ -199,10 +198,10 @@ Now a run looks like:
 ``` console
 $ spatula test quickstart.EmployeeList
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff
-1: EmployeeDetail(input={'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'} source=https://scrapple.fly.dev/staff)
-2: EmployeeDetail(input={'first': 'John', 'last': 'Lloyd', 'position': 'Executive Vice President'} source=https:/scrapple.fly.dev/staff/2)
+1: EmployeeDetail(input={'first': 'Eric', 'last': 'Sound', 'position': 'Manager'} source=https://scrapple.fly.dev/staff)
+2: EmployeeDetail(input={'first': 'Jane', 'last': 'Daikon', 'position': 'Developer'} source=https:/scrapple.fly.dev/staff/2)
 ...
-10: EmployeeDetail(input={'first': 'John', 'last': 'Fish', 'position': 'Marine R&D'} source=https:/scrapple.fly.dev/staff/20)
+10: EmployeeDetail(input={'first': 'Ashley', 'last': 'Wilson', 'position': 'Engineer'} source=https:/scrapple.fly.dev/staff/20)
 ```
 
 By default, `spatula test` just shows the result of the page you're
@@ -234,11 +233,11 @@ individual:
 
 ``` json
 {
-  "status": "Single",
+  "status": "Support",
   "hired": "9/9/1963",
-  "first": "John",
-  "last": "Omar",
-  "position": "Imports & Exports"
+  "first": "Emily",
+  "last": "Parker",
+  "position": "Support"
 }
 ```
 
@@ -281,12 +280,12 @@ You'll notice the output of `spatula test quickstart.EmployeeList` has now chang
 ``` console
 $ spatula test quickstart.EmployeeList
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff
-1: {'first': 'John', 'last': 'Barnett', 'position': 'Scheduling'}
+1: {'first': 'Eric', 'last': 'Sound', 'position': 'Manager'}
 ...
 paginating for EmployeeList source=https://scrapple.fly.dev/staff?page=2
 INFO:quickstart.EmployeeList:fetching https://scrapple.fly.dev/staff?page=2
 ...
-45: EmployeeDetail(input={'first': 'John', 'last': 'Ya Ya', 'position': 'Computer Design Specialist'} source=https://scrapple.fly.dev/staff/101)
+45: EmployeeDetail(input={'first': 'Oscar', 'last': 'Ego', 'position': 'Outreach Coordinator'} source=https://scrapple.fly.dev/staff/101)
 ```
 
 ## Error Handling

@@ -112,7 +112,7 @@ INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/1
  'first': 'John',
  'hired': '10/31/1938',
  'last': 'Fish',
- 'status': 'Single',
+ 'status': 'Current',
  'position': 'Engineer',
  'url': 'https://scrapple.fly.dev/staff/1'}
 ```
