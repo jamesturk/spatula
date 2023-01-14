@@ -789,40 +789,36 @@ sometimes data is laid out in other ways that doesn't fit as neatly with the lis
 <h3 id="use-the-dependency-data">Use the Dependency Data<a class="headerlink" href="#use-the-dependency-data" title="Permanent link">&para;</a></h3>
 <p>The final step now is to actually use the mapping to attach the awards to the employees:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 <span class="hll">    <span class="n">awards</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Award</span><span class="p">]</span>
 </span></code></pre></div>
 <p>And then within <code>EmployeeDetail</code>:</p>
 <div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
             <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
             <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
             <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
 <span class="hll">            <span class="n">awards</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">award_mapping</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span>
 </span>        <span class="p">)</span>
 </code></pre></div>
-<p>We can test by passing fake data with a person that has an award:
+<p>We can test by passing fake data with a person that has an award:</p>
 <div class="highlight"><pre><span></span><code><span class="hll"><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--data<span class="w"> </span><span class="nv">first</span><span class="o">=</span>John<span class="w"> </span>--data<span class="w"> </span><span class="nv">last</span><span class="o">=</span>Fish
 </span><span class="hll"><span class="go">INFO:quickstart.AwardsPage:fetching https://scrapple.fly.dev/awards</span>
 </span><span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/1</span>
 <span class="hll"><span class="go">{&#39;awards&#39;: [Award(award=&#39;Cousteau Society Award&#39;, year=&#39;1989&#39;)],</span>
-</span><span class="go"> &#39;children&#39;: &#39;0&#39;,</span>
-<span class="go"> &#39;first&#39;: &#39;John&#39;,</span>
+</span><span class="go"> &#39;first&#39;: &#39;John&#39;,</span>
 <span class="go"> &#39;hired&#39;: &#39;10/31/1938&#39;,</span>
 <span class="go"> &#39;last&#39;: &#39;Fish&#39;,</span>
-<span class="go"> &#39;marital_status&#39;: &#39;Single&#39;,</span>
+<span class="go"> &#39;status&#39;: &#39;Single&#39;,</span>
 <span class="go"> &#39;position&#39;: &#39;Engineer&#39;,</span>
 <span class="go"> &#39;url&#39;: &#39;https://scrapple.fly.dev/staff/1&#39;}</span>
-</code></pre></div></p>
+</code></pre></div>
 <p>Note that before fetching the <code>EmployeeDetail</code> page, <code>AwardsPage</code> is fetched, and the <code>awards</code> data is then correctly attached to John Fish.</p>
 <h2 id="advanced-sources">Advanced Sources<a class="headerlink" href="#advanced-sources" title="Permanent link">&para;</a></h2>
 <h3 id="nullsource"><code>NullSource</code><a class="headerlink" href="#nullsource" title="Permanent link">&para;</a></h3>

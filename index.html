@@ -676,12 +676,10 @@
 
 <span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="c1"># self.input is the data passed in from the prior scrape</span>
             <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span>

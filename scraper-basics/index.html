@@ -765,10 +765,8 @@ like <a href="https://scrapple.fly.dev/staff/52">https://scrapple.fly.dev/staff/
   <span class="p">&lt;</span><span class="nt">dl</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Position<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">dd</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;position&quot;</span><span class="p">&gt;</span>Scheduling<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Marital Status<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">dd</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>Married<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Number of Children<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
-    <span class="p">&lt;</span><span class="nt">dd</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;children&quot;</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Status<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">dd</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;status&quot;</span><span class="p">&gt;</span>Current<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">dt</span><span class="p">&gt;</span>Hired<span class="p">&lt;/</span><span class="nt">dt</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">dd</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;hired&quot;</span><span class="p">&gt;</span>3/6/1963<span class="p">&lt;/</span><span class="nt">dd</span><span class="p">&gt;</span>
   <span class="p">&lt;/</span><span class="nt">dl</span><span class="p">&gt;</span>
@@ -780,12 +778,10 @@ small class to handle individual employee pages.</p>
 we'll subclass <code>HtmlPage</code>, and override the <code>process_page</code> function.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
         <span class="p">)</span>
 </code></pre></div>
@@ -793,7 +789,7 @@ we'll subclass <code>HtmlPage</code>, and override the <code>process_page</code>
 <p>It can be tested from the command line like:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
-<span class="go">{&#39;children&#39;: &#39;1&#39;, &#39;hired&#39;: &#39;3/6/1963&#39;, &#39;marital_status&#39;: &#39;Married&#39;}</span>
+<span class="go">{&#39;hired&#39;: &#39;3/6/1963&#39;, &#39;status&#39;: &#39;Current&#39;}</span>
 </code></pre></div>
 <p>One thing to note is that since we didn't define a single source attribute like we did in <code>EmployeeList</code>, we need to pass one on the command line with <code>--source</code>.
 This lets you quickly try your scraper against multiple variants of a page as needed.</p>
@@ -826,12 +822,10 @@ to tell <em>spatula</em> that more work is needed:</p>
 <p>And we can revisit <code>EmployeeDetail</code> to tell it to combine the data it collects with the data passed in from the parent page:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
 <span class="hll">            <span class="c1"># self.input is the data passed in from the prior scrape,</span>
 </span><span class="hll">            <span class="c1"># in this case a dict we can expand here</span>
@@ -866,8 +860,7 @@ full scrape and write the data to disk.</p>
 <p>If you look at a data file you'll see that it has the full data for an
 individual:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;marital_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Single&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;children&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Single&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;hired&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9/9/1963&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;first&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;last&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Omar&quot;</span><span class="p">,</span>

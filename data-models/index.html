@@ -747,12 +747,10 @@
 <p>Back in <a href="../scraper-basics/#chaining-pages-together">Chaining Pages Together</a> we saw that when chaining pages we can pass data through from the parent page.</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
-            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
 <span class="hll">            <span class="c1"># self.input is the data passed in from the prior scrape,</span>
 </span><span class="hll">            <span class="c1"># in this case a dict we can expand here</span>
@@ -761,7 +759,9 @@
 </code></pre></div>
 <p>Dictionaries seem to work well for this since we can decide what data we want to grab on each page and combine them easily, but as scrapers tend to evolve over time it can be nice to have something a bit more self-documenting, and add the possibility to validate the data we're collecting.</p>
 <p>That's where we can introduce <code>dataclasses</code>, <code>attrs</code>, or <code>pydantic</code> models:</p>
-<div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">dataclasses</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">dataclasses</label><label for="__tabbed_1_2">attrs</label><label for="__tabbed_1_3">pydantic</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>
@@ -769,12 +769,11 @@
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">attrs</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">attr</span>
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -782,22 +781,21 @@
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">pydantic</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
+</div>
 </div>
 </div>
 <div class="admonition question">
@@ -808,12 +806,10 @@ You'll notice the examples barely differ, so it is easy to switch between them l
 </div>
 <p>And then we'll update <code>EmployeeDetail.process_page</code> to return our new <code>Employee</code> class:</p>
 <div class="highlight"><pre><span></span><code>    <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
 <span class="hll">        <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
-</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span>            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="c1"># self.input is the data passed in from the prior scrape,</span>
             <span class="c1"># in this case a dict we can expand here</span>
@@ -831,7 +827,9 @@ You'll notice the examples barely differ, so it is easy to switch between them l
 <h2 id="defining-input_type">Defining <code>input_type</code><a class="headerlink" href="#defining-input_type" title="Permanent link">&para;</a></h2>
 <p><em>spatula</em> provides a way to make the dependency on <code>self.input</code> more explicit, and restore our ability to test as a bonus side effect.</p>
 <p>Let's add a new data model that just includes the fields we're getting from the <code>EmployeeList</code> page:</p>
-<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">dataclasses</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">dataclasses</label><label for="__tabbed_2_2">attrs</label><label for="__tabbed_2_3">pydantic</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
@@ -839,7 +837,7 @@ You'll notice the examples barely differ, so it is easy to switch between them l
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">attrs</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
@@ -847,7 +845,7 @@ You'll notice the examples barely differ, so it is easy to switch between them l
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">pydantic</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
@@ -855,20 +853,19 @@ You'll notice the examples barely differ, so it is easy to switch between them l
 </code></pre></div>
 </div>
 </div>
+</div>
 <p>And then we'll update <code>PersonDetail</code> to set an <code>input_type</code> and stop assuming <code>self.input</code> is a <code>dict</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">EmployeeDetail</span><span class="p">(</span><span class="n">HtmlPage</span><span class="p">):</span>
 <span class="hll">    <span class="n">input_type</span> <span class="o">=</span> <span class="n">PartialEmployee</span>
 </span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
 <span class="hll">            <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
 </span><span class="hll">            <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
 </span><span class="hll">            <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
-</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span>            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
         <span class="p">)</span>
 </code></pre></div>
@@ -879,14 +876,16 @@ You'll notice the examples barely differ, so it is easy to switch between them l
 <span class="go">  last: ~last</span>
 <span class="go">  position: ~position</span>
 <span class="go">INFO:quickstart.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
-<span class="go">Employee(first=&#39;~first&#39;, last=&#39;~last&#39;, position=&#39;~position&#39;, marital_status=&#39;Married&#39;, children=&#39;1&#39;, hired=&#39;3/6/1963&#39;)</span>
+<span class="go">Employee(first=&#39;~first&#39;, last=&#39;~last&#39;, position=&#39;~position&#39;, status=&#39;Current&#39;, hired=&#39;3/6/1963&#39;)</span>
 </code></pre></div>
 <p>Test data has been used, so even though <code>EmployeeList</code> didn't pass data into <code>EmployeeDetail</code> we can still see roughly what the data would look like if it had.</p>
 <h3 id="using-inheritance">Using Inheritance<a class="headerlink" href="#using-inheritance" title="Permanent link">&para;</a></h3>
 <p>The above pattern is pretty useful &amp; common.
 Often part of the data comes from one page, and the rest from another (or perhaps even more).</p>
 <p>A nice way to handle this without introducing a ton of redundancy is by setting up your models to inherit from one another:</p>
-<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">dataclasses</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">dataclasses</label><label for="__tabbed_3_2">attrs</label><label for="__tabbed_3_3">pydantic</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 
 <span class="nd">@dataclass</span>
@@ -897,12 +896,11 @@ Often part of the data comes from one page, and the rest from another (or perhap
 
 <span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">attrs</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">attr</span>
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -913,12 +911,11 @@ Often part of the data comes from one page, and the rest from another (or perhap
 
 <span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
 </div>
-<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">pydantic</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
 
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -927,10 +924,10 @@ Often part of the data comes from one page, and the rest from another (or perhap
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
 
 <span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">PartialEmployee</span><span class="p">):</span>
-    <span class="n">marital_status</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">children</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">status</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hired</span><span class="p">:</span> <span class="nb">str</span>
 </code></pre></div>
+</div>
 </div>
 </div>
 <div class="admonition warning">
@@ -956,15 +953,15 @@ Often part of the data comes from one page, and the rest from another (or perhap
 <p>Sometimes you may want to override default values (especially useful if the behavior of the second scrape varies on data from the first).</p>
 <h3 id="via-command-line">via Command Line<a class="headerlink" href="#via-command-line" title="Permanent link">&para;</a></h3>
 <p>The <code>--data</code> flag to <code>spatula test</code> allows overriding input values with key=value pairs.</p>
-<p><div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span><span class="w"> </span>--data<span class="w"> </span><span class="nv">first</span><span class="o">=</span>John<span class="w"> </span>--data<span class="w"> </span><span class="nv">last</span><span class="o">=</span>Neptune
+<div class="highlight"><pre><span></span><code><span class="gp">$ </span>spatula<span class="w"> </span><span class="nb">test</span><span class="w"> </span>quickstart.EmployeeDetail<span class="w"> </span>--source<span class="w"> </span><span class="s2">&quot;https://scrapple.fly.dev/staff/52&quot;</span><span class="w"> </span>--data<span class="w"> </span><span class="nv">first</span><span class="o">=</span>John<span class="w"> </span>--data<span class="w"> </span><span class="nv">last</span><span class="o">=</span>Neptune
 <span class="go">EmployeeDetail expects input (PartialEmployee):</span>
 <span class="go">  first: John</span>
 <span class="go">  last: Neptune</span>
 <span class="go">  position: ~position</span>
 <span class="go">INFO:ex03_data.EmployeeDetail:fetching https://scrapple.fly.dev/staff/52</span>
-<span class="go">Employee(first=&#39;John&#39;, last=&#39;Neptune&#39;, position=&#39;~position&#39;, marital_status=&#39;Married&#39;, children=&#39;1&#39;, hired=&#39;3/6/1963&#39;)</span>
+<span class="go">Employee(first=&#39;John&#39;, last=&#39;Neptune&#39;, position=&#39;~position&#39;, status=&#39;Current&#39;, hired=&#39;3/6/1963&#39;)</span>
 </code></pre></div>
-Alternately, <code>--interactive</code> will prompt for input data.</p>
+<p>Alternately, <code>--interactive</code> will prompt for input data.</p>
 <h3 id="via-example_input">via <code>example_input</code><a class="headerlink" href="#via-example_input" title="Permanent link">&para;</a></h3>
 <p>You can also provide the <code>example_input</code> attribute on the class in question.  This value is assumed to be of type <code>example_type</code>.</p>
 <p>For example:</p>
@@ -988,7 +985,9 @@ when running <code>spatula test</code>.</p>
 <h2 id="get_source_from_input"><code>get_source_from_input</code><a class="headerlink" href="#get_source_from_input" title="Permanent link">&para;</a></h2>
 <p>It is not uncommon to want to capture a URL as part of the data and then use that URL as the next <code>source</code>.</p>
 <p>Let's go ahead and modify <code>PartialEmployee</code> to collect a URL:</p>
-<div class="tabbed-set" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">dataclasses</label><div class="tabbed-content">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">dataclasses</label><label for="__tabbed_4_2">attrs</label><label for="__tabbed_4_3">pydantic</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
@@ -997,7 +996,7 @@ when running <code>spatula test</code>.</p>
 <span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
 </span></code></pre></div>
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">attrs</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">:</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
@@ -1006,13 +1005,14 @@ when running <code>spatula test</code>.</p>
 <span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
 </span></code></pre></div>
 </div>
-<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">pydantic</label><div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PartialEmployee</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="n">first</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">position</span><span class="p">:</span> <span class="nb">str</span>
 <span class="hll">    <span class="n">url</span><span class="p">:</span> <span class="nb">str</span>
 </span></code></pre></div>
+</div>
 </div>
 </div>
 <p>And then we'll modify <code>EmployeeList.process_item</code> to capture this URL, and stop providing a redundant <code>source</code>:</p>
@@ -1043,16 +1043,14 @@ when running <code>spatula test</code>.</p>
 </span><span class="hll">        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span>
 </span>
     <span class="k">def</span> <span class="nf">process_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">marital_status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
-        <span class="n">children</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#children&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#status&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="n">hired</span> <span class="o">=</span> <span class="n">CSS</span><span class="p">(</span><span class="s2">&quot;#hired&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_one</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Employee</span><span class="p">(</span>
             <span class="n">first</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">first</span><span class="p">,</span>
             <span class="n">last</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">last</span><span class="p">,</span>
             <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">position</span><span class="p">,</span>
 <span class="hll">            <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
-</span>            <span class="n">marital_status</span><span class="o">=</span><span class="n">marital_status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
-            <span class="n">children</span><span class="o">=</span><span class="n">children</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+</span>            <span class="n">status</span><span class="o">=</span><span class="n">status</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
             <span class="n">hired</span><span class="o">=</span><span class="n">hired</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
         <span class="p">)</span>
 </code></pre></div>
