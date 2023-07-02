@@ -12,7 +12,6 @@ classifiers=[
   "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -24,7 +23,7 @@ classifiers=[
 spatula = 'spatula.cli:cli'
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 scrapelib = "^2.0.6"
 click = "^8"
 lxml = "^4.6.2"

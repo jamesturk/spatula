@@ -17,13 +17,9 @@ except ImportError:  # pragma: no cover
 def _display_element(obj: _Element) -> str:
     elem_str = f"<{obj.tag} "
 
-    # := if we drop 3.7
-    id_str = obj.get("id")
-    class_str = obj.get("class")
-
-    if id_str:
+    if id_str := obj.get("id"):
         elem_str += f"id='{id_str}'"
-    elif class_str:
+    elif class_str := obj.get("class"):
         elem_str += f"class='{class_str}'"
     else:
         elem_str += " ".join(f"{k}='{v}'" for k, v in obj.attrib.items())
