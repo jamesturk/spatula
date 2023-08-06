@@ -1,10 +1,8 @@
-import json
 import os
 import re
 import requests
 import scrapelib
 import warnings
-from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Optional, Union
 from .pages import Page
@@ -25,6 +23,7 @@ class CachedTestURL(URL):
         verify: bool = True,
         timeout: Optional[float] = None,
         retries: Optional[int] = None,
+        response: Union[requests.models.Response, str, None] = None,
     ):
         """
         Defines a resource to fetch via URL, particularly useful for handling non-GET
@@ -37,15 +36,23 @@ class CachedTestURL(URL):
         :param verify: bool indicating whether or not to verify SSL certificates for request, defaults to True
         :param timeout: HTTP(S) timeout in seconds
         :param retries: number of retries to make
+        :param response: optional response to use instead of fetching
         """
-
-        self.url = url
-        self.method = method
-        self.data = data
-        self.headers = headers
-        self.verify = verify
-        self.timeout = timeout
-        self.retries = retries
+        super().__init__(
+            url=url,
+            method=method,
+            data=data,
+            headers=headers,
+            verify=verify,
+            timeout=timeout,
+            retries=retries,
+        )
+        # convert string responses to simple Response objects
+        if isinstance(response, str):
+            resp = requests.models.Response()
+            resp._content = response.encode()
+            response = resp
+        self.response = response
 
     @classmethod
     def from_url(cls, url: Union[URL, str]) -> "CachedTestURL":
@@ -64,6 +71,8 @@ class CachedTestURL(URL):
     def get_response(
         self, scraper: scrapelib.Scraper
     ) -> requests.models.Response:
+        if self.response:
+            return self.response
         path = _source_to_test_path(self)
         if path.exists():
             resp = requests.models.Response()
