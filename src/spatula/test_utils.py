@@ -6,7 +6,7 @@ import scrapelib
 import warnings
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 from .pages import Page
 from .sources import URL
 
@@ -48,7 +48,7 @@ class CachedTestURL(URL):
         self.retries = retries
 
     @classmethod
-    def from_url(cls, url: URL | str) -> "CachedTestURL":
+    def from_url(cls, url: Union[URL, str]) -> "CachedTestURL":
         if isinstance(url, str):
             url = URL(url)
         return cls(
