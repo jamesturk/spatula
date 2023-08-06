@@ -15,18 +15,6 @@ class SpatulaTestError(Exception):
     pass
 
 
-@dataclass
-class MockResponse:
-    content: bytes
-
-    def json(self):
-        return json.loads(self.content)
-
-    @property
-    def text(self):
-        return self.content
-
-
 class CachedTestURL(URL):
     def __init__(
         self,
@@ -75,10 +63,12 @@ class CachedTestURL(URL):
 
     def get_response(
         self, scraper: scrapelib.Scraper
-    ) -> Optional[requests.models.Response]:
+    ) -> requests.models.Response:
         path = _source_to_test_path(self)
         if path.exists():
-            return MockResponse(path.read_text())
+            resp = requests.models.Response()
+            resp._content = path.read_bytes()
+            return resp
         else:
             if os.environ.get("SPATULA_TEST_ALLOW_FETCH") == "1":
                 warnings.warn(f"spatula test fetching {self} -> {path}")
@@ -87,7 +77,9 @@ class CachedTestURL(URL):
                     path.parent.mkdir()
                 with path.open("w") as cf:
                     cf.write(response.text)
-                    return MockResponse(response.text)
+                    resp = requests.models.Response()
+                    resp._content = response.content
+                    return resp
             else:
                 warnings.warn("Set SPATULA_TEST_ALLOW_FETCH=1 to allow fetching.")
                 raise SpatulaTestError(f"spatula test missing {self} @ {path}")
@@ -102,15 +94,17 @@ def _source_to_test_path(source: URL) -> Path:
     return Path(__file__).parent / "_test_responses" / clean_url
 
 
-def cached_page_response(page: Page):
+def cached_page_response(page: Page) -> Page:
     scraper = scrapelib.Scraper()
-    page.source = CachedTestURL.from_url(page.source)
+    if isinstance(page.source, URL):
+        page.source = CachedTestURL.from_url(page.source)
     page._fetch_data(scraper)
     page.postprocess_response()
     return page
 
 
-def cached_page_items(page: Page):
-    page.source = CachedTestURL.from_url(page.source)
+def cached_page_items(page: Page) -> list:
+    if isinstance(page.source, URL):
+        page.source = CachedTestURL.from_url(page.source)
     items = list(page.do_scrape())
     return items
