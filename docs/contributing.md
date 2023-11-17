@@ -33,7 +33,7 @@ Bug reports, questions, or feature requests can be submitted as [GitHub issues](
 
 ### Linting & Type Checking
 
-`poetry run inv lint` will run flake8 and black to lint the code style.
+`poetry run inv lint` will run ruff and black to lint the code style.
 
 `poetry run inv mypy` will run the mypy type checker.
 

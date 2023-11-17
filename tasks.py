@@ -19,7 +19,7 @@ def mypy(c):
 
 @task
 def lint(c):
-    c.run("poetry run flake8 src/ tests/ --ignore=E203,E501,W503", pty=True)
+    c.run("poetry run ruff src/ tests/ --ignore=E203,E501,W503", pty=True)
     c.run("poetry run black --check src/ tests/", pty=True)
 
 
