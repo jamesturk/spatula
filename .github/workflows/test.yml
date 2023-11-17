@@ -39,6 +39,6 @@ jobs:
     - name: lint with mypy
       run: poetry run mypy src
     - name: lint with ruff
-      run: poetry run ruff --show-source --statistics --ignore=E203,E501,W503 src
+      run: poetry run ruff src
     - name: pytest
       run: poetry run pytest
