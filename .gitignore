@@ -8,3 +8,4 @@ _scrapes/
 .coverage
 htmlcov/
 site/
+_test_responses/
