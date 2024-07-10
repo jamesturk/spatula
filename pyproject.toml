@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "spatula"
-version = "0.9.0"
+version = "0.9.1"
 description = "A modern Python library for writing maintainable web scrapers."
 authors = ["James Turk <dev@jamesturk.net>"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/jamesturk/spatula/"
 documentation = "https://jamesturk.github.io/spatula/"
-classifiers=[
+classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Natural Language :: English",
@@ -16,6 +16,7 @@ classifiers=[
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
@@ -26,11 +27,11 @@ spatula = 'spatula.cli:cli'
 python = "^3.8"
 scrapelib = "^2.0.6"
 click = "^8"
-lxml = "^4.6.2"
+lxml = ">4.6,<6"
 cssselect = "^1.1.0"
 openpyxl = "^3.0.6"
-attrs = {version = "^20.3.0", extras = ["attrs"]}
-ipython = {version = "^7.19.0", extras = ["shell"]}
+attrs = { version = "^20.3.0", extras = ["attrs"] }
+ipython = { version = "^7.19.0", extras = ["shell"] }
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
