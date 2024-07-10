@@ -1,29 +1,33 @@
 # Changelog
 
 !!! note
-    spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
+spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
+
+## 0.9.1 - 2024-07-10
+
+- add support for new versions of lxml and Python
 
 ## 0.9.0 - 2022-02-10
 
-* add `Page.accept_response` method that can be overriden to trigger custom retry logic
-* add preliminary spatula.config for setting/overriding global defaults
+- add `Page.accept_response` method that can be overriden to trigger custom retry logic
+- add preliminary spatula.config for setting/overriding global defaults
   (this feature is not yet considered stable, it likely will be modified before 1.0)
 
 ## 0.8.10 - 2022-01-31
 
-* update click dependency
+- update click dependency
 
 ## 0.8.9 - 2021-12-14
 
-* fix for `--rmdir` not recreating directory
+- fix for `--rmdir` not recreating directory
 
 ## 0.8.8 - 2021-12-09
 
-* add `--rmdir` flag to `spatula scrape`
+- add `--rmdir` flag to `spatula scrape`
 
 ## 0.8.7 - 2021-11-09
 
-* add support for raising `SkipItem` from a detail page to resume processing
+- add support for raising `SkipItem` from a detail page to resume processing
   without yielding data from the page
 
 ## 0.8.6 - 2021-10-13
@@ -80,45 +84,45 @@
 
 ## 0.7.0 - 2021-06-04
 
--   add `spatula scout` command
--   make error messages a bit more clear
--   improvements to documentation
--   added more CLI options to control verbosity, user agent, etc.
--   if module cannot be found, search current directory
+- add `spatula scout` command
+- make error messages a bit more clear
+- improvements to documentation
+- added more CLI options to control verbosity, user agent, etc.
+- if module cannot be found, search current directory
 
 ## 0.6.0 - 2021-04-12
 
--   add full typing to library
--   small bugfixes
+- add full typing to library
+- small bugfixes
 
 ## 0.5.0 - 2021-02-04
 
--   add `ExcelListPage`
--   improve `Page.logger` and CLI output
--   move to simpler `Workflow` class
--   `spatula scrape` can now take the name of a page, will use default
-    Workflow
--   bugfix: inconsistent name for `process_error_response`
+- add `ExcelListPage`
+- improve `Page.logger` and CLI output
+- move to simpler `Workflow` class
+- `spatula scrape` can now take the name of a page, will use default
+  Workflow
+- bugfix: inconsistent name for `process_error_response`
 
 ## 0.4.1 - 2021-02-01
 
--   bugfix: dependencies are instantiated from parent page input
+- bugfix: dependencies are instantiated from parent page input
 
 ## 0.4.0 - 2021-02-01
 
--   restore Python 3.7 compatibility
--   add behavior to handle returning additional `Page` subclasses to
-    continue scraping
--   add default behavior when `Page.input` has a `url` attribute.
--   add `PdfPage`
--   add `page_to_items` helper
--   add `Page.example_input` and `Page.example_source` for test command
--   add `Page.logger` for logging
--   allow use of `dataclasses` in addition to `attrs` as input objects
--   improve output of HTML elements
--   bugfix: not specifying a page processor on workflow is no longer an
-    error
+- restore Python 3.7 compatibility
+- add behavior to handle returning additional `Page` subclasses to
+  continue scraping
+- add default behavior when `Page.input` has a `url` attribute.
+- add `PdfPage`
+- add `page_to_items` helper
+- add `Page.example_input` and `Page.example_source` for test command
+- add `Page.logger` for logging
+- allow use of `dataclasses` in addition to `attrs` as input objects
+- improve output of HTML elements
+- bugfix: not specifying a page processor on workflow is no longer an
+  error
 
 ## 0.3.0 - 2021-01-18
 
--   first documented major release
+- first documented major release
