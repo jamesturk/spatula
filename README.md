@@ -2,6 +2,8 @@
 
 *spatula* is a modern Python library for writing maintainable web scrapers.
 
+**Please note, the official repository has changed to Codeberg; GitHub will only be used as a mirror.**
+
 Source: [https://codeberg.org/jpt/spatula/](https://codeberg.org/jpt/spatula/)
 
 Documentation: [https://jamesturk.github.io/spatula/](https://jamesturk.github.io/spatula/)
@@ -9,7 +11,6 @@ Documentation: [https://jamesturk.github.io/spatula/](https://jamesturk.github.i
 Issues: [https://codeberg.org/jpt/spatula/issues](https://codeberg.org/jpt/spatula/issues)
 
 [![PyPI badge](https://badge.fury.io/py/spatula.svg)](https://badge.fury.io/py/spatula)
-[![Test badge](https://github.com/jamesturk/spatula/workflows/Test%20&%20Lint/badge.svg)](https://github.com/jamesturk/spatula/actions?query=workflow%3A%22Test+%26+Lint%22)
 
 ## Features
 
