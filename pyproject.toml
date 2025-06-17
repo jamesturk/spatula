@@ -2,10 +2,10 @@
 name = "spatula"
 version = "0.9.1"
 description = "A modern Python library for writing maintainable web scrapers."
-authors = ["James Turk <dev@jamesturk.net>"]
+authors = ["james turk <dev@jpt.sh>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/jamesturk/spatula/"
+repository = "https://codeberg.org/jpt/spatula/"
 documentation = "https://jamesturk.github.io/spatula/"
 classifiers = [
   "Intended Audience :: Developers",
