@@ -41,7 +41,7 @@ class URL(Source):
 
     def get_response(
         self, scraper: scrapelib.Scraper
-    ) -> Optional[requests.models.Response]:
+    ) -> requests.models.Response:
         return scraper.request(
             method=self.method,
             url=self.url,
