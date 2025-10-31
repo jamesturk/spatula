@@ -2,17 +2,14 @@
 
 ## Issues
 
-Bug reports, questions, or feature requests can be submitted as [GitHub issues](https://github.com/jamesturk/spatula/issues).
+Bug reports, questions, or feature requests can be submitted as [issues](https://codeberg.org/jpt/spatula/issues).
 
 ## Developing Locally
 
-0. Before starting, you'll need [poetry](https://python-poetry.org/docs/#installation) installed.
+0. Before starting, you'll need [uv](https://docs.astral.sh/uv/getting-started/),
   [pre-commit](https://pre-commit.com/#install) is also recommended.
 
 0. Fork *spatula* and check out your fork:
-  ``` console
-  $ git clone git@github.com:<your username>/spatula.git
-  ```
 
 0. Install pre-commit hooks
   ```

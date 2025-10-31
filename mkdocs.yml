@@ -1,10 +1,10 @@
 site_name: spatula
-site_url: https://jamesturk.github.io/spatula/
+site_url: https://spatula.jpt.sh/
 site_author: James Turk
 site_description: A modern Python library for writing maintainable web scrapers.
-copyright: Copyright &copy; 2021 James Turk
-repo_url: https://github.com/jamesturk/spatula
-repo_name: jamesturk/spatula
+copyright: Copyright &copy; 2025 James Turk
+repo_url: https://codeberg.org/jpt/spatula
+repo_name: jpt/spatula
 edit_uri: edit/main/docs/
 
 theme:
@@ -29,8 +29,6 @@ theme:
     - navigation.sections
     - navigation.top
     - content.tabs.link
-  icon:
-    repo: fontawesome/brands/github
 markdown_extensions:
   - admonition
   - def_list
