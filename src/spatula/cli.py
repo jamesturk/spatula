@@ -19,7 +19,7 @@ from .sources import URL, Source
 from .pages import Page, ListPage
 
 
-VERSION = "0.9.1"
+VERSION = "1.0.0"
 
 
 def scraper_params(func: typing.Callable) -> typing.Callable:
@@ -322,7 +322,7 @@ def test(
     if subpages:
         initial_page = Cls(fake_input, source=source_obj)
         for n, item in enumerate(initial_page._to_items(scraper)):
-            click.echo(click.style(f"{n+1}: ", fg="green") + _display(item))
+            click.echo(click.style(f"{n + 1}: ", fg="green") + _display(item))
     else:
         # a custom loop instead of _to_items so we can avoid subpages
         # we need to do the request-response-next-page loop at least once

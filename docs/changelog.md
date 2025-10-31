@@ -1,7 +1,9 @@
 # Changelog
 
-!!! note
-spatula 1.0 should be ready in a few months, providing a more stable interface to build upon, until then interfaces may change between releases.
+## 1.0.0 - 2025-10-31
+
+- update to use uv, and release what had clearly become a stable version
+  otherwise unchanged from 0.9.1
 
 ## 0.9.1 - 2024-07-10
 

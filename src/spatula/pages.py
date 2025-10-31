@@ -165,7 +165,9 @@ class Page(ABC):
             self.source = URL(self.source)
         # at this point self.source is indeed a Source
         self.logger.info(f"fetching {self.source}")
-        total_attempts = attempts_remaining = (self.source.retries or config.REJECTED_RESPONSE_RETRIES) + 1  # type: ignore
+        total_attempts = attempts_remaining = (
+            self.source.retries or config.REJECTED_RESPONSE_RETRIES
+        ) + 1  # type: ignore
         while attempts_remaining:
             attempts_remaining -= 1
             try:

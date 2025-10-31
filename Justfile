@@ -14,4 +14,4 @@ publish-pypi:
 
 publish-docs:
     uv run mkdocs build
-    netlify deploy --prod -s careful-docs -d site
+    netlify deploy --prod -s spatula-docs -d site

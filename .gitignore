@@ -9,3 +9,6 @@ _scrapes/
 htmlcov/
 site/
 uv.lock
+
+# Local Netlify folder
+.netlify
