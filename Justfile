@@ -8,7 +8,6 @@ preview:
     uv run mkdocs serve
 
 publish-pypi:
-    rm dist/*
     uv build
     uv publish
 

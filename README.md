@@ -6,7 +6,7 @@
 
 Source: [https://codeberg.org/jpt/spatula/](https://codeberg.org/jpt/spatula/)
 
-Documentation: [https://jamesturk.github.io/spatula/](https://jamesturk.github.io/spatula/)
+Documentation: <https://spatula.jpt.sh>
 
 Issues: [https://codeberg.org/jpt/spatula/issues](https://codeberg.org/jpt/spatula/issues)
 
