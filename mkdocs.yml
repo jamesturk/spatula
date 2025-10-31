@@ -52,8 +52,8 @@ plugins:
           show_root_full_path: false
           show_root_toc_entry: false
 
-    watch:
-      - src/spatula
+        # watch:
+        #   - src/spatula
 extra_css:
   - assets/extra.css
 nav:
