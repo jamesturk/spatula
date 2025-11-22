@@ -13,4 +13,4 @@ publish-pypi:
 
 publish-docs:
     uv run mkdocs build
-    netlify deploy --prod -s spatula-docs -d site
+    uvx trifold publish

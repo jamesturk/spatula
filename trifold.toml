@@ -1,0 +1,8 @@
+provider = "bunny"
+local_path = "site"
+remote_path = "projects/spatula"
+ignore = []
+remote_ignore = []
+
+[bunny]
+storage_zone = "jptsh"

@@ -40,7 +40,7 @@ spatula = "spatula.cli:cli"
 
 [project.urls]
 Repository = "https://codeberg.org/jpt/spatula/"
-Documentation = "https://jamesturk.github.io/spatula/"
+Documentation = "https://jpt.sh/projects/spatula/""
 
 [build-system]
 requires = ["hatchling"]

@@ -4,7 +4,7 @@
 
 Source: <https://codeberg.org/jpt/spatula/>
 
-Documentation: <https://spatula.jpt.sh>
+Documentation: <https://jpt.sh/projects/spatula/>
 
 Issues: <https://codeberg.org/jpt/spatula/issues>
 

@@ -1,5 +1,5 @@
 site_name: spatula
-site_url: https://spatula.jpt.sh/
+site_url: https://jpt.sh/projects/spatula/
 site_author: James Turk
 site_description: A modern Python library for writing maintainable web scrapers.
 copyright: Copyright &copy; 2025 James Turk
